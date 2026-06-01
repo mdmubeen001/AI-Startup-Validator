@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Submit Idea</title>
+
+    <style>
+
+        body{
+            font-family:Arial;
+            background:#f4f6f9;
+        }
+
+        .container{
+            width:50%;
+            margin:50px auto;
+            background:white;
+            padding:30px;
+            border-radius:10px;
+        }
+
+        input, textarea{
+            width:100%;
+            padding:12px;
+            margin-top:10px;
+            margin-bottom:20px;
+        }
+
+        button{
+            background:#2563eb;
+            color:white;
+            border:none;
+            padding:12px 20px;
+            border-radius:8px;
+            cursor:pointer;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h2>Submit Startup Idea</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <button>
+            Analyze Idea
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+</html>

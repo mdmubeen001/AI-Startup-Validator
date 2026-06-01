@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Analysis Result</title>
+
+    <style>
+
+        body{
+            font-family:Arial;
+            background:#f4f6f9;
+            margin:0;
+        }
+
+        .container{
+            width:80%;
+            margin:40px auto;
+        }
+
+        .card{
+            background:white;
+            padding:20px;
+            border-radius:12px;
+            margin-bottom:20px;
+            box-shadow:0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .grid{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:20px;
+        }
+
+        h1,h2{
+            color:#111827;
+        }
+
+        .score{
+            font-size:35px;
+            color:#2563eb;
+            font-weight:bold;
+        }
+
+        button{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <h1>Startup Analysis Report</h1>
+
+    <div class="card">
+
+        <h2>{{ title }}</h2>
+
+        <p><b>Industry:</b> {{ industry }}</p>
+
+        <p>{{ description }}</p>
+
+    </div>
+
+    <div class="grid">
+
+        <div class="card">
+            <h3>Strengths</h3>
+            <p>{{ analysis.strengths }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Weaknesses</h3>
+            <p>{{ analysis.weaknesses }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Opportunities</h3>
+            <p>{{ analysis.opportunities }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Threats</h3>
+            <p>{{ analysis.threats }}</p>
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h3>Market Size</h3>
+
+        <p>{{ analysis.market }}</p>
+
+    </div>
+
+    <div class="card">
+
+        <h3>Competitors</h3>
+
+        <p>{{ analysis.competitors }}</p>
+
+    </div>
+
+    <div class="card">
+
+        <h3>Viability Score</h3>
+
+        <div class="score">
+
+            {{ analysis.score }}
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+    <a href="/download/">
+
+        <button>
+
+            Download PDF
+
+        </button>
+
+    </a>
+
+</div>
+
+
+
+
+
+</div>
+
+</body>
+</html>
