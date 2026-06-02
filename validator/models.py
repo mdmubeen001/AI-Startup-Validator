@@ -1,13 +1,37 @@
 from django.db import models
 
-# Create your models here.
-
 class StartupIdea(models.Model):
-    title = models.CharField(max_length=200)
-    industry = models.CharField(max_length=200)
+
+    title = models.CharField(
+        max_length=200
+    )
+
+    industry = models.CharField(
+        max_length=100
+    )
+
     description = models.TextField()
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    problem = models.TextField()
+
+    target_audience = models.CharField(
+        max_length=200
+    )
+
+    revenue_model = models.CharField(
+        max_length=200
+    )
+
+    startup_stage = models.CharField(
+        max_length=50
+    )
+
+    usp = models.TextField()
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
 
     def __str__(self):
+
         return self.title

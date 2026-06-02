@@ -176,7 +176,37 @@ Fill in startup details below.
 </p>
 
 </div>
+<!-- PROGRESS -->
 
+<div class="card mb-6">
+
+<div class="d-flex justify-between items-center mb-3">
+
+<h4>
+
+Startup Discovery Progress
+
+</h4>
+
+<span id="progress-text">
+
+0%
+
+</span>
+
+</div>
+
+<div class="progress">
+
+<div
+id="progress-bar"
+class="progress__fill">
+
+</div>
+
+</div>
+
+</div>
 <form
 method="POST"
 action="/idea/"
@@ -246,6 +276,66 @@ Terms
 </div>
 
 </footer>
+<script>
 
+const fields = document.querySelectorAll(
+
+'input, textarea, select'
+
+);
+
+const bar =
+document.getElementById(
+'progress-bar'
+);
+
+const text =
+document.getElementById(
+'progress-text'
+);
+
+function updateProgress(){
+
+let filled = 0;
+
+fields.forEach(field=>{
+
+if(
+field.value.trim() !== ''
+){
+
+filled++;
+
+}
+
+});
+
+let percent = Math.round(
+
+(filled / fields.length)
+* 100
+
+);
+
+bar.style.width =
+percent + '%';
+
+text.innerText =
+percent + '%';
+
+}
+
+fields.forEach(field=>{
+
+field.addEventListener(
+'input',
+updateProgress
+);
+
+});
+
+updateProgress();
+
+</script>
 </body>
 </html>

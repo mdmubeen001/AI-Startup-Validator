@@ -19,66 +19,107 @@ def idea_form(request):
             title = form.cleaned_data['title']
             industry = form.cleaned_data['industry']
             description = form.cleaned_data['description']
+            problem = form.cleaned_data['problem']
 
-            # Save the idea to the database
+            target_audience = form.cleaned_data[
+                'target_audience'
+           ]
+
+            revenue_model = form.cleaned_data[
+                'revenue_model'
+            ]
+
+            startup_stage = form.cleaned_data[
+                'startup_stage'
+            ]
+
+            usp = form.cleaned_data['usp']
+
             startup_idea = StartupIdea(
                 title=title,
                 industry=industry,
-                description=description
+                description=description,
+                problem=problem,
+                target_audience=target_audience,
+                revenue_model=revenue_model,
+                startup_stage=startup_stage,
+                usp=usp
             )
             startup_idea.save()
 
-            # Analyze the idea
-            analysis = analyze_idea(title, industry, description)
+            analysis = analyze_idea(
+                title,
+                industry,
+                description,
+                problem,
+                target_audience,    
+                revenue_model,
+                startup_stage,
+                usp
+            )
 
-            request.session['report_data'] = {
+            request.session[
+                'report_data'
+            ] = {
 
-    'title': title,
-    'industry': industry,
-    'description': description,
+                'title': title,
+                'industry': industry,
+                'description': description,
 
-    'strengths':
-    analysis['strengths'],
-
-    'weaknesses':
-    analysis['weaknesses'],
-
-    'opportunities':
-    analysis['opportunities'],
-
-    'threats':
-    analysis['threats'],
-
-    'market':
-    analysis['market'],
-
-    'competitors':
-    analysis['competitors'],
-
-    'score':
-    analysis['score']
-}
+                'analysis': analysis
+            }
 
             return render(
                 request,
-                'result.html',
+                'loading.html',
                 {
-                    'title': title,
-                    'industry': industry,
-                    'description': description,
-                    'analysis': analysis
+                    'next_url':
+                    '/result/'
                 }
             )
 
     else:
+
         form = IdeaForm()
 
     return render(
         request,
         'idea_form.html',
-        {'form': form}
+        {
+            'form': form
+        }
     )
 
+def result_page(request):
+
+    data = request.session.get(
+        'report_data'
+    )
+
+    if not data:
+
+        return render(
+            request,
+            'home.html'
+        )
+
+    return render(
+        request,
+        'result.html',
+        {
+            'title':
+            data['title'],
+
+            'industry':
+            data['industry'],
+
+            'description':
+            data['description'],
+
+            'analysis':
+            data['analysis']
+        }
+    )
 
 def download_pdf(request):
 

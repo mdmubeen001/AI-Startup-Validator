@@ -6,7 +6,7 @@ client = Groq(
     api_key=os.getenv("GROQ_API_KEY")
 )
 
-def analyze_idea(title, industry, description):
+def analyze_idea(title, industry, description, problem, target_audience, revenue_model, startup_stage, usp):
 
     prompt = f"""
 You are a startup business analyst.
@@ -16,6 +16,18 @@ Analyze this startup idea.
 Title: {title}
 Industry: {industry}
 Description: {description}
+Problem: {problem}
+Target Audience: {target_audience}
+Revenue Model: {revenue_model}
+Startup Stage: {startup_stage}
+USP: {usp}
+
+Also provide:
+- Practical startup improvement suggestions
+- Recommended business model
+- A short investor pitch summary
+- Startup risk level with reasoning
+- Estimated startup funding requirement
 
 Return ONLY valid JSON.
 
@@ -28,9 +40,16 @@ Use concise business analysis.
     "threats":"2-3 short threats",
     "market":"Estimated market size and target market",
     "competitors":"Top 3 competitors",
-    "score":"Viability score out of 10"
+    "score":"Viability score out of 10",
+    "improvements":"Practical startup improvements",
+    "business_model":"Suggested revenue/business model",
+    "pitch":"Short investor pitch summary",
+    "risk":"Startup risk level and reason",
+    "funding":"Estimated startup funding requirement"
 }}
 
+Also estimate startup risk level
+with short reasoning.
 Rules:
 - Only JSON
 - No markdown
@@ -74,5 +93,10 @@ Rules:
             "threats": "",
             "market": "",
             "competitors": "",
-            "score": ""
+            "score": "",
+            "improvements": "",
+            "business_model": "",
+            "pitch": "",
+            "risk": "",
+            "funding": ""
         }
