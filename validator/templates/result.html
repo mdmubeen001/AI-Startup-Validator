@@ -1,143 +1,450 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Analysis Result</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
 
-    <style>
+    <title>
+        Analysis Report
+    </title>
 
-        body{
-            font-family:Arial;
-            background:#f4f6f9;
-            margin:0;
-        }
-
-        .container{
-            width:80%;
-            margin:40px auto;
-        }
-
-        .card{
-            background:white;
-            padding:20px;
-            border-radius:12px;
-            margin-bottom:20px;
-            box-shadow:0 2px 8px rgba(0,0,0,0.1);
-        }
-
-        .grid{
-            display:grid;
-            grid-template-columns:1fr 1fr;
-            gap:20px;
-        }
-
-        h1,h2{
-            color:#111827;
-        }
-
-        .score{
-            font-size:35px;
-            color:#2563eb;
-            font-weight:bold;
-        }
-
-        button{
-    background:#2563eb;
-    color:white;
-    border:none;
-    padding:12px 20px;
-    border-radius:8px;
-    cursor:pointer;
-}
-
-    </style>
+    <link rel="stylesheet"
+    href="{% static 'css/style.css' %}">
 </head>
 <body>
 
+<!-- NAVBAR -->
+<nav class="navbar">
+
+<div class="container navbar__inner">
+
+<a href="/"
+class="navbar__brand">
+
+<div class="navbar__logo">
+AI
+</div>
+
+Startup <span>Validator</span>
+
+</a>
+
+<div class="navbar__nav">
+
+<a href="/"
+class="navbar__link">
+Home
+</a>
+
+<a href="/idea/"
+class="navbar__link navbar__link--active">
+Results
+</a>
+
+</div>
+
+<div class="navbar__actions">
+
+<a href="/download/"
+class="btn btn--primary">
+
+Download PDF
+
+</a>
+
+</div>
+
+</div>
+
+</nav>
+
+<main>
+
+<!-- HERO HEADER -->
+<section class="section section--sm">
+
 <div class="container">
 
-    <h1>Startup Analysis Report</h1>
+<div class="card card--prominent">
 
-    <div class="card">
+<div class="d-flex items-center justify-between flex-wrap gap-4">
 
-        <h2>{{ title }}</h2>
+<div>
 
-        <p><b>Industry:</b> {{ industry }}</p>
+<div class="hero__badge">
 
-        <p>{{ description }}</p>
-
-    </div>
-
-    <div class="grid">
-
-        <div class="card">
-            <h3>Strengths</h3>
-            <p>{{ analysis.strengths }}</p>
-        </div>
-
-        <div class="card">
-            <h3>Weaknesses</h3>
-            <p>{{ analysis.weaknesses }}</p>
-        </div>
-
-        <div class="card">
-            <h3>Opportunities</h3>
-            <p>{{ analysis.opportunities }}</p>
-        </div>
-
-        <div class="card">
-            <h3>Threats</h3>
-            <p>{{ analysis.threats }}</p>
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <h3>Market Size</h3>
-
-        <p>{{ analysis.market }}</p>
-
-    </div>
-
-    <div class="card">
-
-        <h3>Competitors</h3>
-
-        <p>{{ analysis.competitors }}</p>
-
-    </div>
-
-    <div class="card">
-
-        <h3>Viability Score</h3>
-
-        <div class="score">
-
-            {{ analysis.score }}
-
-        </div>
-
-    </div>
-
-    <div class="card">
-
-    <a href="/download/">
-
-        <button>
-
-            Download PDF
-
-        </button>
-
-    </a>
+AI Business Analysis
 
 </div>
 
+<h1 class="section__title mt-4">
 
+Startup Analysis Report
 
+</h1>
 
+<p class="section__description">
+
+AI-powered evaluation of your startup idea.
+
+</p>
 
 </div>
+
+<div class="score-badge score-badge--high">
+
+<div class="score-badge__value">
+
+{{ analysis.score }}
+
+</div>
+
+<div class="score-badge__label">
+
+Score
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- OVERVIEW -->
+<section class="section">
+
+<div class="container">
+
+<div class="card">
+
+<div class="card__header">
+
+<div class="card__icon">
+
+🚀
+
+</div>
+
+<div>
+
+<h2 class="card__title">
+
+Startup Overview
+
+</h2>
+
+<p class="text-secondary">
+
+Business Summary
+
+</p>
+
+</div>
+
+</div>
+
+<div class="grid grid--2 mt-6">
+
+<div>
+
+<h4 class="text-secondary">
+
+Title
+
+</h4>
+
+<p class="fw-semibold">
+
+{{ title }}
+
+</p>
+
+</div>
+
+<div>
+
+<h4 class="text-secondary">
+
+Industry
+
+</h4>
+
+<p class="fw-semibold">
+
+{{ industry }}
+
+</p>
+
+</div>
+
+</div>
+
+<div class="mt-6">
+
+<h4 class="text-secondary">
+
+Description
+
+</h4>
+
+<p>
+
+{{ description }}
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- SWOT -->
+<section class="section">
+
+<div class="container">
+
+<div class="section__header">
+
+<div class="section__eyebrow">
+
+ANALYSIS
+
+</div>
+
+<h2 class="section__title">
+
+SWOT Analysis
+
+</h2>
+
+</div>
+
+<div class="swot">
+
+<!-- Strength -->
+<div class="swot__card swot__card--strength">
+
+<div class="swot__label">
+
+Strengths
+
+</div>
+
+<div class="swot__item">
+
+{{ analysis.strengths }}
+
+</div>
+
+</div>
+
+<!-- Weakness -->
+<div class="swot__card swot__card--weakness">
+
+<div class="swot__label">
+
+Weaknesses
+
+</div>
+
+<div class="swot__item">
+
+{{ analysis.weaknesses }}
+
+</div>
+
+</div>
+
+<!-- Opportunity -->
+<div class="swot__card swot__card--opportunity">
+
+<div class="swot__label">
+
+Opportunities
+
+</div>
+
+<div class="swot__item">
+
+{{ analysis.opportunities }}
+
+</div>
+
+</div>
+
+<!-- Threat -->
+<div class="swot__card swot__card--threat">
+
+<div class="swot__label">
+
+Threats
+
+</div>
+
+<div class="swot__item">
+
+{{ analysis.threats }}
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- MARKET + COMPETITORS -->
+<section class="section">
+
+<div class="container">
+
+<div class="grid grid--2">
+
+<!-- MARKET -->
+<div class="card">
+
+<div class="card__header">
+
+<div class="card__icon">
+
+🌍
+
+</div>
+
+<div>
+
+<h3 class="card__title">
+
+Market Analysis
+
+</h3>
+
+</div>
+
+</div>
+
+<p class="mt-4">
+
+{{ analysis.market }}
+
+</p>
+
+</div>
+
+<!-- COMPETITOR -->
+<div class="card">
+
+<div class="card__header">
+
+<div class="card__icon">
+
+🏁
+
+</div>
+
+<div>
+
+<h3 class="card__title">
+
+Competitors
+
+</h3>
+
+</div>
+
+</div>
+
+<p class="mt-4">
+
+{{ analysis.competitors }}
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FINAL CTA -->
+<section class="section section--lg">
+
+<div class="container">
+
+<div class="card card--blue text-center p-8">
+
+<h2 class="text-3xl fw-bold mb-4">
+
+Download Full Business Report
+
+</h2>
+
+<p class="mb-6">
+
+Professional AI-generated PDF
+ready to share and present.
+
+</p>
+
+<a href="/download/"
+class="btn btn--light btn--xl">
+
+Download PDF Report
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+
+<div class="container">
+
+<div class="footer__bottom">
+
+<p class="footer__copy">
+
+© 2026 AI Startup Validator
+
+</p>
+
+<div class="footer__legal">
+
+<a href="#">
+Privacy
+</a>
+
+<a href="#">
+Terms
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</footer>
 
 </body>
 </html>

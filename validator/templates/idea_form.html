@@ -1,59 +1,251 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Submit Idea</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+    content="width=device-width, initial-scale=1.0">
 
-    <style>
+    <title>
+        Validate Idea
+    </title>
 
-        body{
-            font-family:Arial;
-            background:#f4f6f9;
-        }
-
-        .container{
-            width:50%;
-            margin:50px auto;
-            background:white;
-            padding:30px;
-            border-radius:10px;
-        }
-
-        input, textarea{
-            width:100%;
-            padding:12px;
-            margin-top:10px;
-            margin-bottom:20px;
-        }
-
-        button{
-            background:#2563eb;
-            color:white;
-            border:none;
-            padding:12px 20px;
-            border-radius:8px;
-            cursor:pointer;
-        }
-
-    </style>
+    <link rel="stylesheet"
+    href="{% static 'css/style.css' %}">
 </head>
 <body>
 
-<div class="container">
+<!-- NAVBAR -->
+<nav class="navbar">
 
-    <h2>Submit Startup Idea</h2>
+<div class="container navbar__inner">
 
-    <form method="POST">
-        {% csrf_token %}
+<a href="/"
+class="navbar__brand">
 
-        {{ form.as_p }}
+<div class="navbar__logo">
+AI
+</div>
 
-        <button>
-            Analyze Idea
-        </button>
+Startup <span>Validator</span>
 
-    </form>
+</a>
+
+<div class="navbar__nav">
+
+<a href="/"
+class="navbar__link">
+Home
+</a>
+
+<a href="/idea/"
+class="navbar__link navbar__link--active">
+Validate Idea
+</a>
 
 </div>
+
+<div class="navbar__actions">
+
+<a href="/idea/"
+class="btn btn--primary">
+
+Analyze Now
+
+</a>
+
+</div>
+
+</div>
+
+</nav>
+
+<main>
+
+<section class="section section--lg">
+
+<div class="container">
+
+<div class="grid grid--2 items-center gap-8">
+
+<!-- LEFT -->
+<div>
+
+<div class="hero__badge">
+
+AI Business Analysis
+
+</div>
+
+<h1 class="section__title mt-4">
+
+Launch Better Ideas With
+
+AI Validation
+
+</h1>
+
+<p class="section__description mt-4">
+
+Describe your startup concept
+and let AI evaluate its
+business potential.
+
+Get:
+
+</p>
+
+<div class="mt-6 d-flex flex-col gap-4">
+
+<div class="tag tag--success">
+✓ SWOT Analysis
+</div>
+
+<div class="tag">
+✓ Market Insights
+</div>
+
+<div class="tag tag--warning">
+✓ Competitor Analysis
+</div>
+
+<div class="tag tag--neutral">
+✓ Viability Score
+</div>
+
+<div class="tag tag--success">
+✓ PDF Business Report
+</div>
+
+</div>
+
+<div class="card mt-8">
+
+<div class="card__header">
+
+<div class="card__icon">
+⚡
+</div>
+
+<div>
+
+<h3 class="card__title">
+
+AI Powered Report
+
+</h3>
+
+<p class="card__body">
+
+Receive startup analysis
+within seconds.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- RIGHT FORM -->
+<div>
+
+<div class="form form--contained card">
+
+<div class="section__header mb-6">
+
+<div class="section__eyebrow">
+
+START ANALYSIS
+
+</div>
+
+<h2 class="section__title">
+
+Submit Your Idea
+
+</h2>
+
+<p class="section__description">
+
+Fill in startup details below.
+
+</p>
+
+</div>
+
+<form
+method="POST"
+action="/idea/"
+class="form">
+
+{% csrf_token %}
+
+<div class="form__group">
+
+{{ form.as_p }}
+
+</div>
+
+<div class="form__actions">
+
+<button
+type="submit"
+class="btn btn--primary btn--full btn--lg">
+
+Analyze Idea
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+
+<div class="container">
+
+<div class="footer__bottom">
+
+<p class="footer__copy">
+
+© 2026 AI Startup Validator
+
+</p>
+
+<div class="footer__legal">
+
+<a href="#">
+Privacy
+</a>
+
+<a href="#">
+Terms
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</footer>
 
 </body>
 </html>

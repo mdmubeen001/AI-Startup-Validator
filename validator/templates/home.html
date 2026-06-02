@@ -1,72 +1,580 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Startup Validator</title>
 
-    <style>
-
-        body{
-            margin:0;
-            font-family:Arial;
-            background:#f4f6f9;
-        }
-
-        nav{
-            background:#111827;
-            color:white;
-            padding:15px 50px;
-            display:flex;
-            justify-content:space-between;
-        }
-
-        .hero{
-            text-align:center;
-            margin-top:100px;
-        }
-
-        h1{
-            font-size:45px;
-            color:#111827;
-        }
-
-        p{
-            color:#555;
-            font-size:18px;
-        }
-
-        button{
-            background:#2563eb;
-            color:white;
-            border:none;
-            padding:12px 25px;
-            border-radius:8px;
-            font-size:16px;
-            cursor:pointer;
-            margin-top:20px;
-        }
-
-    </style>
+    <link rel="stylesheet"
+    href="{% static 'css/style.css' %}">
 </head>
 <body>
 
-<nav>
-    <h2>Startup Validator</h2>
+<!-- NAVBAR -->
+<nav class="navbar">
+
+    <div class="container navbar__inner">
+
+        <a href="/" class="navbar__brand">
+
+            <div class="navbar__logo">
+                AI
+            </div>
+
+            Startup <span>Validator</span>
+
+        </a>
+
+        <div class="navbar__nav">
+
+            <a href="/"
+            class="navbar__link navbar__link--active">
+                Home
+            </a>
+
+            <a href="/idea/"
+            class="navbar__link">
+                Validate Idea
+            </a>
+
+        </div>
+
+        <div class="navbar__actions">
+
+            <a href="/idea/"
+            class="btn btn--primary">
+
+                Start Free
+
+            </a>
+
+        </div>
+
+    </div>
+
 </nav>
 
-<div class="hero">
+<main>
 
-    <h1>AI Startup Idea Validator</h1>
+<!-- HERO -->
+<section class="hero">
 
-    <p>
-        Validate your startup ideas using AI powered SWOT,
-        market and competitor analysis.
-    </p>
-<a href="/idea/">
-    <button>
-        Validate My Idea
-    </button>
-</a>
+<div class="container">
+
+<div class="grid grid--2 items-center gap-8">
+
+<!-- LEFT HERO -->
+<div class="hero__content">
+
+<div class="hero__badge">
+
+AI Powered Startup Intelligence
+
 </div>
+
+<h1 class="hero__title">
+
+Turn Startup Ideas Into
+
+<span>Business Insights</span>
+
+</h1>
+
+<p class="hero__subtitle">
+
+Get instant SWOT analysis,
+market research, competitor insights
+and startup viability scoring using AI.
+
+No business degree needed.
+
+</p>
+
+<div class="hero__actions">
+
+<a href="/idea/"
+class="btn btn--primary btn--xl">
+
+Validate My Idea
+
+</a>
+
+<a href="#features"
+class="btn btn--light btn--xl">
+
+Explore Platform
+
+</a>
+
+</div>
+
+<div class="hero__stats">
+
+<div class="hero__stat">
+
+<span class="hero__stat-value">
+
+AI
+
+</span>
+
+<span class="hero__stat-label">
+
+Analysis
+
+</span>
+
+</div>
+
+<div class="hero__stat">
+
+<span class="hero__stat-value">
+
+PDF
+
+</span>
+
+<span class="hero__stat-label">
+
+Reports
+
+</span>
+
+</div>
+
+<div class="hero__stat">
+
+<span class="hero__stat-value">
+
+SWOT
+
+</span>
+
+<span class="hero__stat-label">
+
+Insights
+
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+<!-- RIGHT PREVIEW -->
+<div>
+
+<div class="card card--prominent">
+
+<div class="card__header">
+
+<div>
+
+<div class="tag">
+
+Live AI Preview
+
+</div>
+
+<h3 class="card__title mt-4">
+
+AI Fitness Coach
+
+</h3>
+
+<p class="text-sm text-secondary">
+
+Business Analysis Snapshot
+
+</p>
+
+</div>
+
+</div>
+
+<div class="swot">
+
+<div class="swot__card swot__card--strength">
+
+<div class="swot__label">
+
+Strength
+
+</div>
+
+<div class="swot__item">
+
+Personalized fitness plans
+
+</div>
+
+</div>
+
+<div class="swot__card swot__card--opportunity">
+
+<div class="swot__label">
+
+Opportunity
+
+</div>
+
+<div class="swot__item">
+
+Growing wellness market
+
+</div>
+
+</div>
+
+</div>
+
+<div class="divider"></div>
+
+<div class="d-flex items-center justify-between">
+
+<div>
+
+<div class="text-sm text-secondary">
+
+Viability Score
+
+</div>
+
+</div>
+
+<div class="score-badge score-badge--high">
+
+<div class="score-badge__value">
+
+8.5
+
+</div>
+
+<div class="score-badge__label">
+
+Score
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- TRUST / BADGES -->
+<section class="section section--sm">
+
+<div class="container">
+
+<div class="d-flex justify-center gap-6 flex-wrap">
+
+<div class="tag">
+AI Powered
+</div>
+
+<div class="tag">
+Business Insights
+</div>
+
+<div class="tag">
+PDF Reports
+</div>
+
+<div class="tag">
+Startup Validation
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- FEATURES -->
+<section
+id="features"
+class="section">
+
+<div class="container">
+
+<div class="section__header">
+
+<div class="section__eyebrow">
+
+FEATURES
+
+</div>
+
+<h2 class="section__title">
+
+Everything Needed To
+
+Validate A Startup
+
+</h2>
+
+<p class="section__description">
+
+Built for founders,
+students and innovators.
+
+</p>
+
+</div>
+
+<div class="grid grid--3">
+
+<div class="card">
+
+<div class="card__icon">
+
+📊
+
+</div>
+
+<h3 class="card__title">
+
+SWOT Analysis
+
+</h3>
+
+<p class="card__body">
+
+Discover strengths,
+weaknesses, opportunities
+and threats instantly.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="card__icon">
+
+🌍
+
+</div>
+
+<h3 class="card__title">
+
+Market Insights
+
+</h3>
+
+<p class="card__body">
+
+Estimate market size,
+target users and business potential.
+
+</p>
+
+</div>
+
+<div class="card">
+
+<div class="card__icon">
+
+🏁
+
+</div>
+
+<h3 class="card__title">
+
+Competitor Analysis
+
+</h3>
+
+<p class="card__body">
+
+Identify competitors
+and evaluate market positioning.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section">
+
+<div class="container">
+
+<div class="section__header">
+
+<div class="section__eyebrow">
+
+PROCESS
+
+</div>
+
+<h2 class="section__title">
+
+How It Works
+
+</h2>
+
+</div>
+
+<div class="grid grid--3">
+
+<div class="card text-center">
+
+<div class="card__icon">
+
+1
+
+</div>
+
+<h3 class="card__title">
+
+Submit Idea
+
+</h3>
+
+<p class="card__body">
+
+Enter startup title,
+industry and description.
+
+</p>
+
+</div>
+
+<div class="card text-center">
+
+<div class="card__icon">
+
+2
+
+</div>
+
+<h3 class="card__title">
+
+AI Analysis
+
+</h3>
+
+<p class="card__body">
+
+AI evaluates your idea
+using business metrics.
+
+</p>
+
+</div>
+
+<div class="card text-center">
+
+<div class="card__icon">
+
+3
+
+</div>
+
+<h3 class="card__title">
+
+Download Report
+
+</h3>
+
+<p class="card__body">
+
+Get professional
+PDF business reports.
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- CTA -->
+<section class="section section--lg">
+
+<div class="container">
+
+<div class="card card--blue text-center p-8">
+
+<h2 class="text-3xl fw-bold mb-4">
+
+Ready To Validate
+Your Startup Idea?
+
+</h2>
+
+<p class="mb-6">
+
+AI-powered business insights
+in seconds.
+
+</p>
+
+<a href="/idea/"
+class="btn btn--light btn--xl">
+
+Start Now
+
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+
+<div class="container">
+
+<div class="footer__bottom">
+
+<p class="footer__copy">
+
+© 2026 AI Startup Validator
+
+</p>
+
+<div class="footer__legal">
+
+<a href="#">
+Privacy
+</a>
+
+<a href="#">
+Terms
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</footer>
 
 </body>
 </html>
