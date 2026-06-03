@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from .forms import IdeaForm
 from .models import StartupIdea
-from .ai_engine import analyze_idea
+from .ai_engine import (analyze_idea, compare_ideas)
 from django.http import FileResponse
 from .pdf_generator import generate_pdf
 
@@ -35,18 +35,7 @@ def idea_form(request):
 
             usp = form.cleaned_data['usp']
 
-            startup_idea = StartupIdea(
-                title=title,
-                industry=industry,
-                description=description,
-                problem=problem,
-                target_audience=target_audience,
-                revenue_model=revenue_model,
-                startup_stage=startup_stage,
-                usp=usp
-            )
-            startup_idea.save()
-
+           
             analysis = analyze_idea(
                 title,
                 industry,
@@ -57,6 +46,38 @@ def idea_form(request):
                 startup_stage,
                 usp
             )
+
+            startup_idea = StartupIdea(
+
+                title=title,
+                industry=industry,
+                description=description,
+
+                problem=problem,
+                target_audience=target_audience,
+                revenue_model=revenue_model,
+                startup_stage=startup_stage,
+                usp=usp,
+
+                strengths=analysis['strengths'],
+                weaknesses=analysis['weaknesses'],
+                opportunities=analysis['opportunities'],
+                threats=analysis['threats'],
+                market=analysis['market'],
+                competitors=analysis['competitors'],
+                score=analysis['score'],
+
+                improvements=analysis['improvements'],
+                business_model=analysis['business_model'],
+                pitch=analysis['pitch'],
+                risk=analysis['risk'],
+                funding=analysis['funding'],
+                tam_sam_som=analysis['tam_sam_som'],
+                name_suggestions=analysis['name_suggestions'],
+                tagline=analysis['tagline']
+            )
+
+            startup_idea.save()
 
             request.session[
                 'report_data'
@@ -121,6 +142,42 @@ def result_page(request):
         }
     )
 
+def compare_view(request):
+
+    if request.method == 'POST':
+
+        idea1 = request.POST.get(
+            'idea1'
+        )
+
+        idea2 = request.POST.get(
+            'idea2'
+        )
+
+        result = compare_ideas(
+            idea1,
+            idea2
+        )
+
+        return render(
+
+            request,
+
+            'compare_result.html',
+
+            {
+                'result': result,
+                'idea1': idea1,
+                'idea2': idea2
+            }
+        )
+
+    return render(
+        request,
+        'compare.html'
+    )
+
+
 def download_pdf(request):
 
     data = request.session.get(
@@ -137,4 +194,65 @@ def download_pdf(request):
     return FileResponse(
         open(filename,'rb'),
         as_attachment=True
+    )
+
+def history_view(request):
+
+    ideas = StartupIdea.objects.all().order_by(
+        '-id'
+    )
+
+    return render(
+
+        request,
+
+        'history.html',
+
+        {
+            'ideas': ideas
+        }
+    )
+
+def history_detail(
+
+    request,
+    idea_id
+):
+
+    idea = StartupIdea.objects.get(
+        id=idea_id
+    )
+
+    analysis = {
+
+    'strengths': idea.strengths,
+    'weaknesses': idea.weaknesses,
+    'opportunities': idea.opportunities,
+    'threats': idea.threats,
+    'market': idea.market,
+    'competitors': idea.competitors,
+    'score': idea.score,
+
+    'improvements': idea.improvements,
+    'business_model': idea.business_model,
+    'pitch': idea.pitch,
+    'risk': idea.risk,
+    'funding': idea.funding,
+    'tam_sam_som': idea.tam_sam_som,
+    'name_suggestions': idea.name_suggestions,
+    'tagline': idea.tagline
+}
+
+    return render(
+
+        request,
+
+        'result.html',
+
+        {
+            'title': idea.title,
+            'industry': idea.industry,
+            'description': idea.description,
+            'analysis': analysis
+        }
     )

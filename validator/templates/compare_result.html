@@ -1,0 +1,295 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+Startup Battle
+</title>
+
+<link rel="stylesheet"
+href="{% static 'css/style.css' %}">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+<div class="container navbar__inner">
+
+<a href="/"
+class="navbar__brand">
+
+<div class="navbar__logo">
+AI
+</div>
+
+Startup <span>Validator</span>
+
+</a>
+
+<div class="navbar__nav">
+
+<a href="/"
+class="navbar__link">
+Home
+</a>
+
+<a href="/compare/"
+class="navbar__link navbar__link--active">
+Compare Ideas
+</a>
+
+</div>
+
+</div>
+
+</nav>
+
+<section class="battle-section">
+
+<div class="container">
+
+<!-- HERO -->
+
+<div class="battle-hero">
+
+<div class="hero__badge">
+
+⚔️ AI STARTUP BATTLE
+
+</div>
+
+<h1 class="battle-title">
+
+Professional Startup Comparison
+
+</h1>
+
+<p class="battle-subtitle">
+
+Side-by-side AI startup research
+
+</p>
+
+</div>
+
+<!-- IDEA TOP -->
+
+<div class="battle-top">
+
+<div class="battle-idea-card">
+
+<h3>
+🚀 Idea 1
+</h3>
+
+<p>
+{{ idea1 }}
+</p>
+
+</div>
+
+<div class="battle-vs-circle">
+
+VS
+
+</div>
+
+<div class="battle-idea-card">
+
+<h3>
+⚡ Idea 2
+</h3>
+
+<p>
+{{ idea2 }}
+</p>
+
+</div>
+
+</div>
+
+<!-- TABLE -->
+
+<div class="compare-table">
+
+<div class="compare-header">
+
+<div>
+Idea 1
+</div>
+
+<div>
+Category
+</div>
+
+<div>
+Idea 2
+</div>
+
+</div>
+
+<div class="compare-row">
+
+<div>
+{{ result.idea1_strength }}
+</div>
+
+<div>
+💪 Strength
+</div>
+
+<div>
+{{ result.idea2_strength }}
+</div>
+
+</div>
+
+<div class="compare-row">
+
+<div>
+{{ result.idea1_weakness }}
+</div>
+
+<div>
+⚠ Weakness
+</div>
+
+<div>
+{{ result.idea2_weakness }}
+</div>
+
+</div>
+
+<div class="compare-row">
+
+<div>
+{{ result.idea1_market }}
+</div>
+
+<div>
+📈 Market
+</div>
+
+<div>
+{{ result.idea2_market }}
+</div>
+
+</div>
+
+<div class="compare-row">
+
+<div>
+{{ result.idea1_risk }}
+</div>
+
+<div>
+⚠ Risk
+</div>
+
+<div>
+{{ result.idea2_risk }}
+</div>
+
+</div>
+
+<div class="compare-row">
+
+<div>
+{{ result.idea1_business }}
+</div>
+
+<div>
+💰 Business
+</div>
+
+<div>
+{{ result.idea2_business }}
+</div>
+
+</div>
+
+</div>
+
+<!-- BOTTOM -->
+
+<div class="battle-main-grid">
+
+<div class="card">
+
+<h3>
+
+⚔️ AI Comparison
+
+</h3>
+
+<p class="mt-4">
+
+{{ result.comparison }}
+
+</p>
+
+</div>
+
+<div class="winner-card">
+
+<div class="winner-trophy">
+
+🏆
+
+</div>
+
+<div class="winner-tag">
+
+WINNER
+
+</div>
+
+<h1>
+
+{{ result.winner }}
+
+</h1>
+
+</div>
+
+</div>
+
+<div class="battle-recommendation">
+
+<div class="battle-rec-icon">
+
+✅
+
+</div>
+
+<div>
+
+<h3>
+
+Final Recommendation
+
+</h3>
+
+<p>
+
+{{ result.recommendation }}
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</body>
+</html>

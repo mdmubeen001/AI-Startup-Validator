@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>
+
+History
+
+</title>
+
+<link rel="stylesheet"
+href="{% static 'css/style.css' %}">
+
+</head>
+
+<body>
+
+<nav class="navbar">
+
+<div class="container navbar__inner">
+
+<a href="/"
+class="navbar__brand">
+
+<div class="navbar__logo">
+
+AI
+
+</div>
+
+Startup <span>Validator</span>
+
+</a>
+
+<div class="navbar__nav">
+
+<a href="/"
+class="navbar__link">
+
+Home
+
+</a>
+
+<a href="/history/"
+class="navbar__link navbar__link--active">
+
+History
+
+</a>
+
+</div>
+
+</div>
+
+</nav>
+
+<section class="section">
+
+<div class="container">
+
+<div class="section__header">
+
+<div class="hero__badge">
+
+📂 REPORT HISTORY
+
+</div>
+
+<h1 class="section__title">
+
+Startup Analysis History
+
+</h1>
+
+<p class="section__description">
+
+Previously analyzed startup ideas
+
+</p>
+
+</div>
+
+<div class="grid grid--2 gap-6">
+
+{% for idea in ideas %}
+
+<div class="card">
+
+<h3 class="card__title">
+
+{{ idea.title }}
+
+</h3>
+
+<p class="text-secondary">
+
+{{ idea.industry }}
+
+</p>
+
+<p class="mt-4">
+
+{{ idea.description|truncatechars:120 }}
+
+</p>
+
+<div class="mt-6">
+
+<a
+href="/history/{{ idea.id }}/"
+class="btn btn--primary">
+
+View Report
+
+</a>
+
+</div>
+
+</div>
+
+{% empty %}
+
+<div class="card">
+
+No startup reports yet.
+
+</div>
+
+{% endfor %}
+
+</div>
+
+</div>
+
+</section>
+
+</body>
+</html>

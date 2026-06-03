@@ -43,6 +43,16 @@ class="navbar__link navbar__link--active">
 Results
 </a>
 
+<a href="/compare/"
+class="navbar__link">
+Compare Ideas
+</a>
+
+<a href="/history/"
+class="navbar__link">
+History
+</a>
+
 </div>
 
 <div class="navbar__actions">
@@ -100,6 +110,48 @@ AI-powered evaluation of your startup idea.
 {{ analysis.score }}
 
 </div>
+
+<div class="score-progress">
+
+<div
+class="score-progress-fill"
+
+style="
+width:
+{{ analysis.score|slice:':1' }}0%;
+">
+
+</div>
+
+</div>
+
+<p class="score-percent">
+
+<div class="score-message">
+
+{% if analysis.score >= 9 %}
+
+🟢 Excellent Startup Idea
+
+{% elif analysis.score >= 7 %}
+
+🔵 Strong Business Potential
+
+{% elif analysis.score >= 5 %}
+
+🟡 Moderate Opportunity
+
+{% else %}
+
+🔴 High Risk Startup
+
+{% endif %}
+
+</div>    
+
+{{ analysis.score }}/10
+
+</p>
 
 <div class="score-badge__label">
 
@@ -207,7 +259,174 @@ Description
 </div>
 
 </section>
+<!-- BUSINESS CHART -->
 
+<section class="section">
+
+<div class="container">
+
+<div class="card">
+
+<div class="card__header">
+
+<div class="card__icon">
+
+📊
+
+</div>
+
+<div>
+
+<h2 class="card__title">
+
+Business Analysis Score
+
+</h2>
+
+<p class="text-secondary">
+
+AI visual startup evaluation
+
+</p>
+
+</div>
+
+</div>
+
+<div class="chart-box">
+
+<div class="chart-row">
+
+<span>
+
+Strength
+
+</span>
+
+<div class="chart-bar">
+
+<div
+class="chart-fill strength">
+
+</div>
+
+</div>
+
+<span>
+
+8/10
+
+</span>
+
+</div>
+
+<div class="chart-row">
+
+<span>
+
+Market
+
+</span>
+
+<div class="chart-bar">
+
+<div
+class="chart-fill market">
+
+</div>
+
+</div>
+
+<span>
+
+7/10
+
+</span>
+
+</div>
+
+<div class="chart-row">
+
+<span>
+
+Business
+
+</span>
+
+<div class="chart-bar">
+
+<div
+class="chart-fill business">
+
+</div>
+
+</div>
+
+<span>
+
+8/10
+
+</span>
+
+</div>
+
+<div class="chart-row">
+
+<span>
+
+Scalability
+
+</span>
+
+<div class="chart-bar">
+
+<div
+class="chart-fill scale">
+
+</div>
+
+</div>
+
+<span>
+
+9/10
+
+</span>
+
+</div>
+
+<div class="chart-row">
+
+<span>
+
+Risk
+
+</span>
+
+<div class="chart-bar">
+
+<div
+class="chart-fill risk">
+
+</div>
+
+</div>
+
+<span>
+
+5/10
+
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
 <!-- SWOT -->
 <section class="section">
 
@@ -216,6 +435,98 @@ Description
 <div class="section__header">
 
 <div class="section__eyebrow">
+
+<!-- SWOT PIE CHART -->
+
+<section class="section">
+
+<div class="container">
+
+<div class="card">
+
+<div class="card__header">
+
+<div class="card__icon">
+
+🥧
+
+</div>
+
+<div>
+
+<h2 class="card__title">
+
+SWOT Distribution
+
+</h2>
+
+<p class="text-secondary">
+
+AI startup analysis overview
+
+</p>
+
+</div>
+
+</div>
+
+<div class="pie-wrapper">
+
+<div class="pie-chart">
+
+</div>
+
+<div class="pie-legend">
+
+<div>
+
+<span class="legend-color strength-c">
+
+</span>
+
+Strength
+
+</div>
+
+<div>
+
+<span class="legend-color weakness-c">
+
+</span>
+
+Weakness
+
+</div>
+
+<div>
+
+<span class="legend-color opportunity-c">
+
+</span>
+
+Opportunity
+
+</div>
+
+<div>
+
+<span class="legend-color threat-c">
+
+</span>
+
+Threat
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
 
 ANALYSIS
 
@@ -568,6 +879,102 @@ Funding Estimate
 <p class="mt-4">
 
 {{ analysis.funding }}
+
+</p>
+
+</div>
+
+<!-- TAM SAM SOM -->
+
+<div class="card">
+
+<div class="card__header">
+
+<div class="card__icon">
+
+🌍
+
+</div>
+
+<div>
+
+<h3 class="card__title">
+
+Market Breakdown
+
+</h3>
+
+</div>
+
+</div>
+
+<p class="mt-4">
+
+{{ analysis.tam_sam_som }}
+
+</p>
+
+</div>
+
+<!-- NAME SUGGESTIONS -->
+
+<div class="card">
+
+<div class="card__header">
+
+<div class="card__icon">
+
+✨
+
+</div>
+
+<div>
+
+<h3 class="card__title">
+
+Startup Name Ideas
+
+</h3>
+
+</div>
+
+</div>
+
+<p class="mt-4">
+
+{{ analysis.name_suggestions }}
+
+</p>
+
+</div>
+
+<!-- TAGLINE -->
+
+<div class="card">
+
+<div class="card__header">
+
+<div class="card__icon">
+
+🏷️
+
+</div>
+
+<div>
+
+<h3 class="card__title">
+
+Brand Tagline
+
+</h3>
+
+</div>
+
+</div>
+
+<p class="mt-4">
+
+{{ analysis.tagline }}
 
 </p>
 

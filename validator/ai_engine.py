@@ -28,6 +28,9 @@ Also provide:
 - A short investor pitch summary
 - Startup risk level with reasoning
 - Estimated startup funding requirement
+- TAM SAM SOM market breakdown
+- 3 startup name suggestions
+- A short startup tagline
 
 Return ONLY valid JSON.
 
@@ -45,7 +48,10 @@ Use concise business analysis.
     "business_model":"Suggested revenue/business model",
     "pitch":"Short investor pitch summary",
     "risk":"Startup risk level and reason",
-    "funding":"Estimated startup funding requirement"
+    "funding":"Estimated startup funding requirement",
+    "tam_sam_som":"TAM SAM SOM market breakdown",
+    "name_suggestions":"3 startup name suggestions",
+    "tagline":"Short startup tagline"
 }}
 
 Also estimate startup risk level
@@ -98,5 +104,84 @@ Rules:
             "business_model": "",
             "pitch": "",
             "risk": "",
-            "funding": ""
+            "funding": "",
+            "tam_sam_som": "",
+            "name_suggestions": "",
+            "tagline": ""
         }
+    
+
+def compare_ideas(
+
+    idea1,
+    idea2
+):
+
+    prompt = f"""
+You are a startup analyst.
+
+Compare these startup ideas.
+
+Analyze BOTH ideas separately first.
+
+Then compare professionally.
+
+Idea 1:
+{idea1}
+
+Idea 2:
+{idea2}
+
+Return ONLY valid JSON.
+{{
+    "winner":"Idea 1 or Idea 2",
+
+    "idea1_strength":"2-3 strong points",
+    "idea1_weakness":"2-3 weak points",
+    "idea1_market":"Market opportunity and target users",
+    "idea1_risk":"Execution and competition risks",
+    "idea1_business":"Revenue and business model",
+
+    "idea2_strength":"2-3 strong points",
+    "idea2_weakness":"2-3 weak points",
+    "idea2_market":"Market opportunity and target users",
+    "idea2_risk":"Execution and competition risks",
+    "idea2_business":"Revenue and business model",
+
+    "comparison":"Professional startup comparison with clear reasoning",
+
+    "recommendation":"Investor-style final recommendation"
+}}
+Rules:
+- Only JSON
+- No markdown
+- Professional startup analysis
+- Separate detailed analysis for both ideas
+- Each field should contain 2-3 concise business points
+- Clear and investor-style language
+"""
+
+    response = client.chat.completions.create(
+
+        model="llama-3.3-70b-versatile",
+
+        messages=[
+            {
+                "role":"user",
+                "content":prompt
+            }
+        ]
+    )
+
+    result = response.choices[
+        0
+    ].message.content
+
+    cleaned = (
+        result
+        .replace("```json","")
+        .replace("```","")
+        .strip()
+    )
+
+    return json.loads(cleaned)
