@@ -4,10 +4,12 @@ from .models import StartupIdea
 from .ai_engine import analyze_idea
 from django.http import FileResponse
 from .pdf_generator import generate_pdf
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     return render(request, 'home.html')
 
+@login_required
 def idea_form(request):
 
     if request.method == 'POST':
@@ -22,6 +24,7 @@ def idea_form(request):
 
             # Save the idea to the database
             startup_idea = StartupIdea(
+                user=request.user,
                 title=title,
                 industry=industry,
                 description=description
