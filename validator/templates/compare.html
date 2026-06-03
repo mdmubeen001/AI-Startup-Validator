@@ -1,0 +1,87 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>
+
+Compare Ideas
+
+</title>
+
+<link rel="stylesheet"
+href="{% static 'css/style.css' %}">
+
+</head>
+
+<body>
+
+<section class="section section--lg">
+
+<div class="container">
+
+<div class="card p-8">
+
+<h1 class="section__title">
+
+Compare Startup Ideas
+
+</h1>
+
+<p class="section__description">
+
+AI will compare two ideas.
+
+</p>
+
+<form
+method="POST"
+class="form">
+
+{% csrf_token %}
+
+<h3>
+
+Idea 1
+
+</h3>
+
+<textarea
+name="idea1"
+rows="4"
+required>
+
+</textarea>
+
+<h3 class="mt-6">
+
+Idea 2
+
+</h3>
+
+<textarea
+name="idea2"
+rows="4"
+required>
+
+</textarea>
+
+<button
+type="submit"
+class="btn btn--primary mt-6">
+
+Compare Ideas
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</section>
+
+</body>
+</html>
