@@ -24,6 +24,7 @@ def idea_form(request):
 
             # Save the idea to the database
             startup_idea = StartupIdea(
+                user=request.user,
                 title=title,
                 industry=industry,
                 description=description

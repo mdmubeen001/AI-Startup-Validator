@@ -76,3 +76,5 @@ Rules:
             "competitors": "",
             "score": ""
         }
+    
+    print("API KEY:", os.getenv("GROQ_API_KEY"))
