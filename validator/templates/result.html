@@ -1,77 +1,14 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-    content="width=device-width, initial-scale=1.0">
 
-    <title>
-        Analysis Report
-    </title>
-
-    <link rel="stylesheet"
-    href="{% static 'css/style.css' %}">
-</head>
-<body>
-
-<!-- NAVBAR -->
-<nav class="navbar">
-
-<div class="container navbar__inner">
-
-<a href="/"
-class="navbar__brand">
-
-<div class="navbar__logo">
-AI
-</div>
-
-Startup <span>Validator</span>
-
-</a>
-
-<div class="navbar__nav">
-
-<a href="/"
-class="navbar__link">
-Home
-</a>
-
-<a href="/idea/"
-class="navbar__link navbar__link--active">
-Results
-</a>
-
-<a href="/compare/"
-class="navbar__link">
-Compare Ideas
-</a>
-
-<a href="/history/"
-class="navbar__link">
-History
-</a>
-
-</div>
-
-<div class="navbar__actions">
-
+{% block topbar_actions %}
 <a href="/download/"
-class="btn btn--primary">
-
+class="btn btn--primary btn--sm">
 Download PDF
-
 </a>
+{% endblock %}
 
-</div>
-
-</div>
-
-</nav>
-
-<main>
-
+{% block content %}
 <!-- HERO HEADER -->
 <section class="section section--sm">
 
@@ -1013,38 +950,22 @@ Download PDF Report
 
 </section>
 
-</main>
-
 <!-- FOOTER -->
 <footer class="footer">
-
 <div class="container">
-
 <div class="footer__bottom">
-
 <p class="footer__copy">
-
 © 2026 AI Startup Validator
-
 </p>
-
 <div class="footer__legal">
-
 <a href="#">
 Privacy
 </a>
-
 <a href="#">
 Terms
 </a>
-
 </div>
-
 </div>
-
 </div>
-
 </footer>
-
-</body>
-</html>
+{% endblock %}

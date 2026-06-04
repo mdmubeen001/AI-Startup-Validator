@@ -1,22 +1,11 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html>
-<head>
+{% block page_title %}
+<h2 class="text-lg fw-bold mb-0">Compare Ideas</h2>
+{% endblock %}
 
-<title>
-
-Compare Ideas
-
-</title>
-
-<link rel="stylesheet"
-href="{% static 'css/style.css' %}">
-
-</head>
-
-<body>
-
+{% block content %}
 <section class="section section--lg">
 
 <div class="container">
@@ -82,6 +71,4 @@ Compare Ideas
 </div>
 
 </section>
-
-</body>
-</html>
+{% endblock %}

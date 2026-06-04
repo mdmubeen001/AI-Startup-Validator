@@ -202,7 +202,7 @@ def download_pdf(request):
 
 def history_view(request):
 
-    ideas = StartupIdea.objects.all().order_by(
+    ideas = StartupIdea.objects.filter(user=request.user).order_by(
         '-id'
     )
 

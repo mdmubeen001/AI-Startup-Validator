@@ -1,56 +1,11 @@
+{% extends 'base.html' %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
 
-<meta charset="UTF-8">
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+{% block page_title %}
+<h2 class="text-lg fw-bold mb-0">Battle Results</h2>
+{% endblock %}
 
-<title>
-Startup Battle
-</title>
-
-<link rel="stylesheet"
-href="{% static 'css/style.css' %}">
-
-</head>
-
-<body>
-
-<nav class="navbar">
-
-<div class="container navbar__inner">
-
-<a href="/"
-class="navbar__brand">
-
-<div class="navbar__logo">
-AI
-</div>
-
-Startup <span>Validator</span>
-
-</a>
-
-<div class="navbar__nav">
-
-<a href="/"
-class="navbar__link">
-Home
-</a>
-
-<a href="/compare/"
-class="navbar__link navbar__link--active">
-Compare Ideas
-</a>
-
-</div>
-
-</div>
-
-</nav>
-
+{% block content %}
 <section class="battle-section">
 
 <div class="container">
@@ -290,6 +245,4 @@ Final Recommendation
 </div>
 
 </section>
-
-</body>
-</html>
+{% endblock %}
