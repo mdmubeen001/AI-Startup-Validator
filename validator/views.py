@@ -288,7 +288,7 @@ def download_pdf(request, idea_id):
         "tagline": idea.tagline
     }
 
-    filename = "media/report.pdf"
+    filename = "/tmp/report.pdf"
 
     generate_pdf(data, filename)
 
