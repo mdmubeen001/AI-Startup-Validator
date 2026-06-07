@@ -76,6 +76,81 @@ def _safe_str(val, fallback="N/A"):
     return s if s else fallback
 
 
+def _parse_json(val, fallback=None):
+    """Safely parse JSON from string, return fallback if fails."""
+    if val is None:
+        return fallback
+    if isinstance(val, (dict, list)):
+        return val
+    try:
+        import json
+        return json.loads(str(val))
+    except Exception:
+        return fallback
+
+
+def _parse_tam_sam_som(val, fallback=None):
+    """Parse tam_sam_som, handling both JSON and old 'TAM:x,SAM:y,SOM:z' format."""
+    if val is None:
+        return fallback or {"tam": "N/A", "sam": "N/A", "som": "N/A"}
+    if isinstance(val, dict):
+        return val
+    try:
+        import json
+        parsed = json.loads(str(val))
+        if isinstance(parsed, dict):
+            return parsed
+    except Exception:
+        pass
+    # Try old comma-separated format: "TAM:$10B,SAM:$1B,SOM:$100M"
+    result = {"tam": "N/A", "sam": "N/A", "som": "N/A"}
+    try:
+        parts = str(val).split(",")
+        for part in parts:
+            part = part.strip()
+            if ":" in part:
+                k, v = part.split(":", 1)
+                k = k.strip().lower()
+                v = v.strip()
+                if k in ["tam", "sam", "som"]:
+                    result[k] = v
+    except Exception:
+        pass
+    return result
+
+
+def _parse_competitors(val, fallback=None):
+    """Parse competitors, handling JSON list or plain text."""
+    if val is None:
+        return fallback or []
+    if isinstance(val, list):
+        return val
+    parsed = _parse_json(val)
+    if isinstance(parsed, list):
+        return parsed
+    # If plain text, split into lines or single item
+    val_str = str(val).strip()
+    if val_str:
+        return [{"name": "Competitor", "description": val_str}]
+    return []
+
+
+def _parse_list_or_text(val, fallback=None):
+    """Parse a value that could be JSON list or plain text."""
+    if val is None:
+        return fallback or []
+    if isinstance(val, list):
+        return val
+    parsed = _parse_json(val)
+    if isinstance(parsed, list):
+        return parsed
+    # If plain text, return as single-item list
+    val_str = str(val).strip()
+    if val_str:
+        return [val_str]
+    return fallback or []
+
+
 def _bullet_paragraphs(items, style):
     """Convert a list of strings to bullet Paragraphs."""
     paras = []
@@ -609,6 +684,8 @@ def _build_swot(analysis_data: dict, styles: dict) -> list:
     story += _section_header("SWOT Analysis", styles)
 
     swot = analysis_data.get("swot_analysis", {})
+    # Ensure swot is dict
+    swot = _parse_json(swot, {}) if not isinstance(swot, dict) else swot
     if not isinstance(swot, dict):
         story.append(Paragraph(_safe_str(swot), styles["body"]))
         return story
@@ -623,8 +700,7 @@ def _build_swot(analysis_data: dict, styles: dict) -> list:
     cells = []
     for key, (icon, label, bg, accent) in icons.items():
         items = swot.get(key, swot.get(key.capitalize(), []))
-        if isinstance(items, str):
-            items = [items]
+        items = _parse_list_or_text(items, [])
 
         header_para = Paragraph(
             f'<font color="{accent.hexval()}"><b>{icon} {label}</b></font>',
@@ -672,6 +748,9 @@ def _build_market_analysis(analysis_data: dict, styles: dict) -> list:
     story += _section_header("Market Analysis", styles)
 
     market = analysis_data.get("market_analysis", "")
+    # Try to parse as JSON if string
+    if not isinstance(market, (dict, str)):
+        market = _safe_str(market)
     if isinstance(market, dict):
         for k, v in market.items():
             story.append(Paragraph(k.replace("_", " ").title(), styles["sub_heading"]))
@@ -680,32 +759,31 @@ def _build_market_analysis(analysis_data: dict, styles: dict) -> list:
         story.append(Paragraph(_safe_str(market), styles["body"]))
 
     # TAM / SAM / SOM
-    tam_data = analysis_data.get("tam_sam_som", {})
-    if tam_data and isinstance(tam_data, dict):
-        story.append(Spacer(1, 8))
-        story.append(Paragraph("Market Sizing", styles["sub_heading"]))
-        rows = []
-        for label in ["TAM", "SAM", "SOM"]:
-            key = label.lower()
-            val = tam_data.get(key) or tam_data.get(label, "N/A")
-            rows.append([label, _safe_str(val)])
+    tam_data = _parse_tam_sam_som(analysis_data.get("tam_sam_som", {}))
+    story.append(Spacer(1, 8))
+    story.append(Paragraph("Market Sizing", styles["sub_heading"]))
+    rows = []
+    for label in ["TAM", "SAM", "SOM"]:
+        key = label.lower()
+        val = tam_data.get(key) or tam_data.get(label, "N/A")
+        rows.append([label, _safe_str(val)])
 
-        tam_table = Table(rows, colWidths=[3 * cm, 13.5 * cm])
-        tam_table.setStyle(TableStyle([
-            ("BACKGROUND",    (0, 0), (0, -1), DARK_NAVY),
-            ("BACKGROUND",    (1, 0), (1, -1), colors.white),
-            ("ROWBACKGROUNDS",(1, 0), (1, -1), [LIGHT_GREY, colors.white]),
-            ("TEXTCOLOR",     (0, 0), (0, -1), colors.white),
-            ("FONTNAME",      (0, 0), (0, -1), "Helvetica-Bold"),
-            ("FONTNAME",      (1, 0), (1, -1), "Helvetica"),
-            ("FONTSIZE",      (0, 0), (-1, -1), 10),
-            ("TOPPADDING",    (0, 0), (-1, -1), 7),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 7),
-            ("LEFTPADDING",   (0, 0), (-1, -1), 10),
-            ("BOX",           (0, 0), (-1, -1), 1, RULE_GREY),
-            ("INNERGRID",     (0, 0), (-1, -1), 0.5, RULE_GREY),
-        ]))
-        story.append(tam_table)
+    tam_table = Table(rows, colWidths=[3 * cm, 13.5 * cm])
+    tam_table.setStyle(TableStyle([
+        ("BACKGROUND",    (0, 0), (0, -1), DARK_NAVY),
+        ("BACKGROUND",    (1, 0), (1, -1), colors.white),
+        ("ROWBACKGROUNDS",(1, 0), (1, -1), [LIGHT_GREY, colors.white]),
+        ("TEXTCOLOR",     (0, 0), (0, -1), colors.white),
+        ("FONTNAME",      (0, 0), (0, -1), "Helvetica-Bold"),
+        ("FONTNAME",      (1, 0), (1, -1), "Helvetica"),
+        ("FONTSIZE",      (0, 0), (-1, -1), 10),
+        ("TOPPADDING",    (0, 0), (-1, -1), 7),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 7),
+        ("LEFTPADDING",   (0, 0), (-1, -1), 10),
+        ("BOX",           (0, 0), (-1, -1), 1, RULE_GREY),
+        ("INNERGRID",     (0, 0), (-1, -1), 0.5, RULE_GREY),
+    ]))
+    story.append(tam_table)
 
     story.append(Spacer(1, 14))
     return story
@@ -715,46 +793,43 @@ def _build_competitors(analysis_data: dict, styles: dict) -> list:
     story = []
     story += _section_header("Competitive Landscape", styles)
 
-    competitors = analysis_data.get("competitors", [])
+    competitors = _parse_competitors(analysis_data.get("competitors", []))
     if not competitors:
         story.append(Paragraph("No competitor data available.", styles["body"]))
         story.append(Spacer(1, 14))
         return story
 
-    if isinstance(competitors, list):
-        rows = [["#", "Competitor", "Notes"]]
-        for i, comp in enumerate(competitors, 1):
-            if isinstance(comp, dict):
-                name  = _safe_str(comp.get("name") or comp.get("competitor"))
-                notes = _safe_str(comp.get("description") or comp.get("notes") or "—")
-            else:
-                name  = _safe_str(comp)
-                notes = "—"
-            rows.append([
-            str(i),
-            Paragraph(name, styles["body"]),
-            Paragraph(notes, styles["body"])
-            ])
+    rows = [["#", "Competitor", "Notes"]]
+    for i, comp in enumerate(competitors, 1):
+        if isinstance(comp, dict):
+            name  = _safe_str(comp.get("name") or comp.get("competitor"))
+            notes = _safe_str(comp.get("description") or comp.get("notes") or "—")
+        else:
+            name  = _safe_str(comp)
+            notes = "—"
+        rows.append([
+        str(i),
+        Paragraph(name, styles["body"]),
+        Paragraph(notes, styles["body"])
+        ])
 
-        col_w = [1 * cm, 3.5 * cm, 12 * cm]
-        comp_table = Table(rows, colWidths=col_w, repeatRows=1)
-        comp_table.setStyle(TableStyle([
-            ("BACKGROUND",    (0, 0), (-1, 0), DARK_NAVY),
-            ("TEXTCOLOR",     (0, 0), (-1, 0), colors.white),
-            ("FONTNAME",      (0, 0), (-1, 0), "Helvetica-Bold"),
-            ("FONTSIZE",      (0, 0), (-1, -1), 9.5),
-            ("ROWBACKGROUNDS",(0, 1), (-1, -1), [colors.white, LIGHT_GREY]),
-            ("TOPPADDING",    (0, 0), (-1, -1), 6),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
-            ("LEFTPADDING",   (0, 0), (-1, -1), 8),
-            ("BOX",           (0, 0), (-1, -1), 1, RULE_GREY),
-            ("INNERGRID",     (0, 0), (-1, -1), 0.4, RULE_GREY),
-            ("ALIGN",         (0, 0), (0, -1), "CENTER"),
-            ("VALIGN", (0,0), (-1,-1), "TOP"),
-        ]))
-        story.append(comp_table)
-    else:
-        story.append(Paragraph(_safe_str(competitors), styles["body"]))
+    col_w = [1 * cm, 3.5 * cm, 12 * cm]
+    comp_table = Table(rows, colWidths=col_w, repeatRows=1)
+    comp_table.setStyle(TableStyle([
+        ("BACKGROUND",    (0, 0), (-1, 0), DARK_NAVY),
+        ("TEXTCOLOR",     (0, 0), (-1, 0), colors.white),
+        ("FONTNAME",      (0, 0), (-1, 0), "Helvetica-Bold"),
+        ("FONTSIZE",      (0, 0), (-1, -1), 9.5),
+        ("ROWBACKGROUNDS",(0, 1), (-1, -1), [colors.white, LIGHT_GREY]),
+        ("TOPPADDING",    (0, 0), (-1, -1), 6),
+        ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
+        ("LEFTPADDING",   (0, 0), (-1, -1), 8),
+        ("BOX",           (0, 0), (-1, -1), 1, RULE_GREY),
+        ("INNERGRID",     (0, 0), (-1, -1), 0.4, RULE_GREY),
+        ("ALIGN",         (0, 0), (0, -1), "CENTER"),
+        ("VALIGN", (0,0), (-1,-1), "TOP"),
+    ]))
+    story.append(comp_table)
 
     story.append(Spacer(1, 14))
     return story
@@ -767,9 +842,11 @@ def _build_business_strategy(analysis_data: dict, styles: dict) -> list:
     model   = _safe_str(analysis_data.get("business_model"))
     funding = _safe_str(analysis_data.get("funding_requirement") or
                         analysis_data.get("funding_requirements"))
-    risks   = analysis_data.get("risk_analysis", [])
-    improvements = analysis_data.get("improvement_suggestions") or \
-                   analysis_data.get("improvements", [])
+    risks   = _parse_list_or_text(analysis_data.get("risk_analysis", []))
+    improvements = _parse_list_or_text(
+        analysis_data.get("improvement_suggestions") or \
+        analysis_data.get("improvements", [])
+    )
 
     if model and model != "N/A":
         story.append(Paragraph("Business Model", styles["sub_heading"]))
@@ -781,17 +858,11 @@ def _build_business_strategy(analysis_data: dict, styles: dict) -> list:
 
     if risks:
         story.append(Paragraph("Risk Analysis", styles["sub_heading"]))
-        if isinstance(risks, list):
-            story += _bullet_paragraphs(risks, styles["bullet"])
-        else:
-            story.append(Paragraph(_safe_str(risks), styles["body"]))
+        story += _bullet_paragraphs(risks, styles["bullet"])
 
     if improvements:
         story.append(Paragraph("Improvement Suggestions", styles["sub_heading"]))
-        if isinstance(improvements, list):
-            story += _bullet_paragraphs(improvements, styles["bullet"])
-        else:
-            story.append(Paragraph(_safe_str(improvements), styles["body"]))
+        story += _bullet_paragraphs(improvements, styles["bullet"])
 
     story.append(Spacer(1, 14))
     return story
@@ -830,44 +901,59 @@ def _build_branding(analysis_data: dict, styles: dict) -> list:
     tagline     = _safe_str(analysis_data.get("tagline"))
 
     if suggestions:
+        # Handle suggestions: could be JSON list or comma-separated string
         if isinstance(suggestions, str):
-            suggestions = [s.strip() for s in suggestions.split(",") if s.strip()]
+            # Try parsing as JSON first
+            parsed = _parse_json(suggestions)
+            if isinstance(parsed, list):
+                suggestions = parsed
+            else:
+                # Try comma-separated
+                suggestions = [s.strip() for s in suggestions.split(",") if s.strip()]
+        
+        # Ensure it's a list
+        if not isinstance(suggestions, list):
+            suggestions = [str(suggestions)]
+        
+        # Filter out empty
+        suggestions = [s for s in suggestions if str(s).strip()]
+        
+        if suggestions:
+            story.append(Paragraph("Startup Name Suggestions", styles["sub_heading"]))
+            cards = []
+            for name in suggestions[:6]:
+                card_para = [
+                    Paragraph(_safe_str(name), styles["card_value"]),
+                    Paragraph("Suggested Name", styles["card_label"]),
+                ]
+                card = Table([[card_para]], colWidths=[4.8 * cm])
+                card.setStyle(TableStyle([
+                    ("BACKGROUND",    (0, 0), (-1, -1), LIGHT_BLUE),
+                    ("BOX",           (0, 0), (-1, -1), 1, ACCENT_BLUE),
+                    ("TOPPADDING",    (0, 0), (-1, -1), 10),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 10),
+                    ("LEFTPADDING",   (0, 0), (-1, -1), 6),
+                    ("RIGHTPADDING",  (0, 0), (-1, -1), 6),
+                    ("ALIGN",         (0, 0), (-1, -1), "CENTER"),
+                ]))
+                cards.append(card)
 
-        story.append(Paragraph("Startup Name Suggestions", styles["sub_heading"]))
-        cards = []
-        for name in suggestions[:6]:
-            card_para = [
-                Paragraph(_safe_str(name), styles["card_value"]),
-                Paragraph("Suggested Name", styles["card_label"]),
-            ]
-            card = Table([[card_para]], colWidths=[4.8 * cm])
-            card.setStyle(TableStyle([
-                ("BACKGROUND",    (0, 0), (-1, -1), LIGHT_BLUE),
-                ("BOX",           (0, 0), (-1, -1), 1, ACCENT_BLUE),
-                ("TOPPADDING",    (0, 0), (-1, -1), 10),
-                ("BOTTOMPADDING", (0, 0), (-1, -1), 10),
-                ("LEFTPADDING",   (0, 0), (-1, -1), 6),
-                ("RIGHTPADDING",  (0, 0), (-1, -1), 6),
-                ("ALIGN",         (0, 0), (-1, -1), "CENTER"),
+            # Fill to 3-per-row
+            per_row = 3
+            while len(cards) % per_row != 0:
+                cards.append(Spacer(4.8 * cm, 1))
+
+            rows_data = [cards[i:i + per_row] for i in range(0, len(cards), per_row)]
+            names_table = Table(rows_data,
+                                colWidths=[5.5 * cm] * per_row)
+            names_table.setStyle(TableStyle([
+                ("LEFTPADDING",   (0, 0), (-1, -1), 4),
+                ("RIGHTPADDING",  (0, 0), (-1, -1), 4),
+                ("TOPPADDING",    (0, 0), (-1, -1), 4),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
             ]))
-            cards.append(card)
-
-        # Fill to 3-per-row
-        per_row = 3
-        while len(cards) % per_row != 0:
-            cards.append(Spacer(4.8 * cm, 1))
-
-        rows_data = [cards[i:i + per_row] for i in range(0, len(cards), per_row)]
-        names_table = Table(rows_data,
-                            colWidths=[5.5 * cm] * per_row)
-        names_table.setStyle(TableStyle([
-            ("LEFTPADDING",   (0, 0), (-1, -1), 4),
-            ("RIGHTPADDING",  (0, 0), (-1, -1), 4),
-            ("TOPPADDING",    (0, 0), (-1, -1), 4),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
-        ]))
-        story.append(names_table)
-        story.append(Spacer(1, 10))
+            story.append(names_table)
+            story.append(Spacer(1, 10))
 
     if tagline and tagline != "N/A":
         story.append(Paragraph("Brand Tagline", styles["sub_heading"]))

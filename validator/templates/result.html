@@ -2,8 +2,10 @@
 {% load static %}
 
 {% block topbar_actions %}
-<a href="/download/" class="report-btn report-btn-primary">Download PDF</a>
-{% endblock %}
+<a href="{% url 'download_pdf' idea_id %}"
+   class="report-btn report-btn-primary">
+    Download PDF
+</a>{% endblock %}
 
 {% block content %}
 <div class="result-redesign">
@@ -199,7 +201,20 @@
           </div>
           <h3 class="result-card-title">Competitor Analysis</h3>
         </div>
-        <p class="result-card-text">{{ analysis.competitors }}</p>
+        <div class="result-card-content">
+          {% if analysis.competitors %}
+            <ul class="competitors-list">
+              {% for comp in analysis.competitors %}
+                <li class="competitor-item">
+                  <strong class="competitor-name">{{ comp.name|default:"Not Available" }}</strong>
+                  <p class="competitor-desc">{{ comp.description|default:"Not Available" }}</p>
+                </li>
+              {% endfor %}
+            </ul>
+          {% else %}
+            <p class="result-card-text">No competitor data available.</p>
+          {% endif %}
+        </div>
       </div>
     </div>
 
@@ -272,7 +287,32 @@
           </div>
           <h3 class="result-card-title">Market Breakdown</h3>
         </div>
-        <p class="result-card-text">{{ analysis.tam_sam_som }}</p>
+        <div class="result-card-content">
+          {% if analysis.tam_sam_som %}
+            <div class="market-breakdown">
+              {% if analysis.tam_sam_som.tam %}
+                <div class="market-item">
+                  <span class="market-label">TAM</span>
+                  <span class="market-value">{{ analysis.tam_sam_som.tam }}</span>
+                </div>
+              {% endif %}
+              {% if analysis.tam_sam_som.sam %}
+                <div class="market-item">
+                  <span class="market-label">SAM</span>
+                  <span class="market-value">{{ analysis.tam_sam_som.sam }}</span>
+                </div>
+              {% endif %}
+              {% if analysis.tam_sam_som.som %}
+                <div class="market-item">
+                  <span class="market-label">SOM</span>
+                  <span class="market-value">{{ analysis.tam_sam_som.som }}</span>
+                </div>
+              {% endif %}
+            </div>
+          {% else %}
+            <p class="result-card-text">No market breakdown data available.</p>
+          {% endif %}
+        </div>
       </div>
       <div class="result-card">
         <div class="result-card-header">
@@ -319,7 +359,10 @@
     <div class="result-cta">
       <h2 class="result-cta-title">Download Full Business Report</h2>
       <p class="result-cta-desc">Professional AI-generated PDF ready to share and present.</p>
-      <a href="/download/" class="report-btn report-btn-primary">Download PDF Report</a>
+      <a href="{% url 'download_pdf' idea_id %}"
+          class="report-btn report-btn-primary">
+           Download PDF Report
+      </a>    
     </div>
   </div>
 </div>

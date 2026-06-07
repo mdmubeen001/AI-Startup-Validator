@@ -3122,3 +3122,62 @@ ul, ol {
         font-size: 1.5rem;
     }
 }
+
+.competitors-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.competitor-item {
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.competitor-item:last-child {
+    border-bottom: none;
+}
+
+.competitor-name {
+    color: var(--primary);
+    font-size: 1rem;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+.competitor-desc {
+    color: var(--muted);
+    font-size: 0.9375rem;
+    margin: 0;
+    line-height: 1.5;
+}
+
+.market-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 0.5rem 0;
+}
+
+.market-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    background: var(--bg);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+}
+
+.market-label {
+    font-weight: 700;
+    color: var(--text);
+    font-size: 0.9375rem;
+}
+
+.market-value {
+    color: var(--primary);
+    font-weight: 600;
+    font-size: 1rem;
+}

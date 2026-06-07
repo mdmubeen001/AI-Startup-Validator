@@ -11,6 +11,5 @@ urlpatterns =  [
     path('history/<int:idea_id>/', views.history_detail, name='history_detail'),
     path('download/<int:idea_id>/', views.download_pdf, name='download_pdf'),
     path('history/<int:idea_id>/delete/', views.delete_idea, name='delete_idea'),
-    path('download/',views.download_pdf,name='download_pdf'),
 
 ]

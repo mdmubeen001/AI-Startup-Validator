@@ -126,7 +126,9 @@ def idea_form(request):
                 opportunities=analysis['opportunities'],
                 threats=analysis['threats'],
                 market=analysis['market'],
-                competitors=analysis['competitors'],
+                competitors=json.dumps(
+                analysis.get('competitors', [])
+                ),
                 score=analysis['score'],
 
                 improvements=analysis['improvements'],
@@ -134,7 +136,8 @@ def idea_form(request):
                 pitch=analysis['pitch'],
                 risk=analysis['risk'],
                 funding=analysis['funding'],
-                tam_sam_som=analysis['tam_sam_som'],
+              #  competitors=str(analysis['competitors']),
+                tam_sam_som=json.dumps(analysis.get('tam_sam_som', {})),
                 name_suggestions=analysis['name_suggestions'],
                 tagline=analysis['tagline']
             )
@@ -253,66 +256,41 @@ USP: {form.cleaned_data['second_usp']}"""
 
 
 @login_required
-def download_pdf(request):
+def download_pdf(request, idea_id):
 
     idea = get_object_or_404(
         StartupIdea,
         id=idea_id,
         user=request.user
     )
-    tam_data = ast.literal_eval(idea.tam_sam_som)
     
-    competitors_data = ast.literal_eval(idea.competitors)
-
+    # Let pdf_generator handle all parsing
     data = {
-    "startup_name": idea.title,
-    "industry": idea.industry,
-    "startup_description": idea.description,
-
-    "viability_score": float(idea.score),
-
-    "swot_analysis": {
-        "strengths": [idea.strengths],
-        "weaknesses": [idea.weaknesses],
-        "opportunities": [idea.opportunities],
-        "threats": [idea.threats]
-    },
-
-    "market_analysis": idea.market,
-
-    "competitors": competitors_data,
-
-    "business_model": idea.business_model,
-
-    "investor_pitch": idea.pitch,
-
-    "risk_analysis": [idea.risk],
-
-    "funding_requirement": idea.funding,
-
-    "improvement_suggestions": [idea.improvements],
-
-    "tam_sam_som": {
-        "tam": tam_data.get("tam", ""),
-        "sam": tam_data.get("sam", ""),
-        "som": tam_data.get("som", "")
-    },
-
-    "startup_name_suggestions": [
-        s.strip()
-        for s in str(idea.name_suggestions).split(",")
-        if s.strip()
-    ],
-
-    "tagline": idea.tagline
-}
+        "startup_name": idea.title,
+        "industry": idea.industry,
+        "startup_description": idea.description,
+        "viability_score": float(idea.score),
+        "swot_analysis": {
+            "strengths": idea.strengths,
+            "weaknesses": idea.weaknesses,
+            "opportunities": idea.opportunities,
+            "threats": idea.threats
+        },
+        "market_analysis": idea.market,
+        "competitors": idea.competitors,
+        "business_model": idea.business_model,
+        "investor_pitch": idea.pitch,
+        "risk_analysis": idea.risk,
+        "funding_requirement": idea.funding,
+        "improvement_suggestions": idea.improvements,
+        "tam_sam_som": idea.tam_sam_som,
+        "startup_name_suggestions": idea.name_suggestions,
+        "tagline": idea.tagline
+    }
 
     filename = "media/report.pdf"
 
-    generate_pdf(
-        data,
-        filename
-    )
+    generate_pdf(data, filename)
 
     return FileResponse(
         open(filename, 'rb'),
@@ -337,6 +315,16 @@ def history_view(request):
         }
     )
 
+def safe_parse_json(json_str, fallback):
+    """Safely parse JSON string, return fallback if invalid or not a string."""
+    if isinstance(json_str, (dict, list)):
+        return json_str
+    try:
+        return json.loads(str(json_str))
+    except (json.JSONDecodeError, TypeError):
+        return fallback
+
+
 @login_required
 def history_detail(
 
@@ -350,6 +338,12 @@ def history_detail(
         user=request.user
     )
 
+    # Parse competitors
+    competitors = safe_parse_json(idea.competitors, [])
+    
+    # Parse tam_sam_som
+    tam_sam_som = safe_parse_json(idea.tam_sam_som, {})
+
     analysis = {
 
     'strengths': idea.strengths,
@@ -357,7 +351,7 @@ def history_detail(
     'opportunities': idea.opportunities,
     'threats': idea.threats,
     'market': idea.market,
-    'competitors': idea.competitors,
+    'competitors': competitors,
     'score': idea.score,
 
     'improvements': idea.improvements,
@@ -365,7 +359,7 @@ def history_detail(
     'pitch': idea.pitch,
     'risk': idea.risk,
     'funding': idea.funding,
-    'tam_sam_som': idea.tam_sam_som,
+    'tam_sam_som': tam_sam_som,
     'name_suggestions': idea.name_suggestions,
     'tagline': idea.tagline
 }
