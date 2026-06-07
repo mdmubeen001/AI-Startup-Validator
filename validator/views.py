@@ -5,7 +5,12 @@ from .ai_engine import (analyze_idea, compare_ideas)
 from django.http import FileResponse
 from .pdf_generator import generate_pdf
 from django.contrib.auth.decorators import login_required
+
+import ast
+from django.shortcuts import get_object_or_404
+
 import json
+
 
 def home(request):
     return render(request, 'home.html')
@@ -140,6 +145,8 @@ def idea_form(request):
                 'report_data'
             ] = {
 
+                'id': startup_idea.id,
+
                 'title': title,
                 'industry': industry,
                 'description': description,
@@ -186,6 +193,7 @@ def result_page(request):
         request,
         'result.html',
         {
+            'idea_id': data['id'],
             'title':
             data['title'],
 
@@ -241,12 +249,63 @@ USP: {form.cleaned_data['second_usp']}"""
         {'form': form}
     )
 
+
+
+
 @login_required
 def download_pdf(request):
 
-    data = request.session.get(
-        'report_data'
+    idea = get_object_or_404(
+        StartupIdea,
+        id=idea_id,
+        user=request.user
     )
+    tam_data = ast.literal_eval(idea.tam_sam_som)
+    
+    competitors_data = ast.literal_eval(idea.competitors)
+
+    data = {
+    "startup_name": idea.title,
+    "industry": idea.industry,
+    "startup_description": idea.description,
+
+    "viability_score": float(idea.score),
+
+    "swot_analysis": {
+        "strengths": [idea.strengths],
+        "weaknesses": [idea.weaknesses],
+        "opportunities": [idea.opportunities],
+        "threats": [idea.threats]
+    },
+
+    "market_analysis": idea.market,
+
+    "competitors": competitors_data,
+
+    "business_model": idea.business_model,
+
+    "investor_pitch": idea.pitch,
+
+    "risk_analysis": [idea.risk],
+
+    "funding_requirement": idea.funding,
+
+    "improvement_suggestions": [idea.improvements],
+
+    "tam_sam_som": {
+        "tam": tam_data.get("tam", ""),
+        "sam": tam_data.get("sam", ""),
+        "som": tam_data.get("som", "")
+    },
+
+    "startup_name_suggestions": [
+        s.strip()
+        for s in str(idea.name_suggestions).split(",")
+        if s.strip()
+    ],
+
+    "tagline": idea.tagline
+}
 
     filename = "media/report.pdf"
 
@@ -256,7 +315,7 @@ def download_pdf(request):
     )
 
     return FileResponse(
-        open(filename,'rb'),
+        open(filename, 'rb'),
         as_attachment=True
     )
 
@@ -285,8 +344,10 @@ def history_detail(
     idea_id
 ):
 
-    idea = StartupIdea.objects.get(
-        id=idea_id
+    idea = get_object_or_404(
+        StartupIdea,
+        id=idea_id,
+        user=request.user
     )
 
     analysis = {
@@ -319,7 +380,8 @@ def history_detail(
             'title': idea.title,
             'industry': idea.industry,
             'description': idea.description,
-            'analysis': analysis
+            'analysis': analysis,
+            'idea_id': idea.id
         }
     )
 
