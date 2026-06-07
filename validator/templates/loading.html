@@ -7,81 +7,102 @@
 content="width=device-width, initial-scale=1.0">
 
 <title>
-
-AI Processing
-
+AI Analysis in Progress
 </title>
 
-<link rel="stylesheet"
-href="{% static 'css/style.css' %}">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 <meta http-equiv="refresh"
 content="3;url={{ next_url }}">
 
 </head>
 
-<body>
+<body class="loading-body">
 
-<section class="section section--lg">
+<div class="loading-card">
+    <div class="loading-badge">
+        AI Processing
+    </div>
 
-<div class="container">
+    <h1 class="loading-title">
+        Analyzing Your Startup Idea
+    </h1>
 
-<div class="card text-center p-8">
+    <p class="loading-description">
+        Please wait while our AI generates comprehensive business insights and market research.
+    </p>
 
-<div class="hero__badge">
+    <!-- AI Loader -->
+    <div class="ai-loader">
+        <div class="ai-loader-circle">
+            <div class="ai-loader-inner">
+                🤖
+            </div>
+        </div>
+    </div>
 
-AI Processing
+    <!-- Steps -->
+    <div class="steps-list">
+        <div class="step-item">
+            <div class="step-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <div class="step-text">Market Research</div>
+        </div>
+        <div class="step-item">
+            <div class="step-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <div class="step-text">SWOT Analysis</div>
+        </div>
+        <div class="step-item">
+            <div class="step-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <div class="step-text">Competitor Analysis</div>
+        </div>
+        <div class="step-item">
+            <div class="step-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <div class="step-text">Viability Score</div>
+        </div>
+        <div class="step-item">
+            <div class="step-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+            </div>
+            <div class="step-text">Investor Report</div>
+        </div>
+    </div>
 
+    <!-- Progress Bar -->
+    <div class="progress-container">
+        <div class="progress-label">
+            <span class="progress-text">Generating Report...</span>
+            <span class="progress-estimate">Est. 3 seconds</span>
+        </div>
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+    </div>
+
+    <div class="loading-footer">
+        You will be redirected automatically when complete.
+    </div>
 </div>
-
-<h1 class="section__title mt-4">
-
-Analyzing Your Startup Idea
-
-</h1>
-
-<p class="section__description">
-
-Please wait while AI generates
-business insights.
-
-</p>
-
-<div class="mt-8 d-flex flex-col gap-4">
-
-<div class="tag">
-✓ SWOT Analysis
-</div>
-
-<div class="tag">
-✓ Market Research
-</div>
-
-<div class="tag">
-✓ Competitor Scan
-</div>
-
-<div class="tag">
-✓ Viability Score
-</div>
-
-</div>
-
-<div class="mt-8">
-
-<h2>
-
-🤖 Thinking...
-
-</h2>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
 
 </body>
 </html>
