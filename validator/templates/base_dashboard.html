@@ -1,0 +1,130 @@
+﻿{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="AI Startup Validator dashboard for idea validation and reporting." />
+    <title>{% block title %}AI Startup Validator{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+<body class="dashboard-page">
+    <div class="dashboard-layout">
+        <aside class="dashboard-sidebar" aria-label="Main navigation">
+            <div class="sidebar-brand">
+                <div class="brand-avatar">AI</div>
+                <div>
+                    <div class="brand-name">Validator</div>
+                    <div class="brand-subtitle">Startup Intelligence</div>
+                </div>
+            </div>
+
+            <nav class="sidebar-menu">
+                <a href="/dashboard/" class="sidebar-link {% if request.path == '/dashboard/' %}active{% endif %}">
+                    <span class="sidebar-link-icon">🏠</span>
+                    <span>Dashboard</span>
+                </a>
+                <a href="/idea/" class="sidebar-link {% if request.path == '/idea/' %}active{% endif %}">
+                    <span class="sidebar-link-icon">💡</span>
+                    <span>Validate Idea</span>
+                </a>
+                <a href="/compare/" class="sidebar-link {% if '/compare/' in request.path %}active{% endif %}">
+                    <span class="sidebar-link-icon">⚔️</span>
+                    <span>Compare Ideas</span>
+                </a>
+                <a href="/history/" class="sidebar-link {% if '/history/' in request.path %}active{% endif %}">
+                    <span class="sidebar-link-icon">📂</span>
+                    <span>History</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                {% if user.is_authenticated %}
+                    <a href="/logout/" class="sidebar-link sidebar-link--ghost">
+                        <span class="sidebar-link-icon">🚪</span>
+                        <span>Logout</span>
+                    </a>
+                {% else %}
+                    <a href="/login/" class="sidebar-link sidebar-link--ghost">
+                        <span class="sidebar-link-icon">🔑</span>
+                        <span>Login</span>
+                    </a>
+                    <a href="/register/" class="sidebar-link sidebar-link--ghost">
+                        <span class="sidebar-link-icon">📝</span>
+                        <span>Register</span>
+                    </a>
+                {% endif %}
+            </div>
+        </aside>
+
+        <div class="sidebar-overlay"></div>
+
+        <div class="dashboard-main">
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button id="sidebarToggle" class="sidebar-toggle" aria-label="Toggle sidebar">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <div class="topbar-title">
+                        {% block page_title %}
+                            <h1 class="page-title">AI Startup Validator</h1>
+                        {% endblock %}
+                    </div>
+                </div>
+
+                <div class="topbar-right">
+                    {% block topbar_actions %}{% endblock %}
+                    <div class="topbar-user">
+                        <span class="topbar-avatar">{{ user.username|default:'Guest'|slice:':1' }}</span>
+                        <div>
+                            <div class="topbar-user-name">{{ user.username|default:'Guest' }}</div>
+                            <div class="topbar-user-meta">Premium dashboard</div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <main class="dashboard-content">
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const layout = document.querySelector('.dashboard-layout');
+            const sidebar = document.querySelector('.dashboard-sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            const toggleBtn = document.getElementById('sidebarToggle');
+
+            const isMobile = () => window.innerWidth < 992;
+            const closeMobileSidebar = () => {
+                sidebar.classList.remove('sidebar-open');
+                overlay.classList.remove('active');
+            };
+
+            toggleBtn?.addEventListener('click', () => {
+                if (isMobile()) {
+                    sidebar.classList.toggle('sidebar-open');
+                    overlay.classList.toggle('active');
+                    return;
+                }
+
+                layout?.classList.toggle('sidebar-collapsed');
+            });
+
+            overlay?.addEventListener('click', closeMobileSidebar);
+
+            window.addEventListener('resize', () => {
+                if (!isMobile()) {
+                    closeMobileSidebar();
+                }
+            });
+        });
+    </script>
+
+    {% block extra_scripts %}{% endblock %}
+</body>
+</html>

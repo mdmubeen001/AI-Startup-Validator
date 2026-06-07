@@ -1,22 +1,45 @@
-<h1>Register</h1>
+{% extends 'base_guest.html' %}
 
-{% if error %}
-<p>{{ error }}</p>
-{% endif %}
+{% block content %}
 
-<form method="POST">
+<div class="auth-page">
 
-    {% csrf_token %}
+    <div class="auth-card">
 
-    {{ form.as_p }}
+        <h1>Create Account 🚀</h1>
 
-    <button type="submit">
-        Register
-    </button>
+        <p>Join AI Startup Validator</p>
 
-    <p>
-        Already have an account?
-        <a href="{% url 'login' %}">Login</a>
-    </p>
+        {% if error %}
+        <div class="error-box">
+            {{ error }}
+        </div>
+        {% endif %}
 
-</form>
+        <form method="POST">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <button type="submit" class="auth-btn">
+                Register
+            </button>
+
+        </form>
+
+        <p class="auth-footer">
+
+            Already have an account?
+
+            <a href="{% url 'login' %}">
+                Login
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}

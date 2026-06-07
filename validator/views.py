@@ -5,9 +5,62 @@ from .ai_engine import (analyze_idea, compare_ideas)
 from django.http import FileResponse
 from .pdf_generator import generate_pdf
 from django.contrib.auth.decorators import login_required
+import json
 
 def home(request):
     return render(request, 'home.html')
+
+
+@login_required
+def dashboard(request):
+
+    ideas = StartupIdea.objects.filter(
+        user=request.user
+    ).order_by('-id')
+
+    total_ideas = ideas.count()
+
+    recent_ideas = ideas[:5]
+
+    chart_labels = []
+    chart_scores = []
+
+    for idea in reversed(recent_ideas):
+       chart_labels.append(idea.title)
+       chart_scores.append(idea.score)
+
+    last_idea = ideas.first()
+
+    last_score = 0
+
+    if last_idea and hasattr(last_idea, 'score'):
+        last_score = last_idea.score
+
+    average_score = 0
+
+    if total_ideas > 0:
+        average_score = sum(
+            float(idea.score)
+            for idea in ideas
+            if idea.score
+        ) / total_ideas
+
+    context = {
+        'total_ideas': total_ideas,
+        'total_reports': total_ideas,
+        'last_score': last_score,
+        'average_score': round(average_score, 1),
+        'recent_ideas': recent_ideas,
+        'chart_labels': json.dumps(chart_labels),
+        'chart_scores': json.dumps(chart_scores)
+    }
+
+    return render(
+        request,
+        'dashboard.html',
+        context
+    )
+
 
 @login_required
 def idea_form(request):
@@ -115,6 +168,7 @@ def idea_form(request):
         }
     )
 
+@login_required
 def result_page(request):
 
     data = request.session.get(
@@ -146,6 +200,7 @@ def result_page(request):
         }
     )
 
+@login_required
 def compare_view(request):
 
     if request.method == 'POST':
@@ -181,7 +236,7 @@ def compare_view(request):
         'compare.html'
     )
 
-
+@login_required
 def download_pdf(request):
 
     data = request.session.get(
@@ -200,6 +255,7 @@ def download_pdf(request):
         as_attachment=True
     )
 
+@login_required
 def history_view(request):
 
     ideas = StartupIdea.objects.filter(user=request.user).order_by(
@@ -217,6 +273,7 @@ def history_view(request):
         }
     )
 
+@login_required
 def history_detail(
 
     request,

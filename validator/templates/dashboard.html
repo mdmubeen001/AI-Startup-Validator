@@ -1,0 +1,253 @@
+﻿{% extends 'base_dashboard.html' %}
+
+{% block title %}Dashboard | AI Startup Validator{% endblock %}
+
+{% block content %}
+<div class="page-grid">
+  <section class="hero-card card">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">AI Startup Validator</span>
+        <h1>Build the highest confidence startup roadmap with AI.</h1>
+        <p>Evaluate ideas, generate reports, and compare investor-ready opportunities from one premium workspace.</p>
+        <div class="hero-actions">
+          <a href="/idea/" class="btn btn-primary">Start validation</a>
+          <a href="/compare/" class="btn btn-secondary">Compare ideas</a>
+        </div>
+      </div>
+      <div class="hero-panel">
+        <div class="metric-pill">
+          <span>Total validations</span>
+          <strong>{{ total_ideas }}</strong>
+        </div>
+        <div class="metric-pill">
+          <span>Active growth plans</span>
+          <strong>{{ total_reports }}</strong>
+        </div>
+        <div class="metric-pill">
+          <span>Average idea score</span>
+          <strong>{{ average_score|default:'—' }}</strong>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="stats-grid">
+    <article class="stat-card card">
+      <div class="stat-card-head">
+        <div class="stat-icon stat-icon--accent"><i data-lucide="Sparkles"></i></div>
+        <span>Total ideas</span>
+      </div>
+      <strong>{{ total_ideas }}</strong>
+      <p>Startup concepts evaluated through the platform.</p>
+      <span class="stat-trend">+12% since last month</span>
+    </article>
+
+    <article class="stat-card card">
+      <div class="stat-card-head">
+        <div class="stat-icon stat-icon--soft"><i data-lucide="FileText"></i></div>
+        <span>Reports generated</span>
+      </div>
+      <strong>{{ total_reports }}</strong>
+      <p>Deep validation reports created for founders.</p>
+      <span class="stat-trend">Stable month over month</span>
+    </article>
+
+    <article class="stat-card card">
+      <div class="stat-card-head">
+        <div class="stat-icon stat-icon--success"><i data-lucide="Star"></i></div>
+        <span>Average score</span>
+      </div>
+      <strong>{{ average_score|default:'—' }}</strong>
+      <p>Trust the data-driven ranking of each idea.</p>
+      <span class="stat-trend">Top ideas trending up</span>
+    </article>
+
+    <article class="stat-card card">
+      <div class="stat-card-head">
+        <div class="stat-icon stat-icon--accent"><i data-lucide="Award"></i></div>
+        <span>Best idea</span>
+      </div>
+      <strong>{{ best_idea|default:'Your strongest concept' }}</strong>
+      <p>Most promising idea from your latest validations.</p>
+      <span class="stat-trend">Review recommendations</span>
+    </article>
+  </section>
+
+  <section class="chart-grid">
+    <article class="chart-card card span-8">
+      <div class="section-card-head">
+        <div>
+          <span class="eyebrow">Trend</span>
+          <h2>Idea score trend</h2>
+        </div>
+        <span class="badge badge--accent">Live</span>
+      </div>
+      <div class="chart-container">
+        <canvas id="trendChart"></canvas>
+      </div>
+    </article>
+
+    <article class="chart-card card span-4">
+      <div class="section-card-head">
+        <div>
+          <span class="eyebrow">Audience</span>
+          <h2>Industry distribution</h2>
+        </div>
+      </div>
+      <div class="chart-container chart-container--compact">
+        <canvas id="industryChart"></canvas>
+      </div>
+    </article>
+
+    <article class="chart-card card span-4">
+      <div class="section-card-head">
+        <div>
+          <span class="eyebrow">Conversion</span>
+          <h2>Validation success rate</h2>
+        </div>
+      </div>
+      <div class="chart-container chart-container--compact">
+        <canvas id="successChart"></canvas>
+      </div>
+    </article>
+  </section>
+
+  <section class="reports-card card">
+    <div class="section-card-head">
+      <div>
+        <span class="eyebrow">Recent reports</span>
+        <h2>Latest validations</h2>
+      </div>
+      <a href="/history/" class="btn btn-tertiary">View all reports</a>
+    </div>
+    <div class="table-wrap">
+      <table class="table-dashboard">
+        <thead>
+          <tr>
+            <th>Idea</th>
+            <th>Industry</th>
+            <th>Score</th>
+            <th>Date</th>
+            <th class="text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for idea in recent_ideas %}
+          <tr>
+            <td>
+              <strong>{{ idea.title }}</strong>
+              <span class="table-note">{{ idea.description|truncatechars:60 }}</span>
+            </td>
+            <td>{{ idea.industry }}</td>
+            <td><span class="badge badge--success">{{ idea.score|default:'—' }}</span></td>
+            <td>{{ idea.created_at|date:"M d, Y" }}</td>
+            <td class="table-actions">
+              <a href="/history/{{ idea.id }}/" class="icon-btn" aria-label="View report"><i data-lucide="Eye"></i></a>
+              <a href="/history/{{ idea.id }}/download/" class="icon-btn" aria-label="Download pdf"><i data-lucide="Download"></i></a>
+            </td>
+          </tr>
+          {% empty %}
+          <tr>
+            <td colspan="5" class="text-muted">No recent reports yet. Start with a new validation.</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const trendLabels = JSON.parse('{{ chart_labels|default:"[]"|escapejs }}');
+  const trendScores = JSON.parse('{{ chart_scores|default:"[]"|escapejs }}');
+  const industryLabels = JSON.parse('{{ industry_labels|default:"[\"AI\",\"Fintech\",\"Health\",\"Commerce\"]"|escapejs }}');
+  const industryData = JSON.parse('{{ industry_values|default:"[32,22,18,28]"|escapejs }}');
+  const successLabels = JSON.parse('{{ success_labels|default:"[\"Validated\",\"Needs work\"]"|escapejs }}');
+  const successData = JSON.parse('{{ success_rates|default:"[68,32]"|escapejs }}');
+
+  const trendCtx = document.getElementById('trendChart');
+  if (trendCtx) {
+    new Chart(trendCtx, {
+      type: 'line',
+      data: {
+        labels: trendLabels.length ? trendLabels : ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+        datasets: [{
+          label: 'Validation score',
+          data: trendScores.length ? trendScores : [6, 7.2, 7.8, 8.1, 8.5],
+          borderColor: '#10A37F',
+          backgroundColor: 'rgba(16, 163, 127, 0.18)',
+          fill: true,
+          tension: 0.38,
+          pointRadius: 4,
+          pointBackgroundColor: '#ffffff'
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { backgroundColor: 'rgba(17, 24, 39, 0.95)', titleColor: '#FAFAFA', bodyColor: '#F8FAFC' }
+        },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: '#A1A1AA' } },
+          y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#A1A1AA' }, beginAtZero: true }
+        }
+      }
+    });
+  }
+
+  const industryCtx = document.getElementById('industryChart');
+  if (industryCtx) {
+    new Chart(industryCtx, {
+      type: 'doughnut',
+      data: {
+        labels: industryLabels,
+        datasets: [{
+          data: industryData,
+          backgroundColor: ['#10A37F', '#22C55E', '#3B82F6', '#7C3AED'],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { position: 'bottom', labels: { color: '#F8FAFC' } },
+          tooltip: { backgroundColor: 'rgba(17, 24, 39, 0.95)' }
+        }
+      }
+    });
+  }
+
+  const successCtx = document.getElementById('successChart');
+  if (successCtx) {
+    new Chart(successCtx, {
+      type: 'bar',
+      data: {
+        labels: successLabels,
+        datasets: [{
+          label: 'Success rate',
+          data: successData,
+          backgroundColor: ['#10A37F', '#EF4444'],
+          borderRadius: 12,
+          maxBarThickness: 28
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false }, tooltip: { backgroundColor: 'rgba(17, 24, 39, 0.95)' } },
+        scales: {
+          x: { grid: { display: false }, ticks: { color: '#A1A1AA' } },
+          y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#A1A1AA', beginAtZero: true, max: 100 } }
+        }
+      }
+    });
+  }
+</script>
+{% endblock %}

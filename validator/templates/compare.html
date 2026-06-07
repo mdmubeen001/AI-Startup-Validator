@@ -1,74 +1,67 @@
-{% extends 'base.html' %}
-{% load static %}
+{% extends 'base_dashboard.html' %}
 
-{% block page_title %}
-<h2 class="text-lg fw-bold mb-0">Compare Ideas</h2>
-{% endblock %}
+{% block title %}Compare Ideas | AI Startup Validator{% endblock %}
 
 {% block content %}
-<section class="section section--lg">
+<section class="page-section">
+  <div class="page-section-head">
+    <div>
+      <span class="eyebrow">Compare</span>
+      <h2>Side-by-side idea validation</h2>
+      <p class="section-copy">Compare two concepts across market fit, business model, and differentiation in one premium report.</p>
+    </div>
+    <a href="/dashboard/" class="btn btn-tertiary">Back to dashboard</a>
+  </div>
 
-<div class="container">
+  <div class="card compare-panel">
+    <div class="compare-labels">
+      <span>Field</span>
+      <span>Idea one</span>
+      <span>Idea two</span>
+    </div>
 
-<div class="card p-8">
+    <form method="POST" action="/compare/" class="compare-grid">
+      {% csrf_token %}
+      <div class="compare-field">
+        <label for="id_first_title">Name</label>
+        {{ form.first_title.as_widget(attrs={'placeholder': 'First idea name'}) }}
+        {{ form.second_title.as_widget(attrs={'placeholder': 'Second idea name'}) }}
+      </div>
 
-<h1 class="section__title">
+      <div class="compare-field">
+        <label for="id_first_industry">Industry</label>
+        {{ form.first_industry.as_widget(attrs={'placeholder': 'Industry'}) }}
+        {{ form.second_industry.as_widget(attrs={'placeholder': 'Industry'}) }}
+      </div>
 
-Compare Startup Ideas
+      <div class="compare-field compare-field--full">
+        <label for="id_first_description">Description</label>
+        {{ form.first_description.as_widget(attrs={'placeholder': 'Describe first idea'}) }}
+        {{ form.second_description.as_widget(attrs={'placeholder': 'Describe second idea'}) }}
+      </div>
 
-</h1>
+      <div class="compare-field compare-field--full">
+        <label for="id_first_problem">Problem</label>
+        {{ form.first_problem.as_widget(attrs={'placeholder': 'Problem first idea solves'}) }}
+        {{ form.second_problem.as_widget(attrs={'placeholder': 'Problem second idea solves'}) }}
+      </div>
 
-<p class="section__description">
+      <div class="compare-field compare-field--full">
+        <label for="id_first_revenue_model">Revenue model</label>
+        {{ form.first_revenue_model.as_widget(attrs={'placeholder': 'Expected revenue model'}) }}
+        {{ form.second_revenue_model.as_widget(attrs={'placeholder': 'Expected revenue model'}) }}
+      </div>
 
-AI will compare two ideas.
+      <div class="compare-field compare-field--full">
+        <label for="id_first_usp">Unique value</label>
+        {{ form.first_usp.as_widget(attrs={'placeholder': 'Unique value proposition'}) }}
+        {{ form.second_usp.as_widget(attrs={'placeholder': 'Unique value proposition'}) }}
+      </div>
 
-</p>
-
-<form
-method="POST"
-class="form">
-
-{% csrf_token %}
-
-<h3>
-
-Idea 1
-
-</h3>
-
-<textarea
-name="idea1"
-rows="4"
-required>
-
-</textarea>
-
-<h3 class="mt-6">
-
-Idea 2
-
-</h3>
-
-<textarea
-name="idea2"
-rows="4"
-required>
-
-</textarea>
-
-<button
-type="submit"
-class="btn btn--primary mt-6">
-
-Compare Ideas
-
-</button>
-
-</form>
-
-</div>
-
-</div>
-
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Compare now</button>
+      </div>
+    </form>
+  </div>
 </section>
 {% endblock %}
