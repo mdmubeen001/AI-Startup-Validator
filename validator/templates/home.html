@@ -1,492 +1,255 @@
 {% extends 'base_guest.html' %}
 {% load static %}
+
+{% block title %}AI Startup Validator | Validate Your Startup Ideas{% endblock %}
+
 {% block content %}
 
+<div class="home-redesign">
+  <!-- Hero Section -->
+  <section class="home-hero">
+    <div class="home-container">
+      <div class="home-hero-badge">
+        🚀 Trusted by 10,000+ founders
+      </div>
+      <h1 class="home-hero-title">Validate your startup ideas with AI</h1>
+      <p class="home-hero-subtitle">
+        Get comprehensive market analysis, SWOT evaluations, and investor-ready reports in minutes—not weeks.
+      </p>
+      <div class="home-hero-buttons">
+        <a href="{% url 'register' %}" class="home-btn home-btn-primary">
+          Get started for free
+        </a>
+        <a href="#features" class="home-btn home-btn-secondary">
+          See how it works
+        </a>
+      </div>
+    </div>
+  </section>
 
-<!-- HERO -->
-<section class="hero">
+  <!-- Trusted Companies -->
+  <section class="home-section home-trusted">
+    <div class="home-container">
+      <div class="home-trusted-label">Trusted by founders at</div>
+      <div class="home-trusted-logos">
+        <div class="home-trusted-logo">TechStart</div>
+        <div class="home-trusted-logo">InnovateLab</div>
+        <div class="home-trusted-logo">ScaleUp Co.</div>
+        <div class="home-trusted-logo">VentureX</div>
+        <div class="home-trusted-logo">StartupHub</div>
+      </div>
+    </div>
+  </section>
 
-<div class="container">
+  <!-- Features Grid -->
+  <section id="features" class="home-section">
+    <div class="home-container">
+      <div class="home-section-header">
+        <h2 class="home-section-title">Everything you need to validate your idea</h2>
+        <p class="home-section-subtitle">Comprehensive tools and professional startup validation powered by AI.</p>
+      </div>
+      <div class="home-features-grid">
+        <div class="home-feature-card">
+          <div class="home-feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+            </svg>
+          </div>
+          <h3 class="home-feature-title">AI-Powered Analysis</h3>
+          <p class="home-feature-description">Deep insights into your startup idea using advanced AI technology.</p>
+        </div>
 
-<div class="grid grid--2 items-center gap-8">
+        <div class="home-feature-card">
+          <div class="home-feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+          </div>
+          <h3 class="home-feature-title">SWOT Evaluation</h3>
+          <p class="home-feature-description">Comprehensive strengths, weaknesses, opportunities, and threats analysis.</p>
+        </div>
 
-<!-- LEFT HERO -->
-<div class="hero__content">
+        <div class="home-feature-card">
+          <div class="home-feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 20V10"></path>
+              <path d="M18 20V4"></path>
+              <path d="M6 20v-6"></path>
+            </svg>
+          </div>
+          <h3 class="home-feature-title">Market Analysis</h3>
+          <p class="home-feature-description">Detailed market research and competitive landscape insights.</p>
+        </div>
 
-<div class="hero__badge">
+        <div class="home-feature-card">
+          <div class="home-feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <h3 class="home-feature-title">Investor-Ready Reports</h3>
+          <p class="home-feature-description">Professional reports ready to share with investors and stakeholders.</p>
+        </div>
 
-AI Powered Startup Intelligence
+        <div class="home-feature-card">
+          <div class="home-feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="m4 16 6-6-4-4"></path>
+              <path d="m20 8-6 6 4 4"></path>
+              <path d="M14 10h4v4"></path>
+              <path d="M6 14H2v-4"></path>
+            </svg>
+          </div>
+          <h3 class="home-feature-title">Compare Ideas</h3>
+          <p class="home-feature-description">Compare multiple startup ideas side by side to find the best one.</p>
+        </div>
 
+        <div class="home-feature-card">
+          <div class="home-feature-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <h3 class="home-feature-title">Track History</h3>
+          <p class="home-feature-description">Store and review all your validation reports in one place.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="home-section home-section-white">
+    <div class="home-container">
+      <div class="home-section-header">
+        <h2 class="home-section-title">How it works</h2>
+        <p class="home-section-subtitle">Three simple steps to validate your startup idea.</p>
+      </div>
+      <div class="home-how-grid">
+        <div class="home-how-card">
+          <div class="home-how-number">1</div>
+          <h3 class="home-feature-title">Describe Your Idea</h3>
+          <p class="home-feature-description">Fill out a simple form with your startup concept, industry, and goals.</p>
+        </div>
+        <div class="home-how-card">
+          <div class="home-how-number">2</div>
+          <h3 class="home-feature-title">AI Analysis</h3>
+          <p class="home-feature-description">Our AI engine runs comprehensive market research and SWOT analysis.</p>
+        </div>
+        <div class="home-how-card">
+          <div class="home-how-number">3</div>
+          <h3 class="home-feature-title">Get Report</h3>
+          <p class="home-feature-description">Receive a professional report with actionable insights and recommendations.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Analysis Preview -->
+  <section class="home-section">
+    <div class="home-container">
+      <div class="home-section-header">
+        <h2 class="home-section-title">See AI analysis in action</h2>
+        <p class="home-section-subtitle">Professional, detailed, and actionable insights for your startup.</p>
+      </div>
+      <div class="home-preview-card">
+        <div class="home-preview-grid">
+          <div>
+            <span class="home-preview-badge">SWOT Analysis</span>
+            <h3 class="home-preview-title">Strengths</h3>
+            <p class="home-feature-description">Your startup has a unique value proposition that addresses a real market need.</p>
+          </div>
+          <div class="home-preview-score">
+            <h3 class="home-preview-title">Overall Score</h3>
+            <div class="home-preview-score-value">7.8</div>
+            <div class="home-preview-score-bar">
+              <div class="home-preview-score-fill"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="home-section home-section-white">
+    <div class="home-container">
+      <div class="home-section-header">
+        <h2 class="home-section-title">What founders say</h2>
+        <p class="home-section-subtitle">Don't take our word for it—see what users are saying.</p>
+      </div>
+      <div class="home-testimonials-grid">
+        <div class="home-testimonial-card">
+          <p class="home-testimonial-text">"This tool helped us validate our idea before we spent a dime on development. Invaluable insights that saved us months of work and thousands of dollars."</p>
+          <div class="home-testimonial-author">
+            <div class="home-testimonial-avatar">JD</div>
+            <div>
+              <div class="home-testimonial-name">John Doe</div>
+              <div class="home-testimonial-role">Founder, TechStart</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="home-testimonial-card">
+          <p class="home-testimonial-text">"The AI analysis is incredibly thorough. We used the reports in our seed round and investors were super impressed with the level of detail."</p>
+          <div class="home-testimonial-author">
+            <div class="home-testimonial-avatar">SA</div>
+            <div>
+              <div class="home-testimonial-name">Sarah Adams</div>
+              <div class="home-testimonial-role">CEO, InnovateLab</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="home-section">
+    <div class="home-container">
+      <div class="home-section-header">
+        <h2 class="home-section-title">Frequently asked questions</h2>
+        <p class="home-section-subtitle">Everything you need to know about AI Startup Validator.</p>
+      </div>
+      <div class="home-faq-card">
+        <div class="home-faq-item">
+          <h3 class="home-faq-question">How accurate is the AI analysis?</h3>
+          <p class="home-faq-answer">Our AI engine uses market data and industry trends to provide highly accurate insights, validated by thousands of users.</p>
+        </div>
+        <div class="home-faq-item">
+          <h3 class="home-faq-question">Can I compare multiple ideas?</h3>
+          <p class="home-faq-answer">Yes! You can compare up to two startup ideas side by side to see which has stronger potential.</p>
+        </div>
+        <div class="home-faq-item">
+          <h3 class="home-faq-question">Is my data secure?</h3>
+          <p class="home-faq-answer">Absolutely. We prioritize your privacy and all your data is encrypted and stored securely.</p>
+        </div>
+        <div class="home-faq-item">
+          <h3 class="home-faq-question">Do you offer a free plan?</h3>
+          <p class="home-faq-answer">Yes, you can get started for free and try all features without any credit card required.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="home-section">
+    <div class="home-container">
+      <div class="home-cta-card">
+        <h2 class="home-cta-title">Ready to validate your next big idea?</h2>
+        <p class="home-cta-text">Join thousands of founders who've used AI Startup Validator to test their concepts.</p>
+        <a href="{% url 'register' %}" class="home-btn home-btn-primary">
+          Get started for free
+        </a>
+      </div>
+    </div>
+  </section>
 </div>
-
-<h1 class="hero__title">
-
-Turn Startup Ideas Into
-
-<span>Business Insights</span>
-
-</h1>
-
-<p class="hero__subtitle">
-
-Get instant SWOT analysis,
-market research, competitor insights
-and startup viability scoring using AI.
-
-No business degree needed.
-
-</p>
-
-<div class="hero__actions">
-
-<a href="/idea/"
-class="btn btn--primary btn--xl">
-
-Validate My Idea
-
-</a>
-
-<a href="#features"
-class="btn btn--light btn--xl">
-
-Explore Platform
-
-</a>
-
-</div>
-
-<div class="hero__stats">
-
-<div class="hero__stat">
-
-<span class="hero__stat-value">
-
-AI
-
-</span>
-
-<span class="hero__stat-label">
-
-Analysis
-
-</span>
-
-</div>
-
-<div class="hero__stat">
-
-<span class="hero__stat-value">
-
-PDF
-
-</span>
-
-<span class="hero__stat-label">
-
-Reports
-
-</span>
-
-</div>
-
-<div class="hero__stat">
-
-<span class="hero__stat-value">
-
-SWOT
-
-</span>
-
-<span class="hero__stat-label">
-
-Insights
-
-</span>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- RIGHT PREVIEW -->
-<div>
-
-<div class="card card--prominent">
-
-<div class="card__header">
-
-<div>
-
-<div class="tag">
-
-Live AI Preview
-
-</div>
-
-<h3 class="card__title mt-4">
-
-AI Fitness Coach
-
-</h3>
-
-<p class="text-sm text-secondary">
-
-Business Analysis Snapshot
-
-</p>
-
-</div>
-
-</div>
-
-<div class="swot">
-
-<div class="swot__card swot__card--strength">
-
-<div class="swot__label">
-
-Strength
-
-</div>
-
-<div class="swot__item">
-
-Personalized fitness plans
-
-</div>
-
-</div>
-
-<div class="swot__card swot__card--opportunity">
-
-<div class="swot__label">
-
-Opportunity
-
-</div>
-
-<div class="swot__item">
-
-Growing wellness market
-
-</div>
-
-</div>
-
-</div>
-
-<div class="divider"></div>
-
-<div class="d-flex items-center justify-between">
-
-<div>
-
-<div class="text-sm text-secondary">
-
-Viability Score
-
-</div>
-
-</div>
-
-<div class="score-badge score-badge--high">
-
-<div class="score-badge__value">
-
-8.5
-
-</div>
-
-<div class="score-badge__label">
-
-Score
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- TRUST / BADGES -->
-<section class="section section--sm">
-
-<div class="container">
-
-<div class="d-flex justify-center gap-6 flex-wrap">
-
-<div class="tag">
-AI Powered
-</div>
-
-<div class="tag">
-Business Insights
-</div>
-
-<div class="tag">
-PDF Reports
-</div>
-
-<div class="tag">
-Startup Validation
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- FEATURES -->
-<section
-id="features"
-class="section">
-
-<div class="container">
-
-<div class="section__header">
-
-<div class="section__eyebrow">
-
-FEATURES
-
-</div>
-
-<h2 class="section__title">
-
-Everything Needed To
-
-Validate A Startup
-
-</h2>
-
-<p class="section__description">
-
-Built for founders,
-students and innovators.
-
-</p>
-
-</div>
-
-<div class="grid grid--3">
-
-<div class="card">
-
-<div class="card__icon">
-
-📊
-
-</div>
-
-<h3 class="card__title">
-
-SWOT Analysis
-
-</h3>
-
-<p class="card__body">
-
-Discover strengths,
-weaknesses, opportunities
-and threats instantly.
-
-</p>
-
-</div>
-
-<div class="card">
-
-<div class="card__icon">
-
-🌍
-
-</div>
-
-<h3 class="card__title">
-
-Market Insights
-
-</h3>
-
-<p class="card__body">
-
-Estimate market size,
-target users and business potential.
-
-</p>
-
-</div>
-
-<div class="card">
-
-<div class="card__icon">
-
-🏁
-
-</div>
-
-<h3 class="card__title">
-
-Competitor Analysis
-
-</h3>
-
-<p class="card__body">
-
-Identify competitors
-and evaluate market positioning.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- HOW IT WORKS -->
-<section class="section">
-
-<div class="container">
-
-<div class="section__header">
-
-<div class="section__eyebrow">
-
-PROCESS
-
-</div>
-
-<h2 class="section__title">
-
-How It Works
-
-</h2>
-
-</div>
-
-<div class="grid grid--3">
-
-<div class="card text-center">
-
-<div class="card__icon">
-
-1
-
-</div>
-
-<h3 class="card__title">
-
-Submit Idea
-
-</h3>
-
-<p class="card__body">
-
-Enter startup title,
-industry and description.
-
-</p>
-
-</div>
-
-<div class="card text-center">
-
-<div class="card__icon">
-
-2
-
-</div>
-
-<h3 class="card__title">
-
-AI Analysis
-
-</h3>
-
-<p class="card__body">
-
-AI evaluates your idea
-using business metrics.
-
-</p>
-
-</div>
-
-<div class="card text-center">
-
-<div class="card__icon">
-
-3
-
-</div>
-
-<h3 class="card__title">
-
-Download Report
-
-</h3>
-
-<p class="card__body">
-
-Get professional
-PDF business reports.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- CTA -->
-<section class="section section--lg">
-
-<div class="container">
-
-<div class="card card--blue text-center p-8">
-
-<h2 class="text-3xl fw-bold mb-4">
-
-Ready To Validate
-Your Startup Idea?
-
-</h2>
-
-<p class="mb-6">
-
-AI-powered business insights
-in seconds.
-
-</p>
-
-<a href="/idea/"
-class="btn btn--light btn--xl">
-
-Start Now
-
-</a>
-
-</div>
-
-</div>
-
-</section>
-
 {% endblock %}

@@ -3,126 +3,128 @@
 {% block title %}Dashboard | AI Startup Validator{% endblock %}
 
 {% block content %}
-<div class="page-grid">
-  <section class="hero-card card">
-    <div class="hero-grid">
-      <div class="hero-copy">
-        <span class="eyebrow">AI Startup Validator</span>
-        <h1>Build the highest confidence startup roadmap with AI.</h1>
-        <p>Evaluate ideas, generate reports, and compare investor-ready opportunities from one premium workspace.</p>
-        <div class="hero-actions">
-          <a href="/idea/" class="btn btn-primary">Start validation</a>
-          <a href="/compare/" class="btn btn-secondary">Compare ideas</a>
-        </div>
-      </div>
-      <div class="hero-panel">
-        <div class="metric-pill">
-          <span>Total validations</span>
-          <strong>{{ total_ideas }}</strong>
-        </div>
-        <div class="metric-pill">
-          <span>Active growth plans</span>
-          <strong>{{ total_reports }}</strong>
-        </div>
-        <div class="metric-pill">
-          <span>Average idea score</span>
-          <strong>{{ average_score|default:'—' }}</strong>
-        </div>
-      </div>
+<div class="dashboard-redesign">
+  <!-- Header -->
+  <div class="dashboard-header">
+    <div>
+      <h1 class="dashboard-header-title">Dashboard</h1>
+      <p class="dashboard-header-subtitle">Overview of your startup validations</p>
     </div>
-  </section>
+    <div class="dashboard-actions">
+      <a href="/compare/" class="dashboard-btn dashboard-btn-secondary">Compare ideas</a>
+      <a href="/idea/" class="dashboard-btn dashboard-btn-primary">New validation</a>
+    </div>
+  </div>
 
-  <section class="stats-grid">
-    <article class="stat-card card">
-      <div class="stat-card-head">
-        <div class="stat-icon stat-icon--accent"><i data-lucide="Sparkles"></i></div>
-        <span>Total ideas</span>
-      </div>
-      <strong>{{ total_ideas }}</strong>
-      <p>Startup concepts evaluated through the platform.</p>
-      <span class="stat-trend">+12% since last month</span>
-    </article>
-
-    <article class="stat-card card">
-      <div class="stat-card-head">
-        <div class="stat-icon stat-icon--soft"><i data-lucide="FileText"></i></div>
-        <span>Reports generated</span>
-      </div>
-      <strong>{{ total_reports }}</strong>
-      <p>Deep validation reports created for founders.</p>
-      <span class="stat-trend">Stable month over month</span>
-    </article>
-
-    <article class="stat-card card">
-      <div class="stat-card-head">
-        <div class="stat-icon stat-icon--success"><i data-lucide="Star"></i></div>
-        <span>Average score</span>
-      </div>
-      <strong>{{ average_score|default:'—' }}</strong>
-      <p>Trust the data-driven ranking of each idea.</p>
-      <span class="stat-trend">Top ideas trending up</span>
-    </article>
-
-    <article class="stat-card card">
-      <div class="stat-card-head">
-        <div class="stat-icon stat-icon--accent"><i data-lucide="Award"></i></div>
-        <span>Best idea</span>
-      </div>
-      <strong>{{ best_idea|default:'Your strongest concept' }}</strong>
-      <p>Most promising idea from your latest validations.</p>
-      <span class="stat-trend">Review recommendations</span>
-    </article>
-  </section>
-
-  <section class="chart-grid">
-    <article class="chart-card card span-8">
-      <div class="section-card-head">
-        <div>
-          <span class="eyebrow">Trend</span>
-          <h2>Idea score trend</h2>
+  <!-- KPI Cards -->
+  <div class="kpi-grid">
+    <div class="kpi-card">
+      <div class="kpi-header">
+        <span class="kpi-label">Total Ideas</span>
+        <div class="kpi-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+          </svg>
         </div>
-        <span class="badge badge--accent">Live</span>
+      </div>
+      <p class="kpi-value">{{ total_ideas }}</p>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-header">
+        <span class="kpi-label">Total Reports</span>
+        <div class="kpi-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+        </div>
+      </div>
+      <p class="kpi-value">{{ total_reports }}</p>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-header">
+        <span class="kpi-label">Average Score</span>
+        <div class="kpi-icon kpi-icon-success">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+          </svg>
+        </div>
+      </div>
+      <p class="kpi-value">{{ average_score|default:'—' }}</p>
+    </div>
+
+    <div class="kpi-card">
+      <div class="kpi-header">
+        <span class="kpi-label">Last Analysis</span>
+        <div class="kpi-icon kpi-icon-success">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <polyline points="12 6 12 12 16 14"></polyline>
+          </svg>
+        </div>
+      </div>
+      <p class="kpi-value kpi-value-small">{{ best_idea|default:'Your first idea' }}</p>
+    </div>
+  </div>
+
+  <!-- Charts Section -->
+  <div class="charts-grid">
+    <!-- Main Chart: Trend -->
+    <div class="chart-card">
+      <div class="chart-card-header">
+        <div>
+          <h3 class="chart-card-title">Idea score trend</h3>
+          <p class="chart-card-subtitle">How your ideas have scored over time</p>
+        </div>
       </div>
       <div class="chart-container">
         <canvas id="trendChart"></canvas>
       </div>
-    </article>
-
-    <article class="chart-card card span-4">
-      <div class="section-card-head">
-        <div>
-          <span class="eyebrow">Audience</span>
-          <h2>Industry distribution</h2>
-        </div>
-      </div>
-      <div class="chart-container chart-container--compact">
-        <canvas id="industryChart"></canvas>
-      </div>
-    </article>
-
-    <article class="chart-card card span-4">
-      <div class="section-card-head">
-        <div>
-          <span class="eyebrow">Conversion</span>
-          <h2>Validation success rate</h2>
-        </div>
-      </div>
-      <div class="chart-container chart-container--compact">
-        <canvas id="successChart"></canvas>
-      </div>
-    </article>
-  </section>
-
-  <section class="reports-card card">
-    <div class="section-card-head">
-      <div>
-        <span class="eyebrow">Recent reports</span>
-        <h2>Latest validations</h2>
-      </div>
-      <a href="/history/" class="btn btn-tertiary">View all reports</a>
     </div>
-    <div class="table-wrap">
-      <table class="table-dashboard">
+
+    <!-- Side Charts -->
+    <div class="charts-column">
+      <!-- Industry Chart -->
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div>
+            <h3 class="chart-card-title">Industry distribution</h3>
+            <p class="chart-card-subtitle">Where your ideas are focused</p>
+          </div>
+        </div>
+        <div class="chart-container chart-container-compact">
+          <canvas id="industryChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Success Chart -->
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div>
+            <h3 class="chart-card-title">Validation breakdown</h3>
+            <p class="chart-card-subtitle">Success rate of your ideas</p>
+          </div>
+        </div>
+        <div class="chart-container chart-container-compact">
+          <canvas id="successChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recent Reports Table -->
+  <div class="table-card">
+    <div class="table-card-header">
+      <h3 class="table-card-title">Recent reports</h3>
+      <a href="/history/" class="dashboard-btn dashboard-btn-secondary dashboard-btn-small">View all</a>
+    </div>
+    <div class="table-container">
+      <table class="dashboard-table">
         <thead>
           <tr>
             <th>Idea</th>
@@ -136,26 +138,48 @@
           {% for idea in recent_ideas %}
           <tr>
             <td>
-              <strong>{{ idea.title }}</strong>
-              <span class="table-note">{{ idea.description|truncatechars:60 }}</span>
+              <div class="idea-title">{{ idea.title }}</div>
+              {% if idea.description %}
+              <div class="idea-desc">{{ idea.description|truncatechars:60 }}</div>
+              {% endif %}
             </td>
             <td>{{ idea.industry }}</td>
-            <td><span class="badge badge--success">{{ idea.score|default:'—' }}</span></td>
+            <td>
+              {% with idea.score as score %}
+                {% if score %}
+                  {% if score >= 7 %}
+                    <span class="score-badge score-badge-high">{{ score }}</span>
+                  {% elif score >= 5 %}
+                    <span class="score-badge score-badge-medium">{{ score }}</span>
+                  {% else %}
+                    <span class="score-badge score-badge-low">{{ score }}</span>
+                  {% endif %}
+                {% else %}
+                  <span class="text-muted">—</span>
+                {% endif %}
+              {% endwith %}
+            </td>
             <td>{{ idea.created_at|date:"M d, Y" }}</td>
-            <td class="table-actions">
-              <a href="/history/{{ idea.id }}/" class="icon-btn" aria-label="View report"><i data-lucide="Eye"></i></a>
-              <a href="/history/{{ idea.id }}/download/" class="icon-btn" aria-label="Download pdf"><i data-lucide="Download"></i></a>
+            <td>
+              <div class="table-actions">
+                <a href="/history/{{ idea.id }}/" class="table-btn">View</a>
+                <a href="/history/{{ idea.id }}/download/" class="table-btn">Download</a>
+              </div>
             </td>
           </tr>
           {% empty %}
           <tr>
-            <td colspan="5" class="text-muted">No recent reports yet. Start with a new validation.</td>
+            <td colspan="5">
+              <div class="empty-state">
+                No recent reports yet. Start with a new validation.
+              </div>
+            </td>
           </tr>
           {% endfor %}
         </tbody>
       </table>
     </div>
-  </section>
+  </div>
 </div>
 {% endblock %}
 
@@ -178,12 +202,14 @@
         datasets: [{
           label: 'Validation score',
           data: trendScores.length ? trendScores : [6, 7.2, 7.8, 8.1, 8.5],
-          borderColor: '#10A37F',
-          backgroundColor: 'rgba(16, 163, 127, 0.18)',
+          borderColor: '#2563EB',
+          backgroundColor: 'rgba(37, 99, 235, 0.08)',
           fill: true,
-          tension: 0.38,
+          tension: 0.4,
           pointRadius: 4,
-          pointBackgroundColor: '#ffffff'
+          pointBackgroundColor: '#2563EB',
+          pointBorderWidth: 2,
+          pointBorderColor: '#FFFFFF'
         }]
       },
       options: {
@@ -191,11 +217,11 @@
         maintainAspectRatio: false,
         plugins: {
           legend: { display: false },
-          tooltip: { backgroundColor: 'rgba(17, 24, 39, 0.95)', titleColor: '#FAFAFA', bodyColor: '#F8FAFC' }
+          tooltip: { backgroundColor: '#0F172A', titleColor: '#FFFFFF', bodyColor: '#F1F5F9', padding: 12, cornerRadius: 8 }
         },
         scales: {
-          x: { grid: { display: false }, ticks: { color: '#A1A1AA' } },
-          y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#A1A1AA' }, beginAtZero: true }
+          x: { grid: { display: false }, ticks: { color: '#64748B' } },
+          y: { grid: { color: 'rgba(229,231,235,0.6)' }, ticks: { color: '#64748B' }, beginAtZero: true, suggestedMax: 10 }
         }
       }
     });
@@ -209,7 +235,7 @@
         labels: industryLabels,
         datasets: [{
           data: industryData,
-          backgroundColor: ['#10A37F', '#22C55E', '#3B82F6', '#7C3AED'],
+          backgroundColor: ['#2563EB', '#10B981', '#F59E0B', '#7C3AED'],
           borderWidth: 0
         }]
       },
@@ -217,8 +243,8 @@
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { position: 'bottom', labels: { color: '#F8FAFC' } },
-          tooltip: { backgroundColor: 'rgba(17, 24, 39, 0.95)' }
+          legend: { position: 'bottom', labels: { color: '#64748B', padding: 16, font: { size: 12 } } },
+          tooltip: { backgroundColor: '#0F172A', bodyColor: '#F1F5F9', padding: 12, cornerRadius: 8 }
         }
       }
     });
@@ -233,18 +259,21 @@
         datasets: [{
           label: 'Success rate',
           data: successData,
-          backgroundColor: ['#10A37F', '#EF4444'],
-          borderRadius: 12,
-          maxBarThickness: 28
+          backgroundColor: ['#10B981', '#F59E0B'],
+          borderRadius: 6,
+          maxBarThickness: 40
         }]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
-        plugins: { legend: { display: false }, tooltip: { backgroundColor: 'rgba(17, 24, 39, 0.95)' } },
+        plugins: {
+          legend: { display: false },
+          tooltip: { backgroundColor: '#0F172A', bodyColor: '#F1F5F9', padding: 12, cornerRadius: 8 }
+        },
         scales: {
-          x: { grid: { display: false }, ticks: { color: '#A1A1AA' } },
-          y: { grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#A1A1AA', beginAtZero: true, max: 100 } }
+          x: { grid: { display: false }, ticks: { color: '#64748B' } },
+          y: { grid: { color: 'rgba(229,231,235,0.6)' }, ticks: { color: '#64748B', beginAtZero: true, max: 100 } }
         }
       }
     });

@@ -2,970 +2,354 @@
 {% load static %}
 
 {% block topbar_actions %}
-<a href="/download/"
-class="btn btn--primary btn--sm">
-Download PDF
-</a>
+<a href="/download/" class="report-btn report-btn-primary">Download PDF</a>
 {% endblock %}
 
 {% block content %}
-<!-- HERO HEADER -->
-<section class="section section--sm">
-
-<div class="container">
-
-<div class="card card--prominent">
-
-<div class="d-flex items-center justify-between flex-wrap gap-4">
-
-<div>
-
-<div class="hero__badge">
-
-AI Business Analysis
-
-</div>
-
-<h1 class="section__title mt-4">
-
-Startup Analysis Report
-
-</h1>
-
-<p class="section__description">
-
-AI-powered evaluation of your startup idea.
-
-</p>
-
-</div>
-
-<div class="score-badge score-badge--high">
-
-<div class="score-badge__value">
-
-{{ analysis.score }}
-
-</div>
-
-<div class="score-progress">
-
-<div
-class="score-progress-fill"
-
-style="
-width:
-{{ analysis.score|slice:':1' }}0%;
-">
-
-</div>
-
-</div>
-
-<p class="score-percent">
-
-<div class="score-message">
-
-{% if analysis.score >= 9 %}
-
-🟢 Excellent Startup Idea
-
-{% elif analysis.score >= 7 %}
-
-🔵 Strong Business Potential
-
-{% elif analysis.score >= 5 %}
-
-🟡 Moderate Opportunity
-
-{% else %}
-
-🔴 High Risk Startup
-
-{% endif %}
-
-</div>    
-
-{{ analysis.score }}/10
-
-</p>
-
-<div class="score-badge__label">
-
-Score
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- OVERVIEW -->
-<section class="section">
-
-<div class="container">
-
-<div class="card">
-
-<div class="card__header">
-
-<div class="card__icon">
-
-🚀
-
-</div>
-
-<div>
-
-<h2 class="card__title">
-
-Startup Overview
-
-</h2>
-
-<p class="text-secondary">
-
-Business Summary
-
-</p>
-
-</div>
-
-</div>
-
-<div class="grid grid--2 mt-6">
-
-<div>
-
-<h4 class="text-secondary">
-
-Title
-
-</h4>
-
-<p class="fw-semibold">
-
-{{ title }}
-
-</p>
-
-</div>
-
-<div>
-
-<h4 class="text-secondary">
-
-Industry
-
-</h4>
-
-<p class="fw-semibold">
-
-{{ industry }}
-
-</p>
-
-</div>
-
-</div>
-
-<div class="mt-6">
-
-<h4 class="text-secondary">
-
-Description
-
-</h4>
-
-<p>
-
-{{ description }}
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-<!-- BUSINESS CHART -->
-
-<section class="section">
-
-<div class="container">
-
-<div class="card">
-
-<div class="card__header">
-
-<div class="card__icon">
-
-📊
-
-</div>
-
-<div>
-
-<h2 class="card__title">
-
-Business Analysis Score
-
-</h2>
-
-<p class="text-secondary">
-
-AI visual startup evaluation
-
-</p>
-
-</div>
-
-</div>
-
-<div class="chart-box">
-
-<div class="chart-row">
-
-<span>
-
-Strength
-
-</span>
-
-<div class="chart-bar">
-
-<div
-class="chart-fill strength">
-
-</div>
-
-</div>
-
-<span>
-
-8/10
-
-</span>
-
-</div>
-
-<div class="chart-row">
-
-<span>
-
-Market
-
-</span>
-
-<div class="chart-bar">
-
-<div
-class="chart-fill market">
-
-</div>
-
-</div>
-
-<span>
-
-7/10
-
-</span>
-
-</div>
-
-<div class="chart-row">
-
-<span>
-
-Business
-
-</span>
-
-<div class="chart-bar">
-
-<div
-class="chart-fill business">
-
-</div>
-
-</div>
-
-<span>
-
-8/10
-
-</span>
-
-</div>
-
-<div class="chart-row">
-
-<span>
-
-Scalability
-
-</span>
-
-<div class="chart-bar">
-
-<div
-class="chart-fill scale">
-
-</div>
-
-</div>
-
-<span>
-
-9/10
-
-</span>
-
-</div>
-
-<div class="chart-row">
-
-<span>
-
-Risk
-
-</span>
-
-<div class="chart-bar">
-
-<div
-class="chart-fill risk">
-
-</div>
-
-</div>
-
-<span>
-
-5/10
-
-</span>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-<!-- SWOT -->
-<section class="section">
-
-<div class="container">
-
-<div class="section__header">
-
-<div class="section__eyebrow">
-
-<!-- SWOT PIE CHART -->
-
-<section class="section">
-
-<div class="container">
-
-<div class="card">
-
-<div class="card__header">
-
-<div class="card__icon">
-
-🥧
-
-</div>
-
-<div>
-
-<h2 class="card__title">
-
-SWOT Distribution
-
-</h2>
-
-<p class="text-secondary">
-
-AI startup analysis overview
-
-</p>
-
-</div>
-
-</div>
-
-<div class="pie-wrapper">
-
-<div class="pie-chart">
-
-</div>
-
-<div class="pie-legend">
-
-<div>
-
-<span class="legend-color strength-c">
-
-</span>
-
-Strength
-
-</div>
-
-<div>
-
-<span class="legend-color weakness-c">
-
-</span>
-
-Weakness
-
-</div>
-
-<div>
-
-<span class="legend-color opportunity-c">
-
-</span>
-
-Opportunity
-
-</div>
-
-<div>
-
-<span class="legend-color threat-c">
-
-</span>
-
-Threat
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-ANALYSIS
-
-</div>
-
-<h2 class="section__title">
-
-SWOT Analysis
-
-</h2>
-
-</div>
-
-<div class="swot">
-
-<!-- Strength -->
-<div class="swot__card swot__card--strength">
-
-<div class="swot__label">
-
-Strengths
-
-</div>
-
-<div class="swot__item">
-
-{{ analysis.strengths }}
-
-</div>
-
-</div>
-
-<!-- Weakness -->
-<div class="swot__card swot__card--weakness">
-
-<div class="swot__label">
-
-Weaknesses
-
-</div>
-
-<div class="swot__item">
-
-{{ analysis.weaknesses }}
-
-</div>
-
-</div>
-
-<!-- Opportunity -->
-<div class="swot__card swot__card--opportunity">
-
-<div class="swot__label">
-
-Opportunities
-
-</div>
-
-<div class="swot__item">
-
-{{ analysis.opportunities }}
-
-</div>
-
-</div>
-
-<!-- Threat -->
-<div class="swot__card swot__card--threat">
-
-<div class="swot__label">
-
-Threats
-
-</div>
-
-<div class="swot__item">
-
-{{ analysis.threats }}
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- MARKET + COMPETITORS -->
-<section class="section">
-
-<div class="container">
-
-<div class="grid grid--2">
-
-<!-- MARKET -->
-<div class="card">
-
-<div class="card__header">
-
-<div class="card__icon">
-
-🌍
-
-</div>
-
-<div>
-
-<h3 class="card__title">
-
-Market Analysis
-
-</h3>
-
-</div>
-
-</div>
-
-<p class="mt-4">
-
-{{ analysis.market }}
-
-</p>
-
-</div>
-
-<!-- COMPETITOR -->
-<div class="card">
-
-<div class="card__header">
-
-<div class="card__icon">
-
-🏁
-
-</div>
-
-<div>
-
-<h3 class="card__title">
-
-Competitors
-
-</h3>
-
-</div>
-
-</div>
-
-<p class="mt-4">
-
-{{ analysis.competitors }}
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- AI BUSINESS INSIGHTS -->
-
-<section class="section">
-
-<div class="container">
-
-<div class="section__header">
-
-<div class="section__eyebrow">
-
-AI INSIGHTS
-
-</div>
-
-<h2 class="section__title">
-
-Business Intelligence
-
-</h2>
-
-<p class="section__description">
-
-AI-generated startup recommendations.
-
-</p>
-
-</div>
-
-<div class="grid grid--3">
-
-<!-- IMPROVEMENTS -->
-<div class="card">
-
-<div class="card__header">
-
-<div class="card__icon">
-
-💡
-
-</div>
-
-<div>
-
-<h3 class="card__title">
-
-Improvement Suggestions
-
-</h3>
-
-</div>
-
-</div>
-
-<p class="mt-4">
-
-{{ analysis.improvements }}
-
-</p>
-
-</div>
-
-<!-- BUSINESS MODEL -->
-<div class="card">
-
-<div class="card__header">
-
-<div class="card__icon">
-
-💰
-
-</div>
-
-<div>
-
-<h3 class="card__title">
-
-Business Model
-
-</h3>
-
-</div>
-
-</div>
-
-<p class="mt-4">
-
-{{ analysis.business_model }}
-
-</p>
-
-</div>
-
-<!-- INVESTOR PITCH -->
-<div class="card">
-
-<div class="card__header">
-
-<div class="card__icon">
-
-🎤
-
-</div>
-
-<div>
-
-<h3 class="card__title">
-
-Investor Pitch
-
-</h3>
-
-</div>
-
-</div>
-
-<p class="mt-4">
-
-{{ analysis.pitch }}
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- RISK -->
-
-<div class="card">
-
-<div class="card__header">
-
-<div class="card__icon">
-
-⚠️
-
-</div>
-
-<div>
-
-<h3 class="card__title">
-
-Risk Analysis
-
-</h3>
-
-</div>
-
-</div>
-
-<p class="mt-4">
-
-{{ analysis.risk }}
-
-</p>
-
-</div>
-
-<!-- FUNDING -->
-
-<div class="card">
-
-<div class="card__header">
-
-<div class="card__icon">
-
-💰
-
-</div>
-
-<div>
-
-<h3 class="card__title">
-
-Funding Estimate
-
-</h3>
-
-</div>
-
-</div>
-
-<p class="mt-4">
-
-{{ analysis.funding }}
-
-</p>
-
-</div>
-
-<!-- TAM SAM SOM -->
-
-<div class="card">
-
-<div class="card__header">
-
-<div class="card__icon">
-
-🌍
-
-</div>
-
-<div>
-
-<h3 class="card__title">
-
-Market Breakdown
-
-</h3>
-
-</div>
-
-</div>
-
-<p class="mt-4">
-
-{{ analysis.tam_sam_som }}
-
-</p>
-
-</div>
-
-<!-- NAME SUGGESTIONS -->
-
-<div class="card">
-
-<div class="card__header">
-
-<div class="card__icon">
-
-✨
-
-</div>
-
-<div>
-
-<h3 class="card__title">
-
-Startup Name Ideas
-
-</h3>
-
-</div>
-
-</div>
-
-<p class="mt-4">
-
-{{ analysis.name_suggestions }}
-
-</p>
-
-</div>
-
-<!-- TAGLINE -->
-
-<div class="card">
-
-<div class="card__header">
-
-<div class="card__icon">
-
-🏷️
-
-</div>
-
-<div>
-
-<h3 class="card__title">
-
-Brand Tagline
-
-</h3>
-
-</div>
-
-</div>
-
-<p class="mt-4">
-
-{{ analysis.tagline }}
-
-</p>
-
-</div>
-
-<!-- FINAL CTA -->
-<section class="section section--lg">
-
-<div class="container">
-
-<div class="card card--blue text-center p-8">
-
-<h2 class="text-3xl fw-bold mb-4">
-
-Download Full Business Report
-
-</h2>
-
-<p class="mb-6">
-
-Professional AI-generated PDF
-ready to share and present.
-
-</p>
-
-<a href="/download/"
-class="btn btn--light btn--xl">
-
-Download PDF Report
-
-</a>
-
-</div>
-
-</div>
-
-</section>
-
-<!-- FOOTER -->
-<footer class="footer">
-<div class="container">
-<div class="footer__bottom">
-<p class="footer__copy">
-© 2026 AI Startup Validator
-</p>
-<div class="footer__legal">
-<a href="#">
-Privacy
-</a>
-<a href="#">
-Terms
-</a>
-</div>
-</div>
-</div>
-</footer>
+<div class="result-redesign">
+  <div class="result-container">
+    <!-- Top Hero -->
+    <div class="result-hero">
+      <div class="result-hero-left">
+        <div class="hero-badge">AI Business Analysis</div>
+        <h1>{{ title }}</h1>
+        <p class="result-hero-subtitle">Startup Analysis Report</p>
+        <div class="result-hero-details">
+          <div class="result-detail">
+            <span class="detail-label">Industry</span>
+            <span class="detail-value">{{ industry }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="result-hero-right">
+        <div class="score-card">
+          <div class="score-circle-container">
+            <svg viewBox="0 0 160 160" class="score-circle">
+              <circle cx="80" cy="80" r="70" fill="none" stroke="#e5e7eb" stroke-width="12"/>
+              <circle 
+                cx="80" 
+                cy="80" 
+                r="70" 
+                fill="none" 
+                stroke="{% if analysis.score >= 9 %}#10b981{% elif analysis.score >= 7 %}#2563eb{% elif analysis.score >= 5 %}#f59e0b{% else %}#ef4444{% endif %}" 
+                stroke-width="12"
+                stroke-linecap="round"
+                stroke-dasharray="440"
+                stroke-dashoffset="{% widthratio analysis.score 10 44 %}"
+                transform="rotate(-90 80 80)"/>
+            </svg>
+            <div class="score-value">{{ analysis.score }}</div>
+          </div>
+          <div class="score-label">Score</div>
+          <div class="score-message">
+            {% if analysis.score >= 9 %}
+              <span class="score-message-success">Excellent Startup Idea</span>
+            {% elif analysis.score >= 7 %}
+              <span class="score-message-primary">Strong Business Potential</span>
+            {% elif analysis.score >= 5 %}
+              <span class="score-message-warning">Moderate Opportunity</span>
+            {% else %}
+              <span class="score-message-danger">High Risk Startup</span>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Score Section -->
+    <div class="score-section">
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div class="chart-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10"></line>
+              <line x1="12" y1="20" x2="12" y2="4"></line>
+              <line x1="6" y1="20" x2="6" y2="14"></line>
+            </svg>
+          </div>
+          <div>
+            <h2 class="chart-card-title">Business Analysis Score</h2>
+            <p class="chart-card-subtitle">AI visual startup evaluation</p>
+          </div>
+        </div>
+        <div class="chart-rows">
+          <div class="chart-row">
+            <span class="chart-label">Strength</span>
+            <div class="chart-bar">
+              <div class="chart-fill strength"></div>
+            </div>
+            <span class="chart-value">8/10</span>
+          </div>
+          <div class="chart-row">
+            <span class="chart-label">Market</span>
+            <div class="chart-bar">
+              <div class="chart-fill market"></div>
+            </div>
+            <span class="chart-value">7/10</span>
+          </div>
+          <div class="chart-row">
+            <span class="chart-label">Business</span>
+            <div class="chart-bar">
+              <div class="chart-fill business"></div>
+            </div>
+            <span class="chart-value">8/10</span>
+          </div>
+          <div class="chart-row">
+            <span class="chart-label">Scalability</span>
+            <div class="chart-bar">
+              <div class="chart-fill scale"></div>
+            </div>
+            <span class="chart-value">9/10</span>
+          </div>
+          <div class="chart-row">
+            <span class="chart-label">Risk</span>
+            <div class="chart-bar">
+              <div class="chart-fill risk"></div>
+            </div>
+            <span class="chart-value">5/10</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SWOT Pie Chart -->
+      <div class="chart-card">
+        <div class="chart-card-header">
+          <div class="chart-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="10" y1="8" x2="10" y2="12"></line>
+              <line x1="10" y1="16" x2="10.01" y2="16"></line>
+            </svg>
+          </div>
+          <div>
+            <h2 class="chart-card-title">SWOT Distribution</h2>
+            <p class="chart-card-subtitle">AI startup analysis overview</p>
+          </div>
+        </div>
+        <div class="pie-wrapper">
+          <div class="pie-chart-container">
+            <canvas id="swotPieChart"></canvas>
+          </div>
+          <div class="pie-legend">
+            <div class="legend-item">
+              <span class="legend-color strength-c"></span>
+              <span>Strength</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-color weakness-c"></span>
+              <span>Weakness</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-color opportunity-c"></span>
+              <span>Opportunity</span>
+            </div>
+            <div class="legend-item">
+              <span class="legend-color threat-c"></span>
+              <span>Threat</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SWOT Analysis - 4 Cards -->
+    <h2 class="section-title">SWOT Analysis</h2>
+    <div class="grid-4">
+      <div class="swot-card strengths">
+        <div class="swot-label">Strengths</div>
+        <p class="result-card-text">{{ analysis.strengths }}</p>
+      </div>
+      <div class="swot-card weaknesses">
+        <div class="swot-label">Weaknesses</div>
+        <p class="result-card-text">{{ analysis.weaknesses }}</p>
+      </div>
+      <div class="swot-card opportunities">
+        <div class="swot-label">Opportunities</div>
+        <p class="result-card-text">{{ analysis.opportunities }}</p>
+      </div>
+      <div class="swot-card threats">
+        <div class="swot-label">Threats</div>
+        <p class="result-card-text">{{ analysis.threats }}</p>
+      </div>
+    </div>
+
+    <!-- Market & Competitor Analysis -->
+    <div class="grid-2">
+      <div class="result-card">
+        <div class="result-card-header">
+          <div class="result-card-icon primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="10" r="3"></circle>
+              <path d="M12 21s-8-4.5-8-11a8 8 0 0 1 16 0c0 6.5-8 11-8 11z"></path>
+            </svg>
+          </div>
+          <h3 class="result-card-title">Market Analysis</h3>
+        </div>
+        <p class="result-card-text">{{ analysis.market }}</p>
+      </div>
+      <div class="result-card">
+        <div class="result-card-header">
+          <div class="result-card-icon primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <h3 class="result-card-title">Competitor Analysis</h3>
+        </div>
+        <p class="result-card-text">{{ analysis.competitors }}</p>
+      </div>
+    </div>
+
+    <!-- Business Insights Grid -->
+    <h2 class="section-title">Business Intelligence</h2>
+    <div class="grid-2">
+      <div class="result-card">
+        <div class="result-card-header">
+          <div class="result-card-icon primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10"></polygon>
+            </svg>
+          </div>
+          <h3 class="result-card-title">Improvement Suggestions</h3>
+        </div>
+        <p class="result-card-text">{{ analysis.improvements }}</p>
+      </div>
+      <div class="result-card">
+        <div class="result-card-header">
+          <div class="result-card-icon primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </div>
+          <h3 class="result-card-title">Business Model</h3>
+        </div>
+        <p class="result-card-text">{{ analysis.business_model }}</p>
+      </div>
+    </div>
+
+    <!-- Risk & Funding -->
+    <div class="grid-2">
+      <div class="result-card">
+        <div class="result-card-header">
+          <div class="result-card-icon warning">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="12"></line>
+              <line x1="12" y1="16" x2="12.01" y2="16"></line>
+            </svg>
+          </div>
+          <h3 class="result-card-title">Risk Analysis</h3>
+        </div>
+        <p class="result-card-text">{{ analysis.risk }}</p>
+      </div>
+      <div class="result-card">
+        <div class="result-card-header">
+          <div class="result-card-icon success">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </div>
+          <h3 class="result-card-title">Funding Suggestions</h3>
+        </div>
+        <p class="result-card-text">{{ analysis.funding }}</p>
+      </div>
+    </div>
+
+    <!-- Market Breakdown & Investor Pitch -->
+    <div class="grid-2">
+      <div class="result-card">
+        <div class="result-card-header">
+          <div class="result-card-icon primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="10" r="3"></circle>
+              <path d="M12 21s-8-4.5-8-11a8 8 0 0 1 16 0c0 6.5-8 11-8 11z"></path>
+            </svg>
+          </div>
+          <h3 class="result-card-title">Market Breakdown</h3>
+        </div>
+        <p class="result-card-text">{{ analysis.tam_sam_som }}</p>
+      </div>
+      <div class="result-card">
+        <div class="result-card-header">
+          <div class="result-card-icon success">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="20 21 12 13.44 4 21"></polygon>
+              <line x1="12" y1="2.76" x2="12" y2="13.44"></line>
+            </svg>
+          </div>
+          <h3 class="result-card-title">Investor Pitch</h3>
+        </div>
+        <p class="result-card-text">{{ analysis.pitch }}</p>
+      </div>
+    </div>
+
+    <!-- Name Suggestions & Tagline -->
+    <div class="grid-2">
+      <div class="result-card">
+        <div class="result-card-header">
+          <div class="result-card-icon primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+              <path d="M2 17l10 5 10-5M2 12l10 5 10-5"></path>
+            </svg>
+          </div>
+          <h3 class="result-card-title">Startup Name Ideas</h3>
+        </div>
+        <p class="result-card-text">{{ analysis.name_suggestions }}</p>
+      </div>
+      <div class="result-card">
+        <div class="result-card-header">
+          <div class="result-card-icon success">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </div>
+          <h3 class="result-card-title">Brand Tagline</h3>
+        </div>
+        <p class="result-card-text">{{ analysis.tagline }}</p>
+      </div>
+    </div>
+
+    <!-- Final CTA -->
+    <div class="result-cta">
+      <h2 class="result-cta-title">Download Full Business Report</h2>
+      <p class="result-cta-desc">Professional AI-generated PDF ready to share and present.</p>
+      <a href="/download/" class="report-btn report-btn-primary">Download PDF Report</a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const pieCtx = document.getElementById('swotPieChart');
+  if (pieCtx) {
+    new Chart(pieCtx, {
+      type: 'doughnut',
+      data: {
+        labels: ['Strength', 'Weakness', 'Opportunity', 'Threat'],
+        datasets: [{
+          data: [35, 15, 30, 20],
+          backgroundColor: ['#10b981', '#ef4444', '#2563eb', '#f59e0b'],
+          borderWidth: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+          legend: { display: false }
+        }
+      }
+    });
+  }
+});
+</script>
 {% endblock %}

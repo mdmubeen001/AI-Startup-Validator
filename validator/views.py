@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from .forms import IdeaForm
+from django.shortcuts import render, redirect
+from .forms import IdeaForm, CompareForm
 from .models import StartupIdea
 from .ai_engine import (analyze_idea, compare_ideas)
 from django.http import FileResponse
@@ -202,38 +202,43 @@ def result_page(request):
 
 @login_required
 def compare_view(request):
-
     if request.method == 'POST':
-
-        idea1 = request.POST.get(
-            'idea1'
-        )
-
-        idea2 = request.POST.get(
-            'idea2'
-        )
-
-        result = compare_ideas(
-            idea1,
-            idea2
-        )
-
-        return render(
-
-            request,
-
-            'compare_result.html',
-
-            {
-                'result': result,
-                'idea1': idea1,
-                'idea2': idea2
-            }
-        )
-
+        form = CompareForm(request.POST)
+        if form.is_valid():
+            # Format idea 1 data
+            idea1 = f"""Startup Name: {form.cleaned_data['first_title']}
+Industry: {form.cleaned_data['first_industry']}
+Description: {form.cleaned_data['first_description']}
+Problem: {form.cleaned_data['first_problem']}
+Revenue Model: {form.cleaned_data['first_revenue_model']}
+USP: {form.cleaned_data['first_usp']}"""
+            
+            # Format idea 2 data
+            idea2 = f"""Startup Name: {form.cleaned_data['second_title']}
+Industry: {form.cleaned_data['second_industry']}
+Description: {form.cleaned_data['second_description']}
+Problem: {form.cleaned_data['second_problem']}
+Revenue Model: {form.cleaned_data['second_revenue_model']}
+USP: {form.cleaned_data['second_usp']}"""
+            
+            result = compare_ideas(idea1, idea2)
+            
+            return render(
+                request,
+                'compare_result.html',
+                {
+                    'result': result,
+                    'idea1': form.cleaned_data['first_title'],
+                    'idea2': form.cleaned_data['second_title']
+                }
+            )
+    else:
+        form = CompareForm()
+        
     return render(
         request,
-        'compare.html'
+        'compare.html',
+        {'form': form}
     )
 
 @login_required
@@ -317,3 +322,11 @@ def history_detail(
             'analysis': analysis
         }
     )
+
+
+@login_required
+def delete_idea(request, idea_id):
+    if request.method == 'POST':
+        idea = StartupIdea.objects.get(id=idea_id, user=request.user)
+        idea.delete()
+    return redirect('history')

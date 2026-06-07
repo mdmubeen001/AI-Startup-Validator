@@ -1,45 +1,130 @@
 {% extends 'base_guest.html' %}
+{% load static %}
+
+{% block title %}Login | AI Startup Validator{% endblock %}
 
 {% block content %}
-
-<div class="auth-page">
-
-    <div class="auth-card">
-
-        <h1>Welcome Back 👋</h1>
-
-        <p>Login to continue</p>
-
-        {% if error %}
-        <div class="error-box">
-            {{ error }}
+<div class="login-redesign">
+  <div class="login-container">
+    <!-- Left: Branding -->
+    <div class="login-branding">
+      <div class="login-branding-logo">
+        <div class="login-branding-logo-icon">AI</div>
+        <div class="login-branding-logo-text">AI Startup Validator</div>
+      </div>
+      <h2 class="login-branding-title">Welcome back</h2>
+      <p class="login-branding-description">
+        Log in to access your startup validation reports and continue your founder journey.
+      </p>
+      <div class="login-benefits">
+        <div class="login-benefit">
+          <div class="login-benefit-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <div class="login-benefit-text">Access all your validation reports</div>
         </div>
-        {% endif %}
-
-        <form method="POST">
-
-            {% csrf_token %}
-
-            {{ form.as_p }}
-
-            <button type="submit" class="auth-btn">
-                Login
-            </button>
-
-        </form>
-
-        <p class="auth-footer">
-
-            Don't have an account?
-
-            <a href="{% url 'register' %}">
-                Register
-            </a>
-
-        </p>
-
+        <div class="login-benefit">
+          <div class="login-benefit-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <div class="login-benefit-text">Compare startup ideas side by side</div>
+        </div>
+        <div class="login-benefit">
+          <div class="login-benefit-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <div class="login-benefit-text">Generate investor-ready documents</div>
+        </div>
+      </div>
     </div>
 
+    <!-- Right: Login Form -->
+    <div class="login-form-section">
+      <div class="login-form-header">
+        <h2 class="login-form-title">Log in</h2>
+        <p class="login-form-subtitle">Enter your credentials to access your account</p>
+      </div>
+
+      {% if error %}
+      <div class="login-error">{{ error }}</div>
+      {% endif %}
+
+      <form method="POST" class="login-form">
+        {% csrf_token %}
+
+        <div class="login-form-group">
+          <label for="id_username" class="login-form-label">Username</label>
+          <div class="login-form-input-wrapper">
+            {{ form.username }}
+          </div>
+        </div>
+
+        <div class="login-form-group">
+          <label for="id_password" class="login-form-label">Password</label>
+          <div class="login-form-input-wrapper">
+            {{ form.password }}
+            <button type="button" class="login-form-toggle-password" onclick="togglePassword()">
+              <svg id="eye-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+
+        <button type="submit" class="login-btn">
+          Log in
+        </button>
+      </form>
+
+      <div class="login-footer">
+        Don't have an account?
+        <a href="{% url 'register' %}">Register</a>
+      </div>
+    </div>
+  </div>
 </div>
+
+<script>
+  // Add CSS classes to Django form inputs
+  document.addEventListener('DOMContentLoaded', function() {
+    const usernameInput = document.getElementById('id_username');
+    const passwordInput = document.getElementById('id_password');
+    
+    if (usernameInput) {
+      usernameInput.classList.add('login-form-input');
+    }
+    if (passwordInput) {
+      passwordInput.classList.add('login-form-input');
+      passwordInput.classList.add('password');
+    }
+  });
+
+  function togglePassword() {
+    const passwordInput = document.getElementById('id_password');
+    const eyeIcon = document.getElementById('eye-icon');
+    
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      eyeIcon.innerHTML = `
+        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+        <line x1="1" y1="1" x2="23" y2="23"></line>
+      `;
+    } else {
+      passwordInput.type = 'password';
+      eyeIcon.innerHTML = `
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+      `;
+    }
+  }
+</script>
 
 {% endblock %}

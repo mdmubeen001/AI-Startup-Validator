@@ -3,52 +3,128 @@
 {% block title %}History | AI Startup Validator{% endblock %}
 
 {% block content %}
-<section class="page-section">
-  <div class="page-section-head">
-    <div>
-      <span class="eyebrow">History</span>
-      <h2>Startup report archive</h2>
-      <p class="section-copy">All completed validations in a clean action-ready timeline.</p>
+<div class="history-redesign">
+  <div class="history-container">
+    <!-- Header -->
+    <div class="history-header">
+      <div class="history-title-block">
+        <h1 class="history-title">Startup report library</h1>
+        <p class="history-subtitle">All completed validations in one place</p>
+      </div>
+      <div class="history-controls">
+        <input 
+          type="text" 
+          class="history-input history-search" 
+          placeholder="Search reports..." 
+          id="search-input"
+        >
+        <select class="history-input" id="filter-select">
+          <option value="">All industries</option>
+          <option value="ai">AI</option>
+          <option value="fintech">Fintech</option>
+          <option value="health">Health</option>
+          <option value="commerce">Commerce</option>
+        </select>
+      </div>
     </div>
-    <a href="/dashboard/" class="btn btn-tertiary">Back to dashboard</a>
-  </div>
 
-  <div class="card table-card">
-    <div class="table-wrap">
-      <table class="table-dashboard">
-        <thead>
-          <tr>
-            <th>Title</th>
-            <th>Industry</th>
-            <th>Score</th>
-            <th>Date</th>
-            <th class="text-right">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for idea in ideas %}
-          <tr>
-            <td>
-              <strong>{{ idea.title }}</strong>
-              <span class="table-note">{{ idea.description|truncatechars:70 }}</span>
-            </td>
-            <td><span class="badge badge--soft">{{ idea.industry }}</span></td>
-            <td><span class="badge badge--success">{{ idea.score|default:'—' }}</span></td>
-            <td>{{ idea.created_at|date:"M d, Y" }}</td>
-            <td class="table-actions">
-              <a href="/history/{{ idea.id }}/" class="icon-btn" aria-label="View report"><i data-lucide="Eye"></i></a>
-              <a href="/history/{{ idea.id }}/download/" class="icon-btn" aria-label="Download PDF"><i data-lucide="Download"></i></a>
-              <a href="/history/{{ idea.id }}/delete/" class="icon-btn icon-btn--danger" aria-label="Delete report"><i data-lucide="Trash2"></i></a>
-            </td>
-          </tr>
-          {% empty %}
-          <tr>
-            <td colspan="5" class="text-muted">No reports have been generated yet. Create your first validation.</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+    {% if ideas %}
+      <!-- Reports Grid -->
+      <div class="reports-grid" id="reports-grid">
+        {% for idea in ideas %}
+          <div class="report-card" data-industry="{{ idea.industry|lower }}">
+            <div class="report-card-top">
+              <h3 class="report-card-title">{{ idea.title }}</h3>
+              <div class="report-card-badges">
+                <span class="badge badge-industry">{{ idea.industry }}</span>
+                {% with idea.score as score %}
+                  {% if score %}
+                    {% if score >= 7 %}
+                      <span class="badge badge-score-high">{{ score }}</span>
+                    {% elif score >= 5 %}
+                      <span class="badge badge-score-medium">{{ score }}</span>
+                    {% else %}
+                      <span class="badge badge-score-low">{{ score }}</span>
+                    {% endif %}
+                  {% else %}
+                    <span class="badge badge-industry">—</span>
+                  {% endif %}
+                {% endwith %}
+              </div>
+            </div>
+            <p class="report-card-description">
+              {% if idea.description %}
+                {{ idea.description|truncatechars:120 }}
+              {% else %}
+                No description
+              {% endif %}
+            </p>
+            <div class="report-card-footer">
+                <div class="report-card-date">
+                    {{ idea.created_at|date:"M d, Y" }}
+                </div>
+                <div class="report-card-actions">
+                    <a href="/history/{{ idea.id }}/" class="report-btn report-btn-primary">View Report</a>
+                    <a href="/history/{{ idea.id }}/download/" class="report-btn report-btn-secondary">Download</a>
+                    <form method="post" action="{% url 'delete_idea' idea.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="report-btn report-btn-danger" onclick="return confirm('Are you sure you want to delete this report?');">Delete</button>
+                    </form>
+                </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <!-- Empty State -->
+      <div class="history-empty">
+        <p class="history-empty-text">No reports have been generated yet. Create your first validation!</p>
+        <a href="/idea/" class="report-btn report-btn-primary">Create your first idea</a>
+      </div>
+    {% endif %}
   </div>
-</section>
+</div>
+
+<script>
+  // Basic search and filter functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search-input');
+    const filterSelect = document.getElementById('filter-select');
+    const reportsGrid = document.getElementById('reports-grid');
+    
+    if (searchInput && filterSelect && reportsGrid) {
+      const filterCards = function() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filterIndustry = filterSelect.value.toLowerCase();
+        
+        const cards = reportsGrid.querySelectorAll('.report-card');
+        cards.forEach(card => {
+          const title = card.querySelector('.report-card-title').textContent.toLowerCase();
+          const description = card.querySelector('.report-card-description').textContent.toLowerCase();
+          const industry = card.dataset.industry;
+          
+          let matchesSearch = true;
+          let matchesFilter = true;
+          
+          if (searchTerm) {
+            matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
+          }
+          
+          if (filterIndustry) {
+            matchesFilter = industry.includes(filterIndustry);
+          }
+          
+          if (matchesSearch && matchesFilter) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      };
+      
+      searchInput.addEventListener('input', filterCards);
+      filterSelect.addEventListener('change', filterCards);
+    }
+  });
+</script>
 {% endblock %}

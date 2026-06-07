@@ -97,3 +97,19 @@ class IdeaForm(forms.ModelForm):
             )
 
         }
+
+
+class CompareForm(forms.Form):
+    first_title = forms.CharField(max_length=255, label='Startup Name')
+    first_industry = forms.CharField(max_length=255, label='Industry')
+    first_description = forms.CharField(widget=forms.Textarea(attrs={'rows': 4}), label='Description')
+    first_problem = forms.CharField(widget=forms.Textarea(attrs={'rows': 3}), label='Problem')
+    first_revenue_model = forms.CharField(max_length=255, label='Revenue Model')
+    first_usp = forms.CharField(widget=forms.Textarea(attrs={'rows': 3}), label='Unique Value Proposition')
+    
+    second_title = forms.CharField(max_length=255, label='Startup Name')
+    second_industry = forms.CharField(max_length=255, label='Industry')
+    second_description = forms.CharField(widget=forms.Textarea(attrs={'rows': 4}), label='Description')
+    second_problem = forms.CharField(widget=forms.Textarea(attrs={'rows': 3}), label='Problem')
+    second_revenue_model = forms.CharField(max_length=255, label='Revenue Model')
+    second_usp = forms.CharField(widget=forms.Textarea(attrs={'rows': 3}), label='Unique Value Proposition')

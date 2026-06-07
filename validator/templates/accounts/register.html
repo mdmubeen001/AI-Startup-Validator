@@ -1,45 +1,158 @@
 {% extends 'base_guest.html' %}
+{% load static %}
+
+{% block title %}Register | AI Startup Validator{% endblock %}
 
 {% block content %}
-
-<div class="auth-page">
-
-    <div class="auth-card">
-
-        <h1>Create Account 🚀</h1>
-
-        <p>Join AI Startup Validator</p>
-
-        {% if error %}
-        <div class="error-box">
-            {{ error }}
+<div class="register-redesign">
+  <div class="register-container">
+    <!-- Left: Branding -->
+    <div class="register-branding">
+      <div class="register-branding-logo">
+        <div class="register-branding-logo-icon">AI</div>
+        <div class="register-branding-logo-text">AI Startup Validator</div>
+      </div>
+      <h2 class="register-branding-title">Create your account</h2>
+      <p class="register-branding-description">
+        Join thousands of founders using AI to validate their startup ideas.
+      </p>
+      <div class="register-benefits">
+        <div class="register-benefit">
+          <div class="register-benefit-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <div class="register-benefit-text">Unlimited idea validations</div>
         </div>
-        {% endif %}
-
-        <form method="POST">
-
-            {% csrf_token %}
-
-            {{ form.as_p }}
-
-            <button type="submit" class="auth-btn">
-                Register
-            </button>
-
-        </form>
-
-        <p class="auth-footer">
-
-            Already have an account?
-
-            <a href="{% url 'login' %}">
-                Login
-            </a>
-
-        </p>
-
+        <div class="register-benefit">
+          <div class="register-benefit-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <div class="register-benefit-text">Side-by-side idea comparisons</div>
+        </div>
+        <div class="register-benefit">
+          <div class="register-benefit-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+          <div class="register-benefit-text">Investor-ready reports</div>
+        </div>
+      </div>
     </div>
 
+    <!-- Right: Registration Form -->
+    <div class="register-form-section">
+      <div class="register-form-header">
+        <h2 class="register-form-title">Sign up</h2>
+        <p class="register-form-subtitle">Create your account to get started</p>
+      </div>
+
+      {% if error %}
+      <div class="register-error">{{ error }}</div>
+      {% endif %}
+
+      <form method="POST" class="register-form">
+        {% csrf_token %}
+
+        <div class="register-form-group">
+          <label for="id_username" class="register-form-label">Username</label>
+          <div class="register-form-input-wrapper">
+            {{ form.username }}
+          </div>
+        </div>
+
+        <div class="register-form-group">
+          <label for="id_email" class="register-form-label">Email</label>
+          <div class="register-form-input-wrapper">
+            {{ form.email }}
+          </div>
+        </div>
+
+        <div class="register-form-group">
+          <label for="id_password" class="register-form-label">Password</label>
+          <div class="register-form-input-wrapper">
+            {{ form.password }}
+            <button type="button" class="register-form-toggle-password" onclick="togglePassword('id_password', 'eye-icon-1')">
+              <svg id="eye-icon-1" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="register-form-group">
+          <label for="id_confirm_password" class="register-form-label">Confirm Password</label>
+          <div class="register-form-input-wrapper">
+            {{ form.confirm_password }}
+            <button type="button" class="register-form-toggle-password" onclick="togglePassword('id_confirm_password', 'eye-icon-2')">
+              <svg id="eye-icon-2" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <button type="submit" class="register-btn">
+          Create account
+        </button>
+      </form>
+
+      <div class="register-footer">
+        Already have an account?
+        <a href="{% url 'login' %}">Log in</a>
+      </div>
+    </div>
+  </div>
 </div>
+
+<script>
+  // Add CSS classes to Django form inputs
+  document.addEventListener('DOMContentLoaded', function() {
+    const usernameInput = document.getElementById('id_username');
+    const emailInput = document.getElementById('id_email');
+    const passwordInput = document.getElementById('id_password');
+    const confirmPasswordInput = document.getElementById('id_confirm_password');
+    
+    if (usernameInput) {
+      usernameInput.classList.add('register-form-input');
+    }
+    if (emailInput) {
+      emailInput.classList.add('register-form-input');
+    }
+    if (passwordInput) {
+      passwordInput.classList.add('register-form-input');
+      passwordInput.classList.add('password');
+    }
+    if (confirmPasswordInput) {
+      confirmPasswordInput.classList.add('register-form-input');
+      confirmPasswordInput.classList.add('password');
+    }
+  });
+
+  function togglePassword(inputId, iconId) {
+    const passwordInput = document.getElementById(inputId);
+    const eyeIcon = document.getElementById(iconId);
+    
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      eyeIcon.innerHTML = `
+        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+        <line x1="1" y1="1" x2="23" y2="23"></line>
+      `;
+    } else {
+      passwordInput.type = 'password';
+      eyeIcon.innerHTML = `
+        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+        <circle cx="12" cy="12" r="3"></circle>
+      `;
+    }
+  }
+</script>
 
 {% endblock %}

@@ -3,65 +3,122 @@
 {% block title %}Compare Ideas | AI Startup Validator{% endblock %}
 
 {% block content %}
-<section class="page-section">
-  <div class="page-section-head">
-    <div>
-      <span class="eyebrow">Compare</span>
-      <h2>Side-by-side idea validation</h2>
-      <p class="section-copy">Compare two concepts across market fit, business model, and differentiation in one premium report.</p>
-    </div>
-    <a href="/dashboard/" class="btn btn-tertiary">Back to dashboard</a>
-  </div>
-
-  <div class="card compare-panel">
-    <div class="compare-labels">
-      <span>Field</span>
-      <span>Idea one</span>
-      <span>Idea two</span>
+<div class="compare-redesign">
+  <div class="compare-container">
+    <!-- Header -->
+    <div class="compare-header">
+      <div class="compare-header-left">
+        <h1>Side-by-side idea validation</h1>
+        <p>Compare two concepts across market fit, business model, and differentiation in one premium report.</p>
+      </div>
+      <a href="/dashboard/" class="compare-btn compare-btn-secondary">Back to dashboard</a>
     </div>
 
-    <form method="POST" action="/compare/" class="compare-grid">
+    <!-- Form Columns -->
+    <form method="POST" action="/compare/">
       {% csrf_token %}
-      <div class="compare-field">
-        <label for="id_first_title">Name</label>
-        {{ form.first_title.as_widget(attrs={'placeholder': 'First idea name'}) }}
-        {{ form.second_title.as_widget(attrs={'placeholder': 'Second idea name'}) }}
+      
+      <div class="compare-columns">
+        <!-- Idea A -->
+        <div class="compare-column">
+          <h3 class="compare-column-title">🚀 Idea A</h3>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Startup Name</label>
+            {{ form.first_title }}
+          </div>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Industry</label>
+            {{ form.first_industry }}
+          </div>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Description</label>
+            {{ form.first_description }}
+          </div>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Problem</label>
+            {{ form.first_problem }}
+          </div>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Revenue Model</label>
+            {{ form.first_revenue_model }}
+          </div>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Unique Value Proposition</label>
+            {{ form.first_usp }}
+          </div>
+        </div>
+
+        <!-- Idea B -->
+        <div class="compare-column">
+          <h3 class="compare-column-title">⚡ Idea B</h3>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Startup Name</label>
+            {{ form.second_title }}
+          </div>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Industry</label>
+            {{ form.second_industry }}
+          </div>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Description</label>
+            {{ form.second_description }}
+          </div>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Problem</label>
+            {{ form.second_problem }}
+          </div>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Revenue Model</label>
+            {{ form.second_revenue_model }}
+          </div>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Unique Value Proposition</label>
+            {{ form.second_usp }}
+          </div>
+        </div>
       </div>
 
-      <div class="compare-field">
-        <label for="id_first_industry">Industry</label>
-        {{ form.first_industry.as_widget(attrs={'placeholder': 'Industry'}) }}
-        {{ form.second_industry.as_widget(attrs={'placeholder': 'Industry'}) }}
-      </div>
-
-      <div class="compare-field compare-field--full">
-        <label for="id_first_description">Description</label>
-        {{ form.first_description.as_widget(attrs={'placeholder': 'Describe first idea'}) }}
-        {{ form.second_description.as_widget(attrs={'placeholder': 'Describe second idea'}) }}
-      </div>
-
-      <div class="compare-field compare-field--full">
-        <label for="id_first_problem">Problem</label>
-        {{ form.first_problem.as_widget(attrs={'placeholder': 'Problem first idea solves'}) }}
-        {{ form.second_problem.as_widget(attrs={'placeholder': 'Problem second idea solves'}) }}
-      </div>
-
-      <div class="compare-field compare-field--full">
-        <label for="id_first_revenue_model">Revenue model</label>
-        {{ form.first_revenue_model.as_widget(attrs={'placeholder': 'Expected revenue model'}) }}
-        {{ form.second_revenue_model.as_widget(attrs={'placeholder': 'Expected revenue model'}) }}
-      </div>
-
-      <div class="compare-field compare-field--full">
-        <label for="id_first_usp">Unique value</label>
-        {{ form.first_usp.as_widget(attrs={'placeholder': 'Unique value proposition'}) }}
-        {{ form.second_usp.as_widget(attrs={'placeholder': 'Unique value proposition'}) }}
-      </div>
-
-      <div class="form-actions">
-        <button type="submit" class="btn btn-primary">Compare now</button>
+      <!-- Submit Button -->
+      <div class="compare-submit">
+        <button type="submit" class="compare-btn compare-btn-primary">Compare Now</button>
       </div>
     </form>
   </div>
-</section>
+</div>
+
+<script>
+  // Add CSS classes to Django form widgets
+  document.addEventListener('DOMContentLoaded', function() {
+    // Text inputs and selects
+    ['first_title', 'second_title', 'first_industry', 'second_industry', 
+     'first_revenue_model', 'second_revenue_model'].forEach(id => {
+      const el = document.getElementById(`id_${id}`);
+      if (el) {
+        el.classList.add('compare-form-input', 'compare-form-select');
+      }
+    });
+
+    // Textareas
+    ['first_description', 'second_description', 
+     'first_problem', 'second_problem', 
+     'first_usp', 'second_usp'].forEach(id => {
+      const el = document.getElementById(`id_${id}`);
+      if (el) {
+        el.classList.add('compare-form-textarea');
+      }
+    });
+  });
+</script>
 {% endblock %}

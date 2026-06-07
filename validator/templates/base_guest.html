@@ -2,23 +2,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="AI Startup Validator landing page for startup idea validation and reports." />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AI Startup Validator landing page for startup idea validation and reports.">
     <title>{% block title %}AI Startup Validator{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-<body class="guest-page">
-    <header class="navbar guest-navbar">
-        <div class="navbar-inner container">
+<body>
+    <header class="navbar">
+        <div class="container navbar-inner">
             <a class="navbar-brand" href="{% url 'home' %}">
-                <span class="navbar-logo">AI</span>
-                <span class="navbar-title">Validator</span>
+                <div class="navbar-logo">AI</div>
+                <span class="navbar-title">AI Startup Validator</span>
             </a>
-            <nav class="navbar-menu">
+            <nav class="navbar-center">
                 <a href="{% url 'home' %}" class="navbar-link">Home</a>
-                <a href="{% url 'login' %}" class="navbar-link">Login</a>
-                <a href="{% url 'register' %}" class="btn btn--primary">Register</a>
+
+            </nav>
+            <nav class="navbar-right">
+                <a href="{% url 'login' %}" class="btn btn-secondary">Login</a>
+                <a href="{% url 'register' %}" class="btn btn-primary">Register</a>
             </nav>
         </div>
     </header>
@@ -27,7 +33,7 @@
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="footer footer--guest">
+    <footer class="footer">
         <div class="container footer-inner">
             <div>
                 <p class="footer-copy">&copy; {% now "Y" %} AI Startup Validator</p>
