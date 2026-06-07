@@ -4,142 +4,141 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>
+    <title>
 
-History
+        History
 
-</title>
+    </title>
 
-<link rel="stylesheet"
-href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 </head>
 
 <body>
 
-<nav class="navbar">
+    <nav class="navbar">
 
-<div class="container navbar__inner">
+        <div class="container navbar__inner">
 
-<a href="/"
-class="navbar__brand">
+            <a href="/" class="navbar__brand">
 
-<div class="navbar__logo">
+                <div class="navbar__logo">
 
-AI
+                    AI
 
-</div>
+                </div>
 
-Startup <span>Validator</span>
+                Startup <span>Validator</span>
 
-</a>
+            </a>
 
-<div class="navbar__nav">
+            <div class="navbar__nav">
 
-<a href="/"
-class="navbar__link">
+                <a href="/" class="navbar__link">
 
-Home
+                    Home
 
-</a>
+                </a>
 
-<a href="/history/"
-class="navbar__link navbar__link--active">
+                <a href="/history/" class="navbar__link navbar__link--active">
 
-History
+                    History
 
-</a>
+                </a>
 
-</div>
+            </div>
 
-</div>
+        </div>
 
-</nav>
+    </nav>
 
-<section class="section">
+    <section class="section">
 
-<div class="container">
+        <div class="container">
 
-<div class="section__header">
+            <div class="section__header">
 
-<div class="hero__badge">
+                <div class="hero__badge">
 
-📂 REPORT HISTORY
+                    📂 REPORT HISTORY
 
-</div>
+                </div>
 
-<h1 class="section__title">
+                <h1 class="section__title">
 
-Startup Analysis History
+                    Startup Analysis History
 
-</h1>
+                </h1>
 
-<p class="section__description">
+                <p class="section__description">
 
-Previously analyzed startup ideas
+                    Previously analyzed startup ideas
 
-</p>
+                </p>
 
-</div>
+            </div>
 
-<div class="grid grid--2 gap-6">
+            <div class="grid grid--2 gap-6">
 
-{% for idea in ideas %}
+                {% for idea in ideas %}
 
-<div class="card">
+                <div class="card">
 
-<h3 class="card__title">
+                    <h3 class="card__title">
 
-{{ idea.title }}
+                        {{ idea.title }}
 
-</h3>
+                    </h3>
 
-<p class="text-secondary">
+                    <p class="text-secondary">
 
-{{ idea.industry }}
+                        {{ idea.industry }}
 
-</p>
+                    </p>
 
-<p class="mt-4">
+                    <p class="mt-4">
 
-{{ idea.description|truncatechars:120 }}
+                        {{ idea.description|truncatechars:120 }}
 
-</p>
+                    </p>
 
-<div class="mt-6">
+                    <div class="mt-6">
 
-<a
-href="/history/{{ idea.id }}/"
-class="btn btn--primary">
+                        <a href="/history/{{ idea.id }}/" class="btn btn--primary">
 
-View Report
+                            View Report
 
-</a>
+                        </a>
 
-</div>
+                        <a href="/download/{{ idea.id }}/" class="btn btn--secondary">
 
-</div>
+                            Download PDF
 
-{% empty %}
+                        </a>
+                    </div>
 
-<div class="card">
+                </div>
 
-No startup reports yet.
+                {% empty %}
 
-</div>
+                <div class="card">
 
-{% endfor %}
+                    No startup reports yet.
 
-</div>
+                </div>
 
-</div>
+                {% endfor %}
 
-</section>
+            </div>
+
+        </div>
+
+    </section>
 
 </body>
+
 </html>

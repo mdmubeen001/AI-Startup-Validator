@@ -42,17 +42,53 @@ Use concise business analysis.
     "opportunities":"2-3 short opportunities",
     "threats":"2-3 short threats",
     "market":"Estimated market size and target market",
-    "competitors":"Top 3 competitors",
+    "competitors":[
+    {{
+        "name":"Competitor 1",
+        "description":"Short description of competitor"
+    }},
+    {{
+        "name":"Competitor 2",
+        "description":"Short description of competitor"
+    }},
+    {{
+        "name":"Competitor 3",
+        "description":"Short description of competitor"
+    }}
+]
     "score":"Viability score out of 10",
     "improvements":"Practical startup improvements",
     "business_model":"Suggested revenue/business model",
     "pitch":"Short investor pitch summary",
     "risk":"Startup risk level and reason",
     "funding":"Estimated startup funding requirement",
-    "tam_sam_som":"TAM SAM SOM market breakdown",
+    "tam_sam_som":{{
+        "tam":"Estimated Total Addressable Market",
+        "sam":"Estimated Serviceable Available Market",
+        "som":"Estimated Serviceable Obtainable Market"
+    }},
+
     "name_suggestions":"3 startup name suggestions",
     "tagline":"Short startup tagline"
 }}
+
+
+For competitors:
+Return 3 real competitors relevant to the startup idea.
+Each competitor must include:
+- name
+- short description of what they do
+
+
+For tam_sam_som return an object, not a string.
+
+Example:
+"tam_sam_som":{{
+    "tam":"$10 Billion",
+    "sam":"$1 Billion",
+    "som":"$100 Million"
+}}
+
 
 Also estimate startup risk level
 with short reasoning.
