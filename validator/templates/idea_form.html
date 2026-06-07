@@ -1,352 +1,228 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-    content="width=device-width, initial-scale=1.0">
+{% extends 'base_dashboard.html' %}
 
-    <title>
-        Validate Idea
-    </title>
+{% block title %}Validate Idea | AI Startup Validator{% endblock %}
 
-    <link rel="stylesheet"
-    href="{% static 'css/style.css' %}">
-</head>
-<body>
+{% block content %}
+<div class="idea-form-redesign">
+  <div class="idea-form-grid">
+    <!-- Left Column: Benefits & Info -->
+    <div class="info-column">
+      <!-- Hero Info -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <div class="info-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+            </svg>
+          </div>
+          <h3 class="info-card-title">AI-Powered Validation</h3>
+        </div>
+        <p class="info-card-body">Turn startup ideas into confident decisions. Complete the form and we'll generate a polished, investor-ready report with actionable insights.</p>
+      </div>
 
-<!-- NAVBAR -->
-<nav class="navbar">
+      <!-- Benefits -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <div class="info-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+          </div>
+          <h3 class="info-card-title">What you get</h3>
+        </div>
+        <ul class="benefit-list">
+          <li class="benefit-item">
+            <span class="benefit-check">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
+            Automated SWOT Analysis with go-to-market signals
+          </li>
+          <li class="benefit-item">
+            <span class="benefit-check">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
+            Market insights and competitive landscape analysis
+          </li>
+          <li class="benefit-item">
+            <span class="benefit-check">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
+            Revenue model diagnostics and differentiation
+          </li>
+          <li class="benefit-item">
+            <span class="benefit-check">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </span>
+            Downloadable PDF report ready for investors
+          </li>
+        </ul>
+      </div>
 
-<div class="container navbar__inner">
+      <!-- Stats -->
+      <div class="info-card">
+        <div class="info-card-header">
+          <div class="info-card-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <h3 class="info-card-title">Trusted by founders</h3>
+        </div>
+        <div class="stats-grid">
+          <div>
+            <div class="stat-value">98%</div>
+            <div class="stat-label">Validation accuracy</div>
+          </div>
+          <div>
+            <div class="stat-value">4.8/5</div>
+            <div class="stat-label">User satisfaction</div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-<a href="/"
-class="navbar__brand">
+    <!-- Right Column: Form -->
+    <div class="form-column">
+      <div class="form-header">
+        <h1 class="form-title">Submit your startup idea</h1>
+        <p class="form-subtitle">Fill out the form to get a comprehensive AI analysis</p>
+      </div>
 
-<div class="navbar__logo">
-AI
+      <!-- Progress Indicator -->
+      <div class="progress-container">
+        <div class="progress-label">Progress</div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="form-progress"></div>
+        </div>
+      </div>
+
+      <form method="POST" action="/idea/" id="idea-validation-form">
+        {% csrf_token %}
+
+        <div class="form-fields-grid">
+          <!-- Startup Name -->
+          <div class="form-group {% if form.title.errors %}error{% endif %}">
+            {{ form.title }}
+            <label for="{{ form.title.id_for_label }}" class="form-label">Startup name</label>
+            {% for error in form.title.errors %}
+              <p class="form-error">{{ error }}</p>
+            {% endfor %}
+          </div>
+
+          <!-- Industry -->
+          <div class="form-group {% if form.industry.errors %}error{% endif %}">
+            {{ form.industry }}
+            <label for="{{ form.industry.id_for_label }}" class="form-label">Industry</label>
+            {% for error in form.industry.errors %}
+              <p class="form-error">{{ error }}</p>
+            {% endfor %}
+          </div>
+
+          <!-- Description -->
+          <div class="form-group form-field-full {% if form.description.errors %}error{% endif %}">
+            {{ form.description }}
+            <label for="{{ form.description.id_for_label }}" class="form-label">Describe your idea</label>
+            {% for error in form.description.errors %}
+              <p class="form-error">{{ error }}</p>
+            {% endfor %}
+          </div>
+
+          <!-- Problem -->
+          <div class="form-group form-field-full {% if form.problem.errors %}error{% endif %}">
+            {{ form.problem }}
+            <label for="{{ form.problem.id_for_label }}" class="form-label">Problem you solve</label>
+            {% for error in form.problem.errors %}
+              <p class="form-error">{{ error }}</p>
+            {% endfor %}
+          </div>
+
+          <!-- Target Audience -->
+          <div class="form-group {% if form.target_audience.errors %}error{% endif %}">
+            {{ form.target_audience }}
+            <label for="{{ form.target_audience.id_for_label }}" class="form-label">Target audience</label>
+            {% for error in form.target_audience.errors %}
+              <p class="form-error">{{ error }}</p>
+            {% endfor %}
+          </div>
+
+          <!-- Revenue Model -->
+          <div class="form-group {% if form.revenue_model.errors %}error{% endif %}">
+            {{ form.revenue_model }}
+            <label for="{{ form.revenue_model.id_for_label }}" class="form-label">Revenue model</label>
+            {% for error in form.revenue_model.errors %}
+              <p class="form-error">{{ error }}</p>
+            {% endfor %}
+          </div>
+
+          <!-- Startup Stage -->
+          <div class="form-group {% if form.startup_stage.errors %}error{% endif %}">
+            {{ form.startup_stage }}
+            <label for="{{ form.startup_stage.id_for_label }}" class="form-label">Startup stage</label>
+            {% for error in form.startup_stage.errors %}
+              <p class="form-error">{{ error }}</p>
+            {% endfor %}
+          </div>
+
+          <!-- USP -->
+          <div class="form-group form-field-full {% if form.usp.errors %}error{% endif %}">
+            {{ form.usp }}
+            <label for="{{ form.usp.id_for_label }}" class="form-label">Unique value proposition</label>
+            {% for error in form.usp.errors %}
+              <p class="form-error">{{ error }}</p>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="form-btn form-btn-primary">Analyze Startup</button>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>
 
-Startup <span>Validator</span>
-
-</a>
-
-<div class="navbar__nav">
-
-<a href="/"
-class="navbar__link">
-Home
-</a>
-
-<a href="/idea/"
-class="navbar__link navbar__link--active">
-Validate Idea
-</a>
-
-<a href="/compare/"
-class="navbar__link">
-Compare Ideas
-</a>
-
-<a href="/history/"
-class="navbar__link">
-History
-</a>
-
-</div>
-
-
-<div class="navbar__actions">
-
-<a href="/idea/"
-class="btn btn--primary">
-
-Analyze Now
-
-</a>
-
-</div>
-
-</div>
-
-</nav>
-
-<main>
-
-<section class="section section--lg">
-
-<div class="container">
-
-<div class="grid grid--2 items-center gap-8">
-
-<!-- LEFT -->
-<div>
-
-<div class="hero__badge">
-
-AI Business Analysis
-
-</div>
-
-<h1 class="section__title mt-4">
-
-Launch Better Ideas With
-
-AI Validation
-
-</h1>
-
-<p class="section__description mt-4">
-
-Describe your startup concept
-and let AI evaluate its
-business potential.
-
-Get:
-
-</p>
-
-<div class="mt-6 d-flex flex-col gap-4">
-
-<div class="tag tag--success">
-✓ SWOT Analysis
-</div>
-
-<div class="tag">
-✓ Market Insights
-</div>
-
-<div class="tag tag--warning">
-✓ Competitor Analysis
-</div>
-
-<div class="tag tag--neutral">
-✓ Viability Score
-</div>
-
-<div class="tag tag--success">
-✓ PDF Business Report
-</div>
-
-</div>
-
-<div class="card mt-8">
-
-<div class="card__header">
-
-<div class="card__icon">
-⚡
-</div>
-
-<div>
-
-<h3 class="card__title">
-
-AI Powered Report
-
-</h3>
-
-<p class="card__body">
-
-Receive startup analysis
-within seconds.
-
-</p>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- RIGHT FORM -->
-<div>
-
-<div class="form form--contained card">
-
-<div class="section__header mb-6">
-
-<div class="section__eyebrow">
-
-START ANALYSIS
-
-</div>
-
-<h2 class="section__title">
-
-Submit Your Idea
-
-</h2>
-
-<p class="section__description">
-
-Fill in startup details below.
-
-</p>
-
-</div>
-<!-- PROGRESS -->
-
-<div class="card mb-6">
-
-<div class="d-flex justify-between items-center mb-3">
-
-<h4>
-
-Startup Discovery Progress
-
-</h4>
-
-<span id="progress-text">
-
-0%
-
-</span>
-
-</div>
-
-<div class="progress">
-
-<div
-id="progress-bar"
-class="progress__fill">
-
-</div>
-
-</div>
-
-</div>
-<form
-method="POST"
-action="/idea/"
-class="form">
-
-{% csrf_token %}
-
-<div class="form__group">
-
-{{ form.as_p }}
-
-</div>
-
-<div class="form__actions">
-
-<button
-type="submit"
-class="btn btn--primary btn--full btn--lg">
-
-Analyze Idea
-
-</button>
-
-</div>
-
-</form>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-</main>
-
-<!-- FOOTER -->
-<footer class="footer">
-
-<div class="container">
-
-<div class="footer__bottom">
-
-<p class="footer__copy">
-
-© 2026 AI Startup Validator
-
-</p>
-
-<div class="footer__legal">
-
-<a href="#">
-Privacy
-</a>
-
-<a href="#">
-Terms
-</a>
-
-</div>
-
-</div>
-
-</div>
-
-</footer>
 <script>
+  // Add CSS classes to form inputs
+  document.addEventListener('DOMContentLoaded', function() {
+    const inputs = document.querySelectorAll('#idea-validation-form input, #idea-validation-form textarea, #idea-validation-form select');
+    inputs.forEach(input => {
+      input.classList.add('form-input');
+      if (input.tagName === 'TEXTAREA') {
+        input.classList.add('form-textarea');
+      }
+    });
 
-const fields = document.querySelectorAll(
+    // Calculate and update progress based on filled fields
+    function updateProgress() {
+      const fields = document.querySelectorAll('.form-group input, .form-group textarea, .form-group select');
+      let filledCount = 0;
+      
+      fields.forEach(field => {
+        if (field.value.trim() !== '') {
+          filledCount++;
+        }
+      });
 
-'input, textarea, select'
+      const progress = Math.round((filledCount / fields.length) * 100);
+      document.getElementById('form-progress').style.width = `${progress}%`;
+    }
 
-);
+    // Attach event listeners to form fields
+    document.querySelectorAll('#idea-validation-form input, #idea-validation-form textarea, #idea-validation-form select').forEach(field => {
+      field.addEventListener('input', updateProgress);
+    });
 
-const bar =
-document.getElementById(
-'progress-bar'
-);
-
-const text =
-document.getElementById(
-'progress-text'
-);
-
-function updateProgress(){
-
-let filled = 0;
-
-fields.forEach(field=>{
-
-if(
-field.value.trim() !== ''
-){
-
-filled++;
-
-}
-
-});
-
-let percent = Math.round(
-
-(filled / fields.length)
-* 100
-
-);
-
-bar.style.width =
-percent + '%';
-
-text.innerText =
-percent + '%';
-
-}
-
-fields.forEach(field=>{
-
-field.addEventListener(
-'input',
-updateProgress
-);
-
-});
-
-updateProgress();
-
+    // Initial progress calculation
+    updateProgress();
+  });
 </script>
-</body>
-</html>
+{% endblock %}

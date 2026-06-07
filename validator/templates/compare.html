@@ -1,87 +1,124 @@
-{% load static %}
+{% extends 'base_dashboard.html' %}
 
-<!DOCTYPE html>
-<html>
-<head>
+{% block title %}Compare Ideas | AI Startup Validator{% endblock %}
 
-<title>
+{% block content %}
+<div class="compare-redesign">
+  <div class="compare-container">
+    <!-- Header -->
+    <div class="compare-header">
+      <div class="compare-header-left">
+        <h1>Side-by-side idea validation</h1>
+        <p>Compare two concepts across market fit, business model, and differentiation in one premium report.</p>
+      </div>
+      <a href="/dashboard/" class="compare-btn compare-btn-secondary">Back to dashboard</a>
+    </div>
 
-Compare Ideas
+    <!-- Form Columns -->
+    <form method="POST" action="/compare/">
+      {% csrf_token %}
+      
+      <div class="compare-columns">
+        <!-- Idea A -->
+        <div class="compare-column">
+          <h3 class="compare-column-title">🚀 Idea A</h3>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Startup Name</label>
+            {{ form.first_title }}
+          </div>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Industry</label>
+            {{ form.first_industry }}
+          </div>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Description</label>
+            {{ form.first_description }}
+          </div>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Problem</label>
+            {{ form.first_problem }}
+          </div>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Revenue Model</label>
+            {{ form.first_revenue_model }}
+          </div>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Unique Value Proposition</label>
+            {{ form.first_usp }}
+          </div>
+        </div>
 
-</title>
+        <!-- Idea B -->
+        <div class="compare-column">
+          <h3 class="compare-column-title">⚡ Idea B</h3>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Startup Name</label>
+            {{ form.second_title }}
+          </div>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Industry</label>
+            {{ form.second_industry }}
+          </div>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Description</label>
+            {{ form.second_description }}
+          </div>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Problem</label>
+            {{ form.second_problem }}
+          </div>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Revenue Model</label>
+            {{ form.second_revenue_model }}
+          </div>
+          
+          <div class="compare-form-group">
+            <label class="compare-form-label">Unique Value Proposition</label>
+            {{ form.second_usp }}
+          </div>
+        </div>
+      </div>
 
-<link rel="stylesheet"
-href="{% static 'css/style.css' %}">
-
-</head>
-
-<body>
-
-<section class="section section--lg">
-
-<div class="container">
-
-<div class="card p-8">
-
-<h1 class="section__title">
-
-Compare Startup Ideas
-
-</h1>
-
-<p class="section__description">
-
-AI will compare two ideas.
-
-</p>
-
-<form
-method="POST"
-class="form">
-
-{% csrf_token %}
-
-<h3>
-
-Idea 1
-
-</h3>
-
-<textarea
-name="idea1"
-rows="4"
-required>
-
-</textarea>
-
-<h3 class="mt-6">
-
-Idea 2
-
-</h3>
-
-<textarea
-name="idea2"
-rows="4"
-required>
-
-</textarea>
-
-<button
-type="submit"
-class="btn btn--primary mt-6">
-
-Compare Ideas
-
-</button>
-
-</form>
-
+      <!-- Submit Button -->
+      <div class="compare-submit">
+        <button type="submit" class="compare-btn compare-btn-primary">Compare Now</button>
+      </div>
+    </form>
+  </div>
 </div>
 
-</div>
+<script>
+  // Add CSS classes to Django form widgets
+  document.addEventListener('DOMContentLoaded', function() {
+    // Text inputs and selects
+    ['first_title', 'second_title', 'first_industry', 'second_industry', 
+     'first_revenue_model', 'second_revenue_model'].forEach(id => {
+      const el = document.getElementById(`id_${id}`);
+      if (el) {
+        el.classList.add('compare-form-input', 'compare-form-select');
+      }
+    });
 
-</section>
-
-</body>
-</html>
+    // Textareas
+    ['first_description', 'second_description', 
+     'first_problem', 'second_problem', 
+     'first_usp', 'second_usp'].forEach(id => {
+      const el = document.getElementById(`id_${id}`);
+      if (el) {
+        el.classList.add('compare-form-textarea');
+      }
+    });
+  });
+</script>
+{% endblock %}

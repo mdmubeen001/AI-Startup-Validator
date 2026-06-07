@@ -1,13 +1,66 @@
-from django.shortcuts import render
-from .forms import IdeaForm
+from django.shortcuts import render, redirect
+from .forms import IdeaForm, CompareForm
 from .models import StartupIdea
 from .ai_engine import (analyze_idea, compare_ideas)
 from django.http import FileResponse
 from .pdf_generator import generate_pdf
 from django.contrib.auth.decorators import login_required
+import json
 
 def home(request):
     return render(request, 'home.html')
+
+
+@login_required
+def dashboard(request):
+
+    ideas = StartupIdea.objects.filter(
+        user=request.user
+    ).order_by('-id')
+
+    total_ideas = ideas.count()
+
+    recent_ideas = ideas[:5]
+
+    chart_labels = []
+    chart_scores = []
+
+    for idea in reversed(recent_ideas):
+       chart_labels.append(idea.title)
+       chart_scores.append(idea.score)
+
+    last_idea = ideas.first()
+
+    last_score = 0
+
+    if last_idea and hasattr(last_idea, 'score'):
+        last_score = last_idea.score
+
+    average_score = 0
+
+    if total_ideas > 0:
+        average_score = sum(
+            float(idea.score)
+            for idea in ideas
+            if idea.score
+        ) / total_ideas
+
+    context = {
+        'total_ideas': total_ideas,
+        'total_reports': total_ideas,
+        'last_score': last_score,
+        'average_score': round(average_score, 1),
+        'recent_ideas': recent_ideas,
+        'chart_labels': json.dumps(chart_labels),
+        'chart_scores': json.dumps(chart_scores)
+    }
+
+    return render(
+        request,
+        'dashboard.html',
+        context
+    )
+
 
 @login_required
 def idea_form(request):
@@ -115,6 +168,7 @@ def idea_form(request):
         }
     )
 
+@login_required
 def result_page(request):
 
     data = request.session.get(
@@ -146,42 +200,48 @@ def result_page(request):
         }
     )
 
+@login_required
 def compare_view(request):
-
     if request.method == 'POST':
-
-        idea1 = request.POST.get(
-            'idea1'
-        )
-
-        idea2 = request.POST.get(
-            'idea2'
-        )
-
-        result = compare_ideas(
-            idea1,
-            idea2
-        )
-
-        return render(
-
-            request,
-
-            'compare_result.html',
-
-            {
-                'result': result,
-                'idea1': idea1,
-                'idea2': idea2
-            }
-        )
-
+        form = CompareForm(request.POST)
+        if form.is_valid():
+            # Format idea 1 data
+            idea1 = f"""Startup Name: {form.cleaned_data['first_title']}
+Industry: {form.cleaned_data['first_industry']}
+Description: {form.cleaned_data['first_description']}
+Problem: {form.cleaned_data['first_problem']}
+Revenue Model: {form.cleaned_data['first_revenue_model']}
+USP: {form.cleaned_data['first_usp']}"""
+            
+            # Format idea 2 data
+            idea2 = f"""Startup Name: {form.cleaned_data['second_title']}
+Industry: {form.cleaned_data['second_industry']}
+Description: {form.cleaned_data['second_description']}
+Problem: {form.cleaned_data['second_problem']}
+Revenue Model: {form.cleaned_data['second_revenue_model']}
+USP: {form.cleaned_data['second_usp']}"""
+            
+            result = compare_ideas(idea1, idea2)
+            
+            return render(
+                request,
+                'compare_result.html',
+                {
+                    'result': result,
+                    'idea1': form.cleaned_data['first_title'],
+                    'idea2': form.cleaned_data['second_title']
+                }
+            )
+    else:
+        form = CompareForm()
+        
     return render(
         request,
-        'compare.html'
+        'compare.html',
+        {'form': form}
     )
 
-
+@login_required
 def download_pdf(request):
 
     data = request.session.get(
@@ -200,9 +260,10 @@ def download_pdf(request):
         as_attachment=True
     )
 
+@login_required
 def history_view(request):
 
-    ideas = StartupIdea.objects.all().order_by(
+    ideas = StartupIdea.objects.filter(user=request.user).order_by(
         '-id'
     )
 
@@ -217,6 +278,7 @@ def history_view(request):
         }
     )
 
+@login_required
 def history_detail(
 
     request,
@@ -260,3 +322,11 @@ def history_detail(
             'analysis': analysis
         }
     )
+
+
+@login_required
+def delete_idea(request, idea_id):
+    if request.method == 'POST':
+        idea = StartupIdea.objects.get(id=idea_id, user=request.user)
+        idea.delete()
+    return redirect('history')

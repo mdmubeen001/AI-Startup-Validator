@@ -1,145 +1,130 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
+﻿{% extends 'base_dashboard.html' %}
 
-<head>
+{% block title %}History | AI Startup Validator{% endblock %}
 
-<meta charset="UTF-8">
+{% block content %}
+<div class="history-redesign">
+  <div class="history-container">
+    <!-- Header -->
+    <div class="history-header">
+      <div class="history-title-block">
+        <h1 class="history-title">Startup report library</h1>
+        <p class="history-subtitle">All completed validations in one place</p>
+      </div>
+      <div class="history-controls">
+        <input 
+          type="text" 
+          class="history-input history-search" 
+          placeholder="Search reports..." 
+          id="search-input"
+        >
+        <select class="history-input" id="filter-select">
+          <option value="">All industries</option>
+          <option value="ai">AI</option>
+          <option value="fintech">Fintech</option>
+          <option value="health">Health</option>
+          <option value="commerce">Commerce</option>
+        </select>
+      </div>
+    </div>
 
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
-<title>
-
-History
-
-</title>
-
-<link rel="stylesheet"
-href="{% static 'css/style.css' %}">
-
-</head>
-
-<body>
-
-<nav class="navbar">
-
-<div class="container navbar__inner">
-
-<a href="/"
-class="navbar__brand">
-
-<div class="navbar__logo">
-
-AI
-
+    {% if ideas %}
+      <!-- Reports Grid -->
+      <div class="reports-grid" id="reports-grid">
+        {% for idea in ideas %}
+          <div class="report-card" data-industry="{{ idea.industry|lower }}">
+            <div class="report-card-top">
+              <h3 class="report-card-title">{{ idea.title }}</h3>
+              <div class="report-card-badges">
+                <span class="badge badge-industry">{{ idea.industry }}</span>
+                {% with idea.score as score %}
+                  {% if score %}
+                    {% if score >= 7 %}
+                      <span class="badge badge-score-high">{{ score }}</span>
+                    {% elif score >= 5 %}
+                      <span class="badge badge-score-medium">{{ score }}</span>
+                    {% else %}
+                      <span class="badge badge-score-low">{{ score }}</span>
+                    {% endif %}
+                  {% else %}
+                    <span class="badge badge-industry">—</span>
+                  {% endif %}
+                {% endwith %}
+              </div>
+            </div>
+            <p class="report-card-description">
+              {% if idea.description %}
+                {{ idea.description|truncatechars:120 }}
+              {% else %}
+                No description
+              {% endif %}
+            </p>
+            <div class="report-card-footer">
+                <div class="report-card-date">
+                    {{ idea.created_at|date:"M d, Y" }}
+                </div>
+                <div class="report-card-actions">
+                    <a href="/history/{{ idea.id }}/" class="report-btn report-btn-primary">View Report</a>
+                    <a href="/history/{{ idea.id }}/download/" class="report-btn report-btn-secondary">Download</a>
+                    <form method="post" action="{% url 'delete_idea' idea.id %}" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="report-btn report-btn-danger" onclick="return confirm('Are you sure you want to delete this report?');">Delete</button>
+                    </form>
+                </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <!-- Empty State -->
+      <div class="history-empty">
+        <p class="history-empty-text">No reports have been generated yet. Create your first validation!</p>
+        <a href="/idea/" class="report-btn report-btn-primary">Create your first idea</a>
+      </div>
+    {% endif %}
+  </div>
 </div>
 
-Startup <span>Validator</span>
-
-</a>
-
-<div class="navbar__nav">
-
-<a href="/"
-class="navbar__link">
-
-Home
-
-</a>
-
-<a href="/history/"
-class="navbar__link navbar__link--active">
-
-History
-
-</a>
-
-</div>
-
-</div>
-
-</nav>
-
-<section class="section">
-
-<div class="container">
-
-<div class="section__header">
-
-<div class="hero__badge">
-
-📂 REPORT HISTORY
-
-</div>
-
-<h1 class="section__title">
-
-Startup Analysis History
-
-</h1>
-
-<p class="section__description">
-
-Previously analyzed startup ideas
-
-</p>
-
-</div>
-
-<div class="grid grid--2 gap-6">
-
-{% for idea in ideas %}
-
-<div class="card">
-
-<h3 class="card__title">
-
-{{ idea.title }}
-
-</h3>
-
-<p class="text-secondary">
-
-{{ idea.industry }}
-
-</p>
-
-<p class="mt-4">
-
-{{ idea.description|truncatechars:120 }}
-
-</p>
-
-<div class="mt-6">
-
-<a
-href="/history/{{ idea.id }}/"
-class="btn btn--primary">
-
-View Report
-
-</a>
-
-</div>
-
-</div>
-
-{% empty %}
-
-<div class="card">
-
-No startup reports yet.
-
-</div>
-
-{% endfor %}
-
-</div>
-
-</div>
-
-</section>
-
-</body>
-</html>
+<script>
+  // Basic search and filter functionality
+  document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('search-input');
+    const filterSelect = document.getElementById('filter-select');
+    const reportsGrid = document.getElementById('reports-grid');
+    
+    if (searchInput && filterSelect && reportsGrid) {
+      const filterCards = function() {
+        const searchTerm = searchInput.value.toLowerCase();
+        const filterIndustry = filterSelect.value.toLowerCase();
+        
+        const cards = reportsGrid.querySelectorAll('.report-card');
+        cards.forEach(card => {
+          const title = card.querySelector('.report-card-title').textContent.toLowerCase();
+          const description = card.querySelector('.report-card-description').textContent.toLowerCase();
+          const industry = card.dataset.industry;
+          
+          let matchesSearch = true;
+          let matchesFilter = true;
+          
+          if (searchTerm) {
+            matchesSearch = title.includes(searchTerm) || description.includes(searchTerm);
+          }
+          
+          if (filterIndustry) {
+            matchesFilter = industry.includes(filterIndustry);
+          }
+          
+          if (matchesSearch && matchesFilter) {
+            card.style.display = '';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      };
+      
+      searchInput.addEventListener('input', filterCards);
+      filterSelect.addEventListener('change', filterCards);
+    }
+  });
+</script>
+{% endblock %}
