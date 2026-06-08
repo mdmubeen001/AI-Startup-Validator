@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-d)p2b#0(%d!6z9c&yb_%3^c=pj_@c+vcd8ni#c8s6@e1^44dsb
 DEBUG = True
 
 ALLOWED_HOSTS = [
-   # "mdmubeen001.pythonanywhere.com",
+    "mdmubeen001.pythonanywhere.com",
 ]
 
 
