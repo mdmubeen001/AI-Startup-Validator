@@ -8,15 +8,26 @@
     <title>{% block title %}AI Startup Validator{% endblock %}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght400;500;600;700&family=Poppins:wght600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
     <header class="navbar">
         <div class="container navbar-inner">
             <a class="navbar-brand" href="{% url 'home' %}">
-                <div class="navbar-logo">AI</div>
-                <span class="navbar-title">AI Startup Validator</span>
+                <div class="navbar-logo">
+                    <!-- AI/Startup SVG Icon: Rocket with circuit lines -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2l1.674 3.34a1 1 0 0 0 .724.596l3.356.732a1 1 0 0 1 .683 1.45l-2.18 2.907a1 1 0 0 0 .16 1.18l2.635 3.042a1 1 0 0 1-.643 1.653l-3.377.507a1 1 0 0 0-.63.364l-2.138 2.566a1 1 0 0 1-1.692 0l-2.138-2.566a1 1 0 0 0-.63-.364l-3.377-.507a1 1 0 0 1-.643-1.653l2.635-3.042a1 1 0 0 0 .16-1.18L5.566 8.12a1 1 0 0 1 .683-1.45l3.356-.732a1 1 0 0 0 .724-.596L12 2z"/>
+                        <circle cx="12" cy="12" r="2"/>
+                        <path d="M4.5 16.5L2 22l5.5-2.5"/>
+                        <path d="M19.5 16.5L22 22l-5.5-2.5"/>
+                    </svg>
+                </div>
+                <div class="navbar-brand-text">
+                    <span class="navbar-brand-line">AI Startup</span>
+                    <span class="navbar-brand-line">Validator</span>
+                </div>
             </a>
             <nav class="navbar-center">
                 <a href="{% url 'home' %}" class="navbar-link">Home</a>

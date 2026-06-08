@@ -103,6 +103,23 @@ ul, ol {
     font-size: 1.125rem;
 }
 
+.navbar-brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.navbar-brand-line {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.navbar-brand-line:first-child {
+    font-weight: 800;
+    font-size: 1.125rem;
+}
+
 .navbar-title {
     font-weight: 700;
     font-size: 1.125rem;
@@ -110,6 +127,10 @@ ul, ol {
 
 .navbar-center {
     display: flex;
+    gap: 2rem;
+}
+
+.navbar-inner {
     gap: 2rem;
 }
 
@@ -188,8 +209,10 @@ ul, ol {
 }
 
 .brand-name {
+    font-family: 'Poppins', sans-serif;
     font-weight: 700;
     font-size: 1.125rem;
+    letter-spacing: -0.02em;
 }
 
 .brand-subtitle {
@@ -293,6 +316,10 @@ ul, ol {
     flex: 1;
 }
 
+.topbar-right {
+    justify-content: flex-end;
+}
+
 .sidebar-toggle {
     width: 40px;
     height: 40px;
@@ -366,29 +393,46 @@ ul, ol {
 }
 
 .topbar-avatar {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: var(--radius-full);
     background: linear-gradient(135deg, var(--primary), var(--success));
     color: white;
     display: grid;
     place-items: center;
     font-weight: 700;
+    flex-shrink: 0;
+    order: 2;
+}
+
+.topbar-avatar svg {
+    width: 22px;
+    height: 22px;
 }
 
 .topbar-user-info {
     display: flex;
     flex-direction: column;
+    text-align: right;
 }
 
 .topbar-user-name {
-    font-weight: 600;
-    font-size: 0.9375rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-style: normal;
+    color: var(--text);
 }
 
 .topbar-user-meta {
+    font-family: 'Inter', sans-serif;
     color: var(--muted);
-    font-size: 0.8125rem;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
 }
 
 .dashboard-content {
@@ -2925,9 +2969,10 @@ ul, ol {
     .topbar-search {
         display: none;
     }
-
+    
     .topbar-user-info {
-        display: none;
+        display: flex;
+        flex-direction: column;
     }
 
     .login-container,
@@ -2945,12 +2990,38 @@ ul, ol {
         padding: 2rem 1.5rem;
     }
     
-    .dashboard-container {
+    /* Make all authenticated containers use full width */
+    .container,
+    .dashboard-content,
+    .dashboard-main,
+    .form-container,
+    .result-container,
+    .compare-container,
+    .history-container,
+    .dashboard-container,
+    .idea-form-grid {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+    }
+    
+    /* Adjust padding for all authenticated containers */
+    .dashboard-redesign,
+    .idea-form-redesign,
+    .history-redesign,
+    .compare-redesign,
+    .result-redesign,
+    .compare-result-redesign {
         padding: 1rem;
     }
     
-    .history-redesign {
-        padding: 0.5rem;
+    /* Remove padding constraints from content */
+    .dashboard-content {
+        padding: 0;
+    }
+    
+    .dashboard-container {
+        padding: 0;
     }
 }
 
@@ -2969,15 +3040,21 @@ ul, ol {
     }
     
     .report-card-actions {
-        flex-wrap: wrap;
-        gap: 0.5rem;
+        flex-wrap: nowrap;
+        gap: 0.3rem;
         width: 100%;
     }
     
     .report-btn {
-        flex: 1 1 calc(50% - 0.25rem);
-        min-width: 100px;
-        font-size: 0.875rem;
+        flex: 1;
+        min-width: unset;
+        font-size: 0.68rem;
+        padding: 0.4rem 0.4rem;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        line-height: 1.2;
     }
     
     .report-card-footer {
@@ -2990,6 +3067,46 @@ ul, ol {
 @media (max-width: 640px) {
     .dashboard-redesign {
         padding: 1rem;
+    }
+    
+    .report-btn {
+        font-size: 0.65rem;
+        padding: 0.35rem 0.35rem;
+    }
+    
+    .topbar {
+        padding: 0.75rem 1rem;
+    }
+    
+    .topbar-user {
+        gap: 0.5rem;
+    }
+    
+    .topbar-user-info {
+        text-align: right;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .topbar-user-name {
+        font-size: 0.9375rem;
+        font-weight: 800;
+        letter-spacing: -0.02em;
+    }
+    
+    .topbar-user-meta {
+        font-size: 0.68rem;
+        letter-spacing: 0.01em;
+    }
+    
+    .topbar-avatar {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .topbar-avatar svg {
+        width: 20px;
+        height: 20px;
     }
 
     .kpi-grid {
@@ -3006,6 +3123,15 @@ ul, ol {
 
     .container {
         padding: 0 1rem;
+    }
+
+    /* Fix mobile navbar spacing and clutter */
+    .navbar-inner {
+        gap: 1rem;
+    }
+
+    .navbar-center {
+        display: none;
     }
 
     .navbar-right {
